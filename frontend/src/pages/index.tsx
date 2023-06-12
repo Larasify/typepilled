@@ -2,11 +2,26 @@ import { type NextPage } from "next";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
+import { useEffect } from "react";
 import { api } from "~/utils/api";
+import io from "socket.io-client";
 
 const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
 
+  useEffect(() => {
+    console.log("initialising socket");
+    const socket = io("http://localhost:8080");
+
+    socket.on("connect", () => {
+      console.log("connected to socket");
+      socket.emit("message", "hello world");
+      socket.on("message", (data) => {
+        console.log(data);
+      });
+    });
+  }, []);
+  
   return (
     <>
       <Head>
@@ -62,7 +77,7 @@ const AuthShowcase: React.FC = () => {
 
   const { data: secretMessage } = api.example.getSecretMessage.useQuery(
     undefined, // no input
-    { enabled: sessionData?.user !== undefined },
+    { enabled: sessionData?.user !== undefined }
   );
 
   return (
