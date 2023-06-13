@@ -27,7 +27,7 @@ const Home: NextPage = () => {
   function handleClick() {
     reset();
   }
-  const [text, setText] = useState("hello my baby hello my honey hello my ragtime gal how are you i am a frog froggity frog hop hop");
+  const [text, setText] = useState("hello my baby hello my honey hello my ragtime gal how are you i am a frog froggity frog hop hop fill this line please bro what why does it not work properly");
   function reset() {
     console.log("reset");
     setText("brr im so good at typing lets gooo poggers is this thing on wohooo");

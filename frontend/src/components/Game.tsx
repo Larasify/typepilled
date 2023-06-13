@@ -15,6 +15,7 @@ const Game = forwardRef<HTMLDivElement, ButtonProps>(function Game(props, ref) {
   const [duration, setDuration] = useState(() => 0);
   const [isFocused, setIsFocused] = useState(() => false);
   const letterElements = useRef<HTMLDivElement>(null);
+  const [timeLeft, setTimeLeft] = useState(props.time);
 
   //get game hook
   const {
@@ -70,74 +71,111 @@ const Game = forwardRef<HTMLDivElement, ButtonProps>(function Game(props, ref) {
     }
   };
 
+  //focus once the page loads on the game
   useEffect(() => {
     letterElements.current?.parentElement?.focus();
   }, []);
 
+  //reset game when text changes
+  useEffect(() => {
+    setTimeLeft(props.time);
+    endTyping();
+    resetTyping();
+  }, [props.text, props.time]);
+
+  //countdown timer
+  useEffect(() => {
+    const Timer = setInterval(() => {
+      if (phase === 1 && isFocused) {
+        setTimeLeft((currentTime) => {
+          if (currentTime === 1) {
+            clearInterval(Timer);
+            endTyping();
+          }
+          return currentTime - 1;
+        });
+      }
+    }, 1000);
+    if (phase === 2) {
+      clearInterval(Timer);
+    }
+    return () => clearInterval(Timer);
+  }, [startTime, phase, isFocused]);
+
   return (
     <>
-      <div
-        tabIndex={0}
-        onKeyDown={(e) => handleKeyDown(e.key, e.ctrlKey)}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        className={`relative font-serif text-xl outline-none`}
-        ref={ref}
-      >
-        <div
-          ref={letterElements}
-          className={clsx(
-            "pointer-events-none mb-4 select-none tracking-wide",
-            { "bg-gray-400 opacity-40 blur-[8px]": !isFocused }
-          )}
-        >
-          {props.text.split("").map((letter, index) => {
-            const state = charsState[index];
-            const color =
-              state === CharStateType.Incomplete
-                ? "text-gray-500"
-                : state === CharStateType.Correct
-                ? "text-gray-200"
-                : "text-red-500";
-            return (
-              // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-              <span key={letter + index} className={`${color}`}>
-                {letter}
-              </span>
-            );
-          })}
-        </div>
-        {phase !== 2 && isFocused ? (
-          <span
-            style={{
-              left: pos.left,
-              top: pos.top,
-            }}
-            className={`caret absolute z-10 border-l-2 border-primary-color`}
-          >
-            &nbsp;
-          </span>
-        ) : null}
-      </div>
-      {/*Results*/}
-      <p className="text-sm">
-        {phase === 2 && startTime && endTime ? (
-          <>
-            <span className="mr-4 text-green-500">
-              WPM: {Math.round(((60 / duration) * correctChar) / 5)}
-            </span>
-            <span className="mr-4 text-blue-500">
-              Accuracy: {((correctChar / props.text.length) * 100).toFixed(2)}%
-            </span>
-            <span className="mr-4 text-yellow-500">Duration: {duration}s</span>
-          </>
-        ) : null}
-        <span className="text-white">
-        <span className="mr-4"> Current Index: {currIndex}</span>
-        <span className="mr-4"> Correct Characters: {correctChar}</span>
-        <span className="mr-4"> Error Characters: {errorChar}</span>
+      <div className="relative w-full max-w-[950px]">
+        <span className="text-fg/80 absolute -top-[3.25rem] left-0 z-40 text-4xl text-primary-color">
+          {timeLeft}
         </span>
-      </p>
+        <div className="relative z-40 h-[140px] w-full text-2xl outline-none">
+          <div
+            tabIndex={0}
+            onKeyDown={(e) => handleKeyDown(e.key, e.ctrlKey)}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            className={`relative font-serif text-xl outline-none`}
+            ref={ref}
+          >
+            <div
+              ref={letterElements}
+              className={clsx(
+                "pointer-events-none mb-4 select-none tracking-wide",
+                { "bg-gray-400 opacity-40 blur-[8px]": !isFocused }
+              )}
+            >
+              {props.text.split("").map((letter, index) => {
+                const state = charsState[index];
+                const color =
+                  state === CharStateType.Incomplete
+                    ? "text-gray-500"
+                    : state === CharStateType.Correct
+                    ? "text-gray-200"
+                    : "text-red-500";
+                return (
+                  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+                  <span key={letter + index} className={`${color}`}>
+                    {letter}
+                  </span>
+                );
+              })}
+            </div>
+            {phase !== 2 && isFocused ? (
+              <span
+                style={{
+                 left: pos.left,
+                  top: pos.top, 
+                }}
+                className={`caret absolute z-10 border-l-2 border-primary-color`}
+              >
+                &nbsp;
+              </span>
+            ) : null}
+          </div>
+          {/*Results*/}
+          <p className="text-sm">
+            {phase === 2 && startTime && endTime ? (
+              <>
+                <span className="mr-4 text-green-500">
+                  WPM: {Math.round(((60 / duration) * correctChar) / 5)}
+                </span>
+                <span className="mr-4 text-blue-500">
+                  Accuracy:{" "}
+                  {((correctChar / props.text.length) * 100).toFixed(2)}%
+                </span>
+                <span className="mr-4 text-yellow-500">
+                  Duration: {duration}s
+                </span>
+              </>
+            ) : null}
+            <span className="text-white">
+              <span className="mr-4"> Current Index: {currIndex}</span>
+              <span className="mr-4"> Correct Characters: {correctChar}</span>
+              <span className="mr-4"> Error Characters: {errorChar}</span>
+            </span>
+          </p>
+        </div>
+      </div>
     </>
   );
 });
