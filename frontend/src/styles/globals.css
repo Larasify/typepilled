@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+    background-color: #323437;
+}
+
 @keyframes flash {
     0%,
     100% {

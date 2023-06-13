@@ -95,9 +95,9 @@ const Game = forwardRef<HTMLDivElement, ButtonProps>(function Game(props, ref) {
             const state = charsState[index];
             const color =
               state === CharStateType.Incomplete
-                ? "text-gray-400"
+                ? "text-gray-500"
                 : state === CharStateType.Correct
-                ? "text-gray-700"
+                ? "text-gray-200"
                 : "text-red-500";
             return (
               // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
@@ -113,7 +113,7 @@ const Game = forwardRef<HTMLDivElement, ButtonProps>(function Game(props, ref) {
               left: pos.left,
               top: pos.top,
             }}
-            className={`caret absolute z-10 border-l-2 border-orange-500`}
+            className={`caret absolute z-10 border-l-2 border-primary-color`}
           >
             &nbsp;
           </span>
@@ -132,9 +132,11 @@ const Game = forwardRef<HTMLDivElement, ButtonProps>(function Game(props, ref) {
             <span className="mr-4 text-yellow-500">Duration: {duration}s</span>
           </>
         ) : null}
+        <span className="text-white">
         <span className="mr-4"> Current Index: {currIndex}</span>
         <span className="mr-4"> Correct Characters: {correctChar}</span>
         <span className="mr-4"> Error Characters: {errorChar}</span>
+        </span>
       </p>
     </>
   );
