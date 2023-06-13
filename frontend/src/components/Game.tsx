@@ -88,7 +88,7 @@ const Game = forwardRef<HTMLDivElement, ButtonProps>(function Game(props, ref) {
           ref={letterElements}
           className={clsx(
             "pointer-events-none mb-4 select-none tracking-wide",
-            { "bg-gray-400 opacity-40 blur-[8px]": !isFocused && phase === 1 }
+            { "bg-gray-400 opacity-40 blur-[8px]": !isFocused }
           )}
         >
           {props.text.split("").map((letter, index) => {
