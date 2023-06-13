@@ -2,11 +2,11 @@ import { type NextPage } from "next";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { api } from "~/utils/api";
 import io from "socket.io-client";
 import { useRouter } from "next/router";
-import Game from "~/components/Game";
+import Game, { GameElement } from "~/components/Game";
 
 const Home: NextPage = () => {
   useEffect(() => {
@@ -22,13 +22,17 @@ const Home: NextPage = () => {
     });
   }, []);
 
-  const ref = useRef<HTMLInputElement>(null);
+  const ref = useRef<GameElement>(null);
 
   function handleClick() {
-    console.log(ref);
-    if(!ref.current) return null;
-    ref.current.value = "hello";
-    //ref.current.innerHTML("hello");
+    reset();
+  }
+  const [text, setText] = useState("hello my baby hello my honey hello my ragtime gal how are you i am a frog froggity frog hop hop");
+  function reset() {
+    console.log("reset");
+    setText("brr im so good at typing lets gooo poggers is this thing on wohooo");
+    console.log(text);
+    ref.current?.resetTyping();
   }
 
   return (
@@ -40,8 +44,8 @@ const Home: NextPage = () => {
       </Head>
       <AuthShowcase />
       <div className='layout flex flex-col items-center pt-36 text-center '>
-        <Game ref={ref} text="hello my baby hello my honey" time={30} />
-        <button onClick={handleClick}>Button</button>
+        <Game ref={ref} reset={reset} text={text} time={30} />
+        <button className="border bg-gray-400 rounded-lg p-1" onClick={handleClick}>Reset</button>
       </div>
     </>
   );
@@ -56,7 +60,7 @@ const AuthShowcase: React.FC = () => {
     undefined, // no input
     { enabled: sessionData?.user !== undefined }
   );
-
+  
   return (
     <div className="flex flex-col items-center justify-center gap-4">
       <p className="text-center text-2xl text-white">
@@ -64,7 +68,7 @@ const AuthShowcase: React.FC = () => {
         {secretMessage && <span> - {secretMessage}</span>}
       </p>
       <button
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
+        className="rounded-full bg-gray-400 px-10 py-3 font-semibold text-white no-underline transition hover:bg-gray-600"
         onClick={sessionData ? () => void signOut() : () => void signIn()}
       >
         {sessionData ? "Sign out" : "Sign in"}

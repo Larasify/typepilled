@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes flash {
+    0%,
+    100% {
+      opacity: 0;
+    }
+  
+    50% {
+      opacity: 1;
+    }
+  }
+
+
+.caret {
+    animation-name: flash;
+    animation-iteration-count: infinite;
+    animation-duration: 1s;
+    transition: 0.12s;
+  }
+  
+  .caret {
+    position: absolute;
+    display: inline;
+  }
