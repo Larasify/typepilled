@@ -4,7 +4,6 @@ import useTypingGame, { CharStateType } from "react-typing-game-hook";
 import { BsCursorFill } from "react-icons/bs";
 import { BsFlagFill } from "react-icons/bs";
 import { string } from "zod";
-import Tooltip from "./Tooltip";
 
 type ButtonProps = {
   text: string;
