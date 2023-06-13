@@ -11,11 +11,8 @@ type ButtonProps = {
   reset: () => void;
 };
 
-export type GameElement = {
-  resetTyping: () => void;
-}
 
-const Game = forwardRef<GameElement, ButtonProps>(function Game(
+const Game = forwardRef<HTMLDivElement, ButtonProps>(function Game(
   props,
   ref
 ) {
@@ -36,6 +33,7 @@ const Game = forwardRef<GameElement, ButtonProps>(function Game(
     },
     actions: { insertTyping, resetTyping, deleteTyping, endTyping },
   } = useTypingGame(props.text, { skipCurrentWordOnSpace: false });
+
 
   // set cursor
   const pos = useMemo(() => {
@@ -76,20 +74,17 @@ const Game = forwardRef<GameElement, ButtonProps>(function Game(
       insertTyping(letter);
     }
   };
-  useEffect(() => {
-    console.log(props.text);
-    endTyping();
-    resetTyping();
-  }, [props.text]);
+
 
   return (
-    <div>
+    <>
       <div
         tabIndex={0}
         onKeyDown={(e) => handleKeyDown(e.key, e.ctrlKey)}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         className={`relative font-serif text-xl outline-none`}
+        ref={ref}
       >
         <div
           ref={letterElements}
@@ -124,6 +119,7 @@ const Game = forwardRef<GameElement, ButtonProps>(function Game(
           </span>
         ) : null}
       </div>
+      {/*Results*/}
       <p className="text-sm">
         {phase === 2 && startTime && endTime ? (
           <>
@@ -140,7 +136,7 @@ const Game = forwardRef<GameElement, ButtonProps>(function Game(
         <span className="mr-4"> Correct Characters: {correctChar}</span>
         <span className="mr-4"> Error Characters: {errorChar}</span>
       </p>
-    </div>
+    </>
   );
 });
 

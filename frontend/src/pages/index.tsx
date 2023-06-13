@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { api } from "~/utils/api";
 import io from "socket.io-client";
 import { useRouter } from "next/router";
-import Game, { GameElement } from "~/components/Game";
+import Game from "~/components/Game";
 
 const Home: NextPage = () => {
   useEffect(() => {
@@ -22,7 +22,7 @@ const Home: NextPage = () => {
     });
   }, []);
 
-  const ref = useRef<GameElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   function handleClick() {
     reset();
@@ -32,7 +32,7 @@ const Home: NextPage = () => {
     console.log("reset");
     setText("brr im so good at typing lets gooo poggers is this thing on wohooo");
     console.log(text);
-    ref.current?.resetTyping();
+    ref.current?.focus();
   }
 
   return (
