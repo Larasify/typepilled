@@ -11,11 +11,7 @@ type ButtonProps = {
   reset: () => void;
 };
 
-
-const Game = forwardRef<HTMLDivElement, ButtonProps>(function Game(
-  props,
-  ref
-) {
+const Game = forwardRef<HTMLDivElement, ButtonProps>(function Game(props, ref) {
   const [duration, setDuration] = useState(() => 0);
   const [isFocused, setIsFocused] = useState(() => false);
   const letterElements = useRef<HTMLDivElement>(null);
@@ -33,7 +29,6 @@ const Game = forwardRef<HTMLDivElement, ButtonProps>(function Game(
     },
     actions: { insertTyping, resetTyping, deleteTyping, endTyping },
   } = useTypingGame(props.text, { skipCurrentWordOnSpace: false });
-
 
   // set cursor
   const pos = useMemo(() => {
@@ -75,6 +70,9 @@ const Game = forwardRef<HTMLDivElement, ButtonProps>(function Game(
     }
   };
 
+  useEffect(() => {
+    letterElements.current?.parentElement?.focus();
+  }, []);
 
   return (
     <>
@@ -88,8 +86,10 @@ const Game = forwardRef<HTMLDivElement, ButtonProps>(function Game(
       >
         <div
           ref={letterElements}
-          className={clsx("pointer-events-none mb-4 select-none tracking-wide", {"opacity-40 blur-[8px] bg-gray-400":(!isFocused&&phase===1)})}
-          tabIndex={0}
+          className={clsx(
+            "pointer-events-none mb-4 select-none tracking-wide",
+            { "bg-gray-400 opacity-40 blur-[8px]": !isFocused && phase === 1 }
+          )}
         >
           {props.text.split("").map((letter, index) => {
             const state = charsState[index];
@@ -113,7 +113,7 @@ const Game = forwardRef<HTMLDivElement, ButtonProps>(function Game(
               left: pos.left,
               top: pos.top,
             }}
-            className={`caret border-l-2 border-orange-500 absolute z-10`}
+            className={`caret absolute z-10 border-l-2 border-orange-500`}
           >
             &nbsp;
           </span>
