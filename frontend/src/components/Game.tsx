@@ -88,16 +88,16 @@ const Game = forwardRef<HTMLDivElement, ButtonProps>(function Game(
       >
         <div
           ref={letterElements}
-          className="pointer-events-none mb-4 select-none tracking-wide"
+          className={clsx("pointer-events-none mb-4 select-none tracking-wide", {"opacity-40 blur-[8px] bg-gray-400":(!isFocused&&phase===1)})}
           tabIndex={0}
         >
           {props.text.split("").map((letter, index) => {
             const state = charsState[index];
             const color =
               state === CharStateType.Incomplete
-                ? "text-gray-700"
-                : state === CharStateType.Correct
                 ? "text-gray-400"
+                : state === CharStateType.Correct
+                ? "text-gray-700"
                 : "text-red-500";
             return (
               // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
