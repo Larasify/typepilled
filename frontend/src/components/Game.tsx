@@ -1,9 +1,6 @@
 import clsx from "clsx";
 import { forwardRef, useEffect, useRef, useState, useMemo } from "react";
 import useTypingGame, { CharStateType } from "react-typing-game-hook";
-import { BsCursorFill } from "react-icons/bs";
-import { BsFlagFill } from "react-icons/bs";
-import { string } from "zod";
 
 type ButtonProps = {
   text: string;
@@ -24,6 +21,7 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
   const {
     states: {
       charsState,
+      chars,
       currIndex,
       phase,
       correctChar,
@@ -34,14 +32,56 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
     actions: { insertTyping, resetTyping, deleteTyping, endTyping },
   } = useTypingGame(props.text, { skipCurrentWordOnSpace: false });
 
+  const [margin, setMargin] = useState(() => 0);
+
   // set cursor
   const pos = useMemo(() => {
-    if (currIndex !== -1 && letterElements.current) {
+    if (
+      currIndex !== -1 &&
+      letterElements.current &&
+      currIndex < chars.length - 1
+    ) {
+      const nextspan: any = letterElements.current.children[currIndex + 1];
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      const nexttop = nextspan.offsetTop - 2;
+      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands, @typescript-eslint/no-unsafe-member-access
+      const nextleft = nextspan.offsetLeft + nextspan.offsetWidth - 2;
+
       const spanref: any = letterElements.current.children[currIndex];
       // eslint-disable-next-line @typescript-eslint/restrict-plus-operands, @typescript-eslint/no-unsafe-member-access
       const left = spanref.offsetLeft + spanref.offsetWidth - 2;
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       const top = spanref.offsetTop - 2;
+
+      //HANDLE WHEN LINE SWITCHES BACK AND MARGIN UP
+      if (nexttop < 0 && top < 0) {
+        setMargin((margin) => margin - 1);
+        return {
+          left: left,
+          top: 2,
+        };
+      }
+      //HANDLE WHEN LINE SWITCHES SO NEXT MARGIN
+      if (nexttop > 60 && nextleft < 15) {
+        setMargin((margin) => margin + 1);
+        return {
+          left: -2,
+          top: nexttop / 2,
+        };
+      }
+      //HANDLE LINE SWITCHES WITHOUT MARGIN CHANGE
+      else if (
+        nexttop > 30 &&
+        top < 30 &&
+        chars.split("").at(currIndex) == " " &&
+        nextleft < 15
+      ) {
+        console.log("middle work");
+        return {
+          left: -2,
+          top: nexttop,
+        };
+      }
       return { left, top };
     } else {
       return {
@@ -81,6 +121,7 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
 
   //reset game when text changes
   useEffect(() => {
+    setMargin(0);
     setTimeLeft(props.time);
     endTyping();
     resetTyping();
@@ -124,65 +165,76 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
             ref={ref}
           />
           {/*Text*/}
-          <div
-            ref={letterElements}
-            className={clsx(
-              "pointer-events-none mb-4 select-none tracking-wide",
-              { "bg-gray-400 opacity-40 blur-[8px]": !isFocused }
-            )}
-          >
-            {props.text.split("").map((letter, index) => {
-              const state = charsState[index];
-              const color =
-                state === CharStateType.Incomplete
-                  ? "text-gray-500"
-                  : state === CharStateType.Correct
-                  ? "text-gray-200"
-                  : "text-red-500";
-              return (
-                // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-                <span key={letter + index} className={`${color}`}>
-                  {letter}
-                </span>
-              );
-            })}
+          <div className="absolute left-0 top-0 mb-4 h-full w-full overflow-hidden text-justify leading-relaxed tracking-wide transition-all duration-200">
+            <div
+              ref={letterElements}
+              style={
+                margin > 0
+                  ? {
+                      marginTop: -(margin * 39),
+                    }
+                  : {
+                      marginTop: 0,
+                    }
+              }
+              className={clsx(
+                "pointer-events-none mb-4 select-none tracking-wide",
+                { "bg-gray-400 opacity-40 blur-[8px]": !isFocused }
+              )}
+            >
+              {props.text.split("").map((letter, index) => {
+                const state = charsState[index];
+                const color =
+                  state === CharStateType.Incomplete
+                    ? "text-gray-500"
+                    : state === CharStateType.Correct
+                    ? "text-gray-200"
+                    : "text-red-500";
+                return (
+                  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+                  <span key={letter + index} className={`${color}`}>
+                    {letter}
+                  </span>
+                );
+              })}
+            </div>
           </div>
           {/*Cursor*/}
           {phase !== 2 && isFocused ? (
             <span
               style={{
-                left: pos.left,
-                top: pos.top,
+                left: pos.top < 0 ? -2 : pos.left,
+                top: pos.top < 0 ? 2 : pos.top + 2,
               }}
               className={`caret absolute z-10 border-l-2 border-primary-color`}
             >
               &nbsp;
             </span>
           ) : null}
-          {/*Results*/}
-          <p className="text-sm">
-            {phase === 2 && startTime && endTime ? (
-              <>
-                <span className="mr-4 text-green-500">
-                  WPM: {Math.round(((60 / duration) * correctChar) / 5)}
-                </span>
-                <span className="mr-4 text-blue-500">
-                  Accuracy:{" "}
-                  {((correctChar / props.text.length) * 100).toFixed(2)}%
-                </span>
-                <span className="mr-4 text-yellow-500">
-                  Duration: {duration}s
-                </span>
-              </>
-            ) : null}
-            {/*Information Text*/}
-            <span className="text-white">
-              <span className="mr-4"> Current Index: {currIndex}</span>
-              <span className="mr-4"> Correct Characters: {correctChar}</span>
-              <span className="mr-4"> Error Characters: {errorChar}</span>
-            </span>
-          </p>
         </div>
+        {/*Results*/}
+        <p className="text-sm">
+          {phase === 2 && startTime && endTime ? (
+            <>
+              <span className="mr-4 text-green-500">
+                WPM: {Math.round(((60 / duration) * correctChar) / 5)}
+              </span>
+              <span className="mr-4 text-blue-500">
+                Accuracy: {((correctChar / props.text.length) * 100).toFixed(2)}
+                %
+              </span>
+              <span className="mr-4 text-yellow-500">
+                Duration: {duration}s
+              </span>
+            </>
+          ) : null}
+          {/*Information Text*/}
+          <span className="text-white">
+            <span className="mr-4"> Current Index: {currIndex}</span>
+            <span className="mr-4"> Correct Characters: {correctChar}</span>
+            <span className="mr-4"> Error Characters: {errorChar}</span>
+          </span>
+        </p>
       </div>
     </>
   );
