@@ -116,7 +116,7 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
 
   //focus once the page loads on the game
   useEffect(() => {
-    letterElements.current?.parentElement?.focus();
+    document.getElementById("input")?.focus();
   }, []);
 
   //reset game when text changes
@@ -162,6 +162,7 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             className={`absolute left-0 top-0 z-20 h-full w-full cursor-default opacity-0`}
+            id="input"
             ref={ref}
           />
           {/*Text*/}
