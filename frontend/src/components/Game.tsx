@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { forwardRef, useEffect, useRef, useState, useMemo } from "react";
 import useTypingGame, { CharStateType } from "react-typing-game-hook";
+import {GiArrowCursor} from "react-icons/gi";
 
 type ButtonProps = {
   text: string;
@@ -146,27 +147,80 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
     return () => clearInterval(Timer);
   }, [startTime, phase, isFocused]);
 
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleBlur = () => {
+    // Wait for 500 milliseconds before reducing opacity
+    timeoutRef.current = setTimeout(() => {
+      console.log("blur");
+      setIsFocused(false);
+    }, 500);
+  };
+
+  const handleFocus = () => {
+    // Clear the timeout if the window gains focus before the timeout is triggered
+   if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    setIsFocused(true);
+  };
+
   return (
     <>
-      <div className="relative w-full max-w-[950px]">
+      <div className="relative w-full max-w-[1100px]">
         {/*Timer*/}
         <span className="text-fg/80 absolute -top-[3.25rem] left-0 z-40 text-4xl text-primary-color">
           {timeLeft}
         </span>
         {/*Game*/}
-        <div className="relative z-40 h-[140px] w-full text-2xl outline-none">
+        <div
+          className="relative z-40 h-[140px] w-full text-2xl outline-none"
+          onClick={() => {
+            if (ref != null && typeof ref !== "function") {
+              ref?.current?.focus();
+            }
+            setIsFocused(true);
+          }}
+        >
           {/*Input box overlay*/}
           <input
             tabIndex={0}
             onKeyDown={(e) => handleKeyDown(e.key, e.ctrlKey)}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
+            onFocus={() => handleFocus()}
+            onBlur={() => handleBlur()}
             className={`absolute left-0 top-0 z-20 h-full w-full cursor-default opacity-0`}
             id="input"
             ref={ref}
           />
+
+          <div
+            className={clsx(
+              "from-background-color absolute -bottom-1 z-10 h-8 w-full bg-gradient-to-t transition-all duration-200",
+              { "opacity-0": !isFocused }
+            )}
+          ></div>
+          <span
+            className={clsx(
+              "absolute z-20 flex h-full w-full cursor-default items-center justify-center text-primary-color opacity-0 transition-all duration-200",
+              { "text-fg opacity-100 ": !isFocused }
+            )}
+          >
+            <GiArrowCursor className="mt-1" /> Click here or start typing to focus
+          </span>
+          <div
+            className={clsx(
+              "absolute left-0 top-0 mb-4 h-full w-full overflow-hidden text-justify leading-relaxed tracking-wide transition-all duration-200",
+              { "opacity-40 blur-[8px]": !isFocused }
+            )}
+          ></div>
           {/*Text*/}
-          <div className="absolute left-0 top-0 mb-4 h-full w-full overflow-hidden text-justify leading-relaxed tracking-wide transition-all duration-200">
+          <div
+            className={clsx(
+              "absolute left-0 top-0 mb-4 h-full w-full overflow-hidden text-justify leading-relaxed tracking-wide transition-all duration-200",
+              { "opacity-40 blur-[8px]": !isFocused }
+            )}
+          >
             <div
               ref={letterElements}
               style={
@@ -178,10 +232,6 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
                       marginTop: 0,
                     }
               }
-              className={clsx(
-                "pointer-events-none mb-4 select-none tracking-wide",
-                { "bg-gray-400 opacity-40 blur-[8px]": !isFocused }
-              )}
             >
               {props.text.split("").map((letter, index) => {
                 const state = charsState[index];
@@ -190,7 +240,7 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
                     ? "text-gray-500"
                     : state === CharStateType.Correct
                     ? "text-gray-200"
-                    : "text-red-500";
+                    : "text-red-500 border-b-2 border-hl border-red-500";
                 return (
                   // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
                   <span key={letter + index} className={`${color}`}>
@@ -229,12 +279,6 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
               </span>
             </>
           ) : null}
-          {/*Information Text*/}
-          <span className="text-white">
-            <span className="mr-4"> Current Index: {currIndex}</span>
-            <span className="mr-4"> Correct Characters: {correctChar}</span>
-            <span className="mr-4"> Error Characters: {errorChar}</span>
-          </span>
         </p>
       </div>
     </>
