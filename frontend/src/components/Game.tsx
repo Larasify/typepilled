@@ -11,7 +11,7 @@ type ButtonProps = {
   reset: () => void;
 };
 
-const Game = forwardRef<HTMLDivElement, ButtonProps>(function Game(props, ref) {
+const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(props, ref) {
   const [duration, setDuration] = useState(() => 0);
   const [isFocused, setIsFocused] = useState(() => false);
   const letterElements = useRef<HTMLDivElement>(null);
@@ -109,14 +109,14 @@ const Game = forwardRef<HTMLDivElement, ButtonProps>(function Game(props, ref) {
           {timeLeft}
         </span>
         <div className="relative z-40 h-[140px] w-full text-2xl outline-none">
-          <div
+          <input
             tabIndex={0}
             onKeyDown={(e) => handleKeyDown(e.key, e.ctrlKey)}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
-            className={`relative font-serif text-xl outline-none`}
+            className={`absolute left-0 top-0 z-20 h-full w-full cursor-default opacity-0`}
             ref={ref}
-          >
+          />
             <div
               ref={letterElements}
               className={clsx(
@@ -151,7 +151,6 @@ const Game = forwardRef<HTMLDivElement, ButtonProps>(function Game(props, ref) {
                 &nbsp;
               </span>
             ) : null}
-          </div>
           {/*Results*/}
           <p className="text-sm">
             {phase === 2 && startTime && endTime ? (

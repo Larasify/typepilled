@@ -22,7 +22,7 @@ const Home: NextPage = () => {
     });
   }, []);
 
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLInputElement>(null);
 
   function handleClick() {
     reset();
