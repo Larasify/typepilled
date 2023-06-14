@@ -11,7 +11,10 @@ type ButtonProps = {
   reset: () => void;
 };
 
-const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(props, ref) {
+const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
+  props,
+  ref
+) {
   const [duration, setDuration] = useState(() => 0);
   const [isFocused, setIsFocused] = useState(() => false);
   const letterElements = useRef<HTMLDivElement>(null);
@@ -105,10 +108,13 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(props, ref)
   return (
     <>
       <div className="relative w-full max-w-[950px]">
+        {/*Timer*/}
         <span className="text-fg/80 absolute -top-[3.25rem] left-0 z-40 text-4xl text-primary-color">
           {timeLeft}
         </span>
+        {/*Game*/}
         <div className="relative z-40 h-[140px] w-full text-2xl outline-none">
+          {/*Input box overlay*/}
           <input
             tabIndex={0}
             onKeyDown={(e) => handleKeyDown(e.key, e.ctrlKey)}
@@ -117,40 +123,42 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(props, ref)
             className={`absolute left-0 top-0 z-20 h-full w-full cursor-default opacity-0`}
             ref={ref}
           />
-            <div
-              ref={letterElements}
-              className={clsx(
-                "pointer-events-none mb-4 select-none tracking-wide",
-                { "bg-gray-400 opacity-40 blur-[8px]": !isFocused }
-              )}
+          {/*Text*/}
+          <div
+            ref={letterElements}
+            className={clsx(
+              "pointer-events-none mb-4 select-none tracking-wide",
+              { "bg-gray-400 opacity-40 blur-[8px]": !isFocused }
+            )}
+          >
+            {props.text.split("").map((letter, index) => {
+              const state = charsState[index];
+              const color =
+                state === CharStateType.Incomplete
+                  ? "text-gray-500"
+                  : state === CharStateType.Correct
+                  ? "text-gray-200"
+                  : "text-red-500";
+              return (
+                // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+                <span key={letter + index} className={`${color}`}>
+                  {letter}
+                </span>
+              );
+            })}
+          </div>
+          {/*Cursor*/}
+          {phase !== 2 && isFocused ? (
+            <span
+              style={{
+                left: pos.left,
+                top: pos.top,
+              }}
+              className={`caret absolute z-10 border-l-2 border-primary-color`}
             >
-              {props.text.split("").map((letter, index) => {
-                const state = charsState[index];
-                const color =
-                  state === CharStateType.Incomplete
-                    ? "text-gray-500"
-                    : state === CharStateType.Correct
-                    ? "text-gray-200"
-                    : "text-red-500";
-                return (
-                  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-                  <span key={letter + index} className={`${color}`}>
-                    {letter}
-                  </span>
-                );
-              })}
-            </div>
-            {phase !== 2 && isFocused ? (
-              <span
-                style={{
-                 left: pos.left,
-                  top: pos.top, 
-                }}
-                className={`caret absolute z-10 border-l-2 border-primary-color`}
-              >
-                &nbsp;
-              </span>
-            ) : null}
+              &nbsp;
+            </span>
+          ) : null}
           {/*Results*/}
           <p className="text-sm">
             {phase === 2 && startTime && endTime ? (
@@ -167,6 +175,7 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(props, ref)
                 </span>
               </>
             ) : null}
+            {/*Information Text*/}
             <span className="text-white">
               <span className="mr-4"> Current Index: {currIndex}</span>
               <span className="mr-4"> Correct Characters: {correctChar}</span>
