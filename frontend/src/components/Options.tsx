@@ -21,6 +21,9 @@ const Options = () => {
   const wordoptions = [10, 25, 50, 100];
   const quoteoptions = ["all", "short", "medium", "long", "thicc"];
 
+  const btnstyle =
+    "align-center duration-250 flex h-min w-full flex-row gap-1 rounded p-2 text-center leading-5 hover:text-text-color active:text-sub-color";
+
   return (
     <div className="mt-5 flex h-max w-full flex-row items-center justify-around gap-2 ">
       <div className="flex rounded-lg bg-sub-alt-color px-2 font-mono text-sm text-sub-color">
@@ -36,19 +39,13 @@ const Options = () => {
             onClick={() =>
               dispatch({ type: "SET_PUNCTUATION", payload: !punctuation })
             }
-            className={clsx(
-              "align-center duration-250 flex h-min w-full flex-row gap-1 rounded p-2 text-center leading-5 hover:text-text-color active:text-sub-color",
-              { "text-primary-color": punctuation }
-            )}
+            className={clsx(btnstyle, { "text-primary-color": punctuation })}
           >
             <FaAt className="mt-1 text-xs" /> <span> punctuation</span>{" "}
           </button>
           <button
             onClick={() => dispatch({ type: "SET_NUMBERS", payload: !numbers })}
-            className={clsx(
-              "align-center duration-250 flex h-min w-full flex-row gap-1 rounded p-2 text-center leading-5 hover:text-text-color active:text-sub-color",
-              { "text-primary-color": numbers }
-            )}
+            className={clsx(btnstyle, { "text-primary-color": numbers })}
           >
             <FaHashtag className="mt-1 text-xs" /> <span> numbers</span>{" "}
           </button>
@@ -59,30 +56,27 @@ const Options = () => {
         <div className="flex">
           <button
             onClick={() => dispatch({ type: "SET_TYPE", payload: "time" })}
-            className={clsx(
-              "align-center duration-250 flex h-min w-full flex-row gap-1 rounded p-2 text-center leading-5 hover:text-text-color active:text-sub-color",
-              { "text-primary-color": type === "time" }
-            )}
+            className={clsx(btnstyle, {
+              "text-primary-color": type === "time",
+            })}
           >
             {" "}
             <FaClock className="mt-1 text-xs" /> <span> time</span>{" "}
           </button>
           <button
             onClick={() => dispatch({ type: "SET_TYPE", payload: "words" })}
-            className={clsx(
-              "align-center duration-250 flex h-min w-full flex-row gap-1 rounded p-2 text-center leading-5 hover:text-text-color active:text-sub-color",
-              { "text-primary-color": type === "words" }
-            )}
+            className={clsx(btnstyle, {
+              "text-primary-color": type === "words",
+            })}
           >
             {" "}
             <FaFont className="mt-1 text-xs" /> <span> words</span>{" "}
           </button>
           <button
             onClick={() => dispatch({ type: "SET_TYPE", payload: "quote" })}
-            className={clsx(
-              "align-center duration-250 flex h-min w-full flex-row gap-1 rounded p-2 text-center leading-5 hover:text-text-color active:text-sub-color",
-              { "text-primary-color": type === "quote" }
-            )}
+            className={clsx(btnstyle, {
+              "text-primary-color": type === "quote",
+            })}
           >
             <FaQuoteLeft className="mt-1 text-xs" /> <span> quote</span>{" "}
           </button>
@@ -99,10 +93,9 @@ const Options = () => {
                   onClick={() =>
                     dispatch({ type: "SET_TIME", payload: option.toString() })
                   }
-                  className={clsx(
-                    "align-center duration-250 flex h-min w-max animate-fade-in flex-row gap-1 rounded p-2 text-center leading-5 hover:text-text-color active:text-sub-color",
-                    { "text-primary-color": time === option.toString() }
-                  )}
+                  className={clsx(btnstyle,"animate-fade-in", {
+                    "text-primary-color": time === option.toString(),
+                  })}
                 >
                   <span> {option}</span>{" "}
                 </button>
@@ -120,10 +113,9 @@ const Options = () => {
                       payload: option.toString(),
                     })
                   }
-                  className={clsx(
-                    "align-center duration-250 flex h-min w-max animate-fade-in flex-row gap-1 rounded p-2 text-center leading-5 hover:text-text-color active:text-sub-color",
-                    { "text-primary-color": wordlength === option.toString() }
-                  )}
+                  className={clsx(btnstyle,"animate-fade-in", {
+                    "text-primary-color": wordlength === option.toString(),
+                  })}
                 >
                   <span> {option}</span>{" "}
                 </button>
@@ -140,10 +132,12 @@ const Options = () => {
                       payload: option.toString(),
                     })
                   }
-                  className={clsx(
-                    "align-center duration-250 flex h-min w-max animate-fade-in flex-row gap-1 rounded p-2 text-center leading-5 hover:text-text-color active:text-sub-color",
-                    { "text-primary-color": (quotelength === option.toString() && quotelength !== "all") || (quotelength === "all" && option !== "all") }
-                  )}
+                  className={clsx(btnstyle,"animate-fade-in", {
+                    "text-primary-color":
+                      (quotelength === option.toString() &&
+                        quotelength !== "all") ||
+                      (quotelength === "all" && option !== "all"),
+                  })}
                 >
                   <span> {option}</span>{" "}
                 </button>

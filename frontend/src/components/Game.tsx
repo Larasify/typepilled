@@ -102,11 +102,18 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
 
   //set WPM
   useEffect(() => {
+    if(phase === 2 ){
+      setDuration(props.time - timeLeft)
+    }
+    else{
+      setDuration(0);
+    }
+    /*
     if (phase === 2 && endTime && startTime) {
       setDuration(Math.floor((endTime - startTime) / 1000));
     } else {
       setDuration(0);
-    }
+    }*/
   }, [phase, startTime, endTime]);
 
   //handle key presses
