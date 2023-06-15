@@ -8,10 +8,9 @@ datasource db {
   relationMode = "prisma"
 }
 
-//CHIRP app
-
+//CHIRP APP
 model Post {
-  id        String   @id @default(cuid())
+  id        String   @id
   createdAt DateTime @default(now())
   content   String   @db.VarChar(255)
   authorId  String
@@ -19,27 +18,36 @@ model Post {
   @@index([authorId])
 }
 
-//Pokemon App
-
+//POKEMON APP
 model Vote {
-  id             String   @id
-  createdAt      DateTime @default(now())
-  votedForId     Int
-  votedAgainstId Int
+  id  String @id @default(cuid())
+  createdAt DateTime @default(now())
 
-  @@index([votedAgainstId])
+  votedFor Pokemon @relation(name:"votesFor", fields: [votedForId], references: [id])
+  votedForId Int
+
+  votedAgainst Pokemon @relation(name:"votesAgainst", fields: [votedAgainstId], references: [id])
+  votedAgainstId Int  
+
   @@index([votedForId])
+  @@index([votedAgainstId])
 }
 
 model Pokemon {
-  id         Int    @id
-  name       String
-  spriteUrl  String
-  smashCount Int    @default(0)
-  passCount  Int    @default(0)
+  id  Int @id 
+
+  name String
+  spriteUrl String
+
+  VoteFor Vote[] @relation(name:"votesFor")
+  VoteAgainst Vote[] @relation(name:"votesAgainst")
+
+  smashCount Int @default(0)
+  passCount Int @default(0)
+
 }
 
-
+//TYPEPILLED APP
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
