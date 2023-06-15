@@ -27,10 +27,14 @@ const Home: NextPage = () => {
   function handleClick() {
     reset();
   }
-  const [text, setText] = useState("hello my baby hello my honey hello my ragtime gal how are you i am a frog froggity frog hop hop fill this line please bro what why does it not work properly hello my baby hello my honey hello my ragtime gal how are you i am a frog froggity frog hop hop fill this line please bro what why does it not work properly");
+  const [text, setText] = useState(
+    "hello my baby hello my honey hello my ragtime gal how are you i am a frog froggity frog hop hop fill this line please bro what why does it not work properly hello my baby hello my honey hello my ragtime gal how are you i am a frog froggity frog hop hop fill this line please bro what why does it not work properly"
+  );
   function reset() {
     console.log("reset");
-    setText("brr im so good at typing lets gooo poggers is this thing on wohooo");
+    setText(
+      "brr im so good at typing lets gooo poggers is this thing on wohooo"
+    );
     console.log(text);
     ref.current?.focus();
   }
@@ -43,9 +47,21 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <AuthShowcase />
-      <div className='layout flex flex-col items-center pt-36 text-center '>
-        <Game ref={ref} reset={reset} text={text} time={120} />
-        <button className="border bg-gray-400 rounded-lg p-1" onClick={handleClick}>Reset</button>
+      <div className="layout flex flex-col items-center pt-36 text-center ">
+        <h1 className="h-40 text-4xl font-bold text-primary-color">
+          Welcome to Typepilled
+        </h1>
+        <Game ref={ref} reset={reset} text={text} time={99} />
+
+        <div className="tooltip tooltip-bottom font-bold" data-tip="Restart Test">
+          <button
+            className="mt-5 rounded-lg border bg-gray-400 p-1 font-normal"
+            onClick={handleClick}
+          >
+            Reset
+          </button>
+          </div>
+          
       </div>
     </>
   );
@@ -60,7 +76,7 @@ const AuthShowcase: React.FC = () => {
     undefined, // no input
     { enabled: sessionData?.user !== undefined }
   );
-  
+
   return (
     <div className="flex flex-col items-center justify-center gap-4">
       <p className="text-center text-2xl text-white">

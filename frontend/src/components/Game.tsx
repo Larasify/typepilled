@@ -1,7 +1,9 @@
 import clsx from "clsx";
 import { forwardRef, useEffect, useRef, useState, useMemo } from "react";
 import useTypingGame, { CharStateType } from "react-typing-game-hook";
-import {GiArrowCursor} from "react-icons/gi";
+import { GiArrowCursor } from "react-icons/gi";
+import { BsQuote } from "react-icons/bs";
+import { Button, Countdown } from "react-daisyui";
 
 type ButtonProps = {
   text: string;
@@ -117,7 +119,10 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
 
   //focus once the page loads on the game
   useEffect(() => {
-    document.getElementById("input")?.focus();
+    //document.getElementById("input")?.focus();
+    if (ref != null && typeof ref !== "function") {
+      ref?.current?.focus();
+    }
   }, []);
 
   //reset game when text changes
@@ -159,20 +164,36 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
 
   const handleFocus = () => {
     // Clear the timeout if the window gains focus before the timeout is triggered
-   if (timeoutRef.current) {
+    if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
     setIsFocused(true);
   };
 
+  const [animated, setAnimated] = useState(() => false);
   return (
     <>
       <div className="relative w-full max-w-[1100px]">
         {/*Timer*/}
-        <span className="text-fg/80 absolute -top-[3.25rem] left-0 z-40 text-4xl text-primary-color">
-          {timeLeft}
-        </span>
+        <div className="text-fg/80 absolute -top-[3.25rem] left-0 z-40 text-4xl text-primary-color">
+          {animated ? <Countdown value={timeLeft} /> : <span>{timeLeft}</span>}
+        </div>
+
+        <Button
+          className={clsx("flex flex-row text-white", {
+            "text-primary-color": animated,
+          })}
+          onClick={() => {
+            setAnimated(!animated);
+            if (ref != null && typeof ref !== "function") {
+              ref?.current?.focus();
+            }
+          }}
+        >
+          <BsQuote className="mt-1" /> <span> Animated</span>{" "}
+        </Button>
+
         {/*Game*/}
         <div
           className="relative z-40 h-[140px] w-full text-2xl outline-none"
@@ -191,12 +212,13 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
             onBlur={() => handleBlur()}
             className={`absolute left-0 top-0 z-20 h-full w-full cursor-default opacity-0`}
             id="input"
+            autoComplete="off"
             ref={ref}
           />
 
           <div
             className={clsx(
-              "from-background-color absolute -bottom-1 z-10 h-8 w-full bg-gradient-to-t transition-all duration-200",
+              "absolute -bottom-1 z-10 h-8 w-full bg-gradient-to-t from-background-color transition-all duration-200",
               { "opacity-0": !isFocused }
             )}
           ></div>
@@ -206,7 +228,8 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
               { "text-fg opacity-100 ": !isFocused }
             )}
           >
-            <GiArrowCursor className="mt-1" /> Click here or start typing to focus
+            <GiArrowCursor className="mt-1" /> Click here or start typing to
+            focus
           </span>
           <div
             className={clsx(
