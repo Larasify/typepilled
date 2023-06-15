@@ -7,6 +7,8 @@ import { api } from "~/utils/api";
 import io from "socket.io-client";
 import { useRouter } from "next/router";
 import Game from "~/components/Game";
+import clsx from "clsx";
+import { FaAt, FaHashtag, FaClock, FaFont, FaQuoteLeft } from "react-icons/fa";
 
 const Home: NextPage = () => {
   useEffect(() => {
@@ -47,21 +49,24 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <AuthShowcase />
+      <Options />
       <div className="layout flex flex-col items-center pt-36 text-center ">
         <h1 className="h-40 text-4xl font-bold text-primary-color">
           Welcome to Typepilled
         </h1>
         <Game ref={ref} reset={reset} text={text} time={99} />
 
-        <div className="tooltip tooltip-bottom font-bold" data-tip="Restart Test">
+        <div
+          className="tooltip tooltip-bottom font-bold"
+          data-tip="Restart Test"
+        >
           <button
             className="mt-5 rounded-lg border bg-gray-400 p-1 font-normal"
             onClick={handleClick}
           >
             Reset
           </button>
-          </div>
-          
+        </div>
       </div>
     </>
   );
@@ -89,6 +94,50 @@ const AuthShowcase: React.FC = () => {
       >
         {sessionData ? "Sign out" : "Sign in"}
       </button>
+    </div>
+  );
+};
+
+const Options = () => {
+  return (
+    <div className="mt-5 flex h-max w-full flex-row items-center justify-around gap-2 ">
+      <div className="flex rounded-lg bg-sub-alt-color px-2 text-sm text-sub-color">
+        <div className="flex font-mono">
+          <button className="align-center duration-250 flex h-min w-max flex-row gap-1 rounded p-2 text-center leading-5 transition hover:text-text-color">
+            <FaAt className="mt-1 text-xs" /> <span> punctuation</span>{" "}
+          </button>
+          <button className="align-center duration-250 flex h-min w-max flex-row gap-1 rounded p-2 text-center leading-5 transition hover:text-text-color">
+            <FaHashtag className="mt-1 text-xs" /> <span> numbers</span>{" "}
+          </button>
+        </div>
+        <div className="my-2 w-[0.25rem] rounded-md bg-background-color"></div>
+        <div className="flex">
+          <button className="align-center duration-250 flex h-min w-max flex-row gap-1 rounded p-2 text-center leading-5 transition hover:text-text-color">
+            <FaClock className="mt-1 text-xs" /> <span> time</span>{" "}
+          </button>
+          <button className="align-center duration-250 flex h-min w-max flex-row gap-1 rounded p-2 text-center leading-5 text-primary-color transition hover:text-text-color">
+            <FaFont className="mt-1 text-xs" /> <span> words</span>{" "}
+          </button>
+          <button className="align-center duration-250 flex h-min w-max flex-row gap-1 rounded p-2 text-center leading-5 transition hover:text-text-color">
+            <FaQuoteLeft className="mt-1 text-xs" /> <span> quote</span>{" "}
+          </button>
+        </div>
+        <div className="my-2 w-[0.25rem] rounded-md bg-background-color"></div>
+        <div className="flex text-xs">
+          <button className="align-center duration-250 flex h-min w-max flex-row gap-1 rounded p-2 text-center leading-5 transition hover:text-text-color">
+            <span> 15</span>{" "}
+          </button>
+          <button className="align-center duration-250 flex h-min w-max flex-row gap-1 rounded p-2 text-center leading-5 transition hover:text-text-color">
+            <span> 30</span>{" "}
+          </button>
+          <button className="align-center duration-250 flex h-min w-max flex-row gap-1 rounded p-2 text-center leading-5 transition hover:text-text-color">
+            <span> 60</span>{" "}
+          </button>
+          <button className="align-center duration-250 flex h-min w-max flex-row gap-1 rounded p-2 text-center leading-5 transition hover:text-text-color">
+            <span> 120</span>{" "}
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
