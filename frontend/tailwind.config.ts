@@ -12,6 +12,19 @@ export default {
         "sub-alt-color": "#2c2e31",
         "text-color": "#d1d0c5",
       },
+      keyframes: {
+        "fade-in": {
+          "0%": {
+            opacity: "0",
+          },
+          "100%": {
+            opacity: "1",
+          },
+        },
+      },
+      animation: {
+        "fade-in": "fade-in 0.5s ease-out",
+      },
     },
   },
   plugins: [require("daisyui")],
