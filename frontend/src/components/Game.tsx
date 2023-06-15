@@ -1,9 +1,15 @@
 import clsx from "clsx";
-import { forwardRef, useEffect, useRef, useState, useMemo } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useRef,
+  useState,
+  useMemo,
+  CSSProperties,
+} from "react";
 import useTypingGame, { CharStateType } from "react-typing-game-hook";
 import { GiArrowCursor } from "react-icons/gi";
 import { BsQuote } from "react-icons/bs";
-import { Button, Countdown } from "react-daisyui";
 
 type ButtonProps = {
   text: string;
@@ -177,12 +183,18 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
       <div className="relative w-full max-w-[1100px]">
         {/*Timer*/}
         <div className="text-fg/80 absolute -top-[3.25rem] left-0 z-40 text-4xl text-primary-color">
-          {animated ? <Countdown value={timeLeft} /> : <span>{timeLeft}</span>}
+          {animated ? (
+            <span className="countdown">
+              <span style={{ "--value": timeLeft } as CSSProperties}></span>
+            </span>
+          ) : (
+            <span>{timeLeft}</span>
+          )}
         </div>
 
-        <Button
-          className={clsx("flex flex-row text-white", {
-            "text-primary-color": animated,
+        <button
+          className={clsx("flex flex-row", {
+            "text-primary-color ": animated,
           })}
           onClick={() => {
             setAnimated(!animated);
@@ -192,7 +204,7 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
           }}
         >
           <BsQuote className="mt-1" /> <span> Animated</span>{" "}
-        </Button>
+        </button>
 
         {/*Game*/}
         <div
