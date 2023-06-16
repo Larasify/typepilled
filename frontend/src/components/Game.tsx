@@ -196,33 +196,36 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
     <>
       <div className="relative w-full max-w-[1100px]">
         {/*Timer*/}
-        {preferences.type === "time" && (
-          <>
-            <div className="text-fg/80 absolute -top-[3.25rem] left-0 z-40 text-4xl text-primary-color">
-              {animated ? (
-                <span className="countdown">
-                  <span style={{ "--value": timeLeft } as CSSProperties}></span>
-                </span>
-              ) : (
-                <span>{timeLeft}</span>
-              )}
-            </div>
 
-            <button
-              className={clsx("flex flex-row", {
-                "text-primary-color ": animated,
-              })}
-              onClick={() => {
-                setAnimated(!animated);
-                if (ref != null && typeof ref !== "function") {
-                  ref?.current?.focus();
-                }
-              }}
-            >
-              <BsQuote className="mt-1" /> <span> Animated</span>{" "}
-            </button>
-          </>
-        )}
+        <div
+          className={clsx("visible", {
+            invisible: preferences.type !== "time",
+          })}
+        >
+          <div className="text-fg/80 absolute -top-[3.25rem] left-0 z-40 text-4xl text-primary">
+            {animated ? (
+              <span className="countdown">
+                <span style={{ "--value": timeLeft } as CSSProperties}></span>
+              </span>
+            ) : (
+              <span>{timeLeft}</span>
+            )}
+          </div>
+
+          <button
+            className={clsx("flex flex-row", {
+              "text-primary ": animated,
+            })}
+            onClick={() => {
+              setAnimated(!animated);
+              if (ref != null && typeof ref !== "function") {
+                ref?.current?.focus();
+              }
+            }}
+          >
+            <BsQuote className="mt-1" /> <span> Animated</span>{" "}
+          </button>
+        </div>
 
         {/*Game*/}
         <div
@@ -248,13 +251,13 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
 
           <div
             className={clsx(
-              "absolute -bottom-1 z-10 h-8 w-full bg-gradient-to-t from-background-color transition-all duration-200",
+              "absolute -bottom-1 z-10 h-8 w-full bg-gradient-to-t from-base-100 transition-all duration-200",
               { "opacity-0": !isFocused }
             )}
           ></div>
           <span
             className={clsx(
-              "absolute z-20 flex h-full w-full cursor-default items-center justify-center text-primary-color opacity-0 transition-all duration-200",
+              "absolute z-20 flex h-full w-full cursor-default items-center justify-center text-primary opacity-0 transition-all duration-200",
               { "text-fg opacity-100 ": !isFocused }
             )}
           >
@@ -310,7 +313,7 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
                 left: pos.top < 0 ? -2 : pos.left,
                 top: pos.top < 0 ? 2 : pos.top + 2,
               }}
-              className={`caret absolute z-10 border-l-2 border-primary-color`}
+              className={`caret absolute z-10 border-l-2 border-primary`}
             >
               &nbsp;
             </span>

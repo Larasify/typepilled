@@ -28,7 +28,23 @@ export default {
     },
   },
   plugins: [require("daisyui")],
-  daisyui:{
-    base:false,
+  daisyui: {
+    base: false,
+    themes: [
+      {
+        monkey: {
+          "primary": "#e2b714",
+          "secondary": "#d1d0c5",
+          "accent": "#2c2e31",
+          "neutral": "#646669",
+          "base-100": "#323437",
+        },
+      },
+      "dark",
+      "cupcake",
+      "synthwave",
+      "bumblebee"
+
+    ],
   },
 } satisfies Config;

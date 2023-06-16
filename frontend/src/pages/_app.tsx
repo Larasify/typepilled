@@ -4,6 +4,8 @@ import { type AppType } from "next/app";
 import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import PreferenceProvider from "~/context/PreferenceContext";
+import Header from "~/components/Layout/Header";
+import Layout from "~/components/Layout/Layout";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -12,7 +14,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <PreferenceProvider>
       <SessionProvider session={session}>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </SessionProvider>
     </PreferenceProvider>
   );

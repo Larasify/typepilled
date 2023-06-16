@@ -8,7 +8,14 @@ import io from "socket.io-client";
 import { useRouter } from "next/router";
 import Game from "~/components/Game";
 import clsx from "clsx";
-import { FaAt, FaHashtag, FaClock, FaFont, FaQuoteLeft } from "react-icons/fa";
+import {
+  FaAt,
+  FaHashtag,
+  FaClock,
+  FaFont,
+  FaQuoteLeft,
+  FaRedo,
+} from "react-icons/fa";
 import Options from "~/components/Options";
 import { getWords } from "~/utils/getWords";
 import { usePreferenceContext } from "~/context/PreferenceContext";
@@ -47,7 +54,6 @@ const Home: NextPage = () => {
     ref.current?.focus();
   }
 
-
   return (
     <>
       <Head>
@@ -58,20 +64,25 @@ const Home: NextPage = () => {
       <AuthShowcase />
       <Options />
       <div className="layout flex flex-col items-center pt-36 text-center ">
-        <h1 className="h-40 text-4xl font-bold text-primary-color">
+        <h1 className="h-40 text-4xl font-bold text-primary">
           Welcome to Typepilled
         </h1>
-        <Game ref={ref} reset={reset} text={text} time={parseInt(preferences.time)} />
+        <Game
+          ref={ref}
+          reset={reset}
+          text={text}
+          time={parseInt(preferences.time)}
+        />
 
         <div
           className="tooltip tooltip-bottom font-bold"
           data-tip="Restart Test"
         >
           <button
-            className="mt-5 rounded-lg border bg-gray-400 p-1 font-normal"
+            className="mt-5 rounded bg-base-100 px-8 py-4 font-normal text-neutral transition-colors duration-300 hover:text-secondary active:bg-secondary active:text-neutral"
             onClick={handleClick}
           >
-            Reset
+            <FaRedo />
           </button>
         </div>
       </div>

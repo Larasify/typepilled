@@ -56,6 +56,14 @@ const reducer = (state: PreferenceState, action: Action) => {
         ...state,
         numbers: action.payload,
       };
+      case "SET_THEME":
+        if (typeof window !== undefined) {
+          window.localStorage.setItem("theme", action.payload);
+        }
+        return {
+          ...state,
+          theme: action.payload,
+        };
     default:
       throw new Error("Unknown action type");
   }

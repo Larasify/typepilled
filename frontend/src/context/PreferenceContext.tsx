@@ -8,6 +8,7 @@ export type PreferenceState = {
   quotelength: string;
   punctuation: boolean;
   numbers: boolean;
+  theme: string;
 };
 
 export type Action =
@@ -16,7 +17,8 @@ export type Action =
   | { type: "SET_WORDLENGTH"; payload: string }
   | { type: "SET_QUOTELENGTH"; payload: string }
   | { type: "SET_PUNCTUATION"; payload: boolean }
-  | { type: "SET_NUMBERS"; payload: boolean };
+  | { type: "SET_NUMBERS"; payload: boolean }
+  | { type: "SET_THEME"; payload: string};
 
 export type ProviderState = {
   preferences: PreferenceState;
@@ -37,6 +39,7 @@ export default function PreferenceProvider({
     quotelength: "medium",
     punctuation: false,
     numbers: false,
+    theme: "monkey",
   });
 
   React.useEffect(() => {
@@ -47,13 +50,14 @@ export default function PreferenceProvider({
       const quotelength = window.localStorage.getItem("quotelength");
       const punctuation = window.localStorage.getItem("punctuation");
       const numbers = window.localStorage.getItem("numbers");
+      const theme = window.localStorage.getItem("theme");
       if (type) dispatch({ type: "SET_TYPE", payload: type });
       if (time) dispatch({ type: "SET_TIME", payload: time });
       if (wordlength) dispatch({ type: "SET_WORDLENGTH", payload: wordlength });
       if (quotelength) dispatch({ type: "SET_QUOTELENGTH", payload: quotelength });
       if (punctuation) dispatch({ type: "SET_PUNCTUATION", payload: punctuation === 'true' });
       if (numbers) dispatch({ type: "SET_NUMBERS", payload: numbers === 'true' });
-
+      if (theme) dispatch({ type: "SET_THEME", payload: theme });
     }
   }, []);
 
