@@ -16,6 +16,7 @@ import {
   FaQuoteLeft,
   FaRedo,
 } from "react-icons/fa";
+
 import Options from "~/components/Options";
 import { getWords } from "~/utils/getWords";
 import { usePreferenceContext } from "~/context/PreferenceContext";
