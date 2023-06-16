@@ -196,33 +196,36 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
     <>
       <div className="relative w-full max-w-[1100px]">
         {/*Timer*/}
-        {preferences.type === "time" && (
-          <>
-            <div className="text-fg/80 absolute -top-[3.25rem] left-0 z-40 text-4xl text-primary-color">
-              {animated ? (
-                <span className="countdown">
-                  <span style={{ "--value": timeLeft } as CSSProperties}></span>
-                </span>
-              ) : (
-                <span>{timeLeft}</span>
-              )}
-            </div>
 
-            <button
-              className={clsx("flex flex-row", {
-                "text-primary-color ": animated,
-              })}
-              onClick={() => {
-                setAnimated(!animated);
-                if (ref != null && typeof ref !== "function") {
-                  ref?.current?.focus();
-                }
-              }}
-            >
-              <BsQuote className="mt-1" /> <span> Animated</span>{" "}
-            </button>
-          </>
-        )}
+        <div
+          className={clsx("visible", {
+            invisible: preferences.type !== "time",
+          })}
+        >
+          <div className="text-fg/80 absolute -top-[3.25rem] left-0 z-40 text-4xl text-primary-color">
+            {animated ? (
+              <span className="countdown">
+                <span style={{ "--value": timeLeft } as CSSProperties}></span>
+              </span>
+            ) : (
+              <span>{timeLeft}</span>
+            )}
+          </div>
+
+          <button
+            className={clsx("flex flex-row", {
+              "text-primary-color ": animated,
+            })}
+            onClick={() => {
+              setAnimated(!animated);
+              if (ref != null && typeof ref !== "function") {
+                ref?.current?.focus();
+              }
+            }}
+          >
+            <BsQuote className="mt-1" /> <span> Animated</span>{" "}
+          </button>
+        </div>
 
         {/*Game*/}
         <div
