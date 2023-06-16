@@ -5,7 +5,7 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import * as React from 'react';
-import { FaCode } from 'react-icons/fa';
+import { FaCode, FaPalette } from 'react-icons/fa';
 import { usePreferenceContext } from '~/context/PreferenceContext';
 
 
@@ -28,7 +28,8 @@ export default function Footer() {
         </Link>
 
         
-        <button className='transition-colors duration-200 hover:text-secondary text-sm font-mono'  onClick={()=>(window as any).my_modal_2.showModal()}>Themes</button>
+        <button className='flex cursor-pointer items-center space-x-1.5 text-sm transition-colors duration-200 hover:text-secondary'  onClick={()=>(window as any).my_modal_2.showModal()}>
+          <FaPalette/> <div>Themes</div></button>
         <dialog id="my_modal_2" className="modal">
           <form method="dialog" className="modal-box max-h-96 flex flex-col gap-3">
             <h3 className="font-bold text-lg">Select a Theme!</h3>

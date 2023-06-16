@@ -8,3 +8,7 @@ prayge
 - [x] accuraccy not accurate on time mode
 - [x] punctuation and number not working
 - [ ] add correct word count and wpm next to timer as an info panel
+- [ ] fix themeing so it runs well on random other daisyui themes too
+- [ ] keyboard shortcuts
+- [ ] prettyfy theme selector
+- [ ] sign in page
