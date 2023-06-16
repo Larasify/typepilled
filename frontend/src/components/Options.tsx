@@ -1,12 +1,3 @@
-import { type NextPage } from "next";
-import { signIn, signOut, useSession } from "next-auth/react";
-import Head from "next/head";
-import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import { api } from "~/utils/api";
-import io from "socket.io-client";
-import { useRouter } from "next/router";
-import Game from "~/components/Game";
 import clsx from "clsx";
 import { FaAt, FaHashtag, FaClock, FaFont, FaQuoteLeft } from "react-icons/fa";
 import { usePreferenceContext } from "~/context/Preference/PreferenceContext";

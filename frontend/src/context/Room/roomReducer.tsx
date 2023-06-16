@@ -1,8 +1,8 @@
-import { type Action, type RoomState } from './RoomContext';
+import { type Action, type RoomState } from "./RoomContext";
 
 const reducer = (state: RoomState, action: Action): RoomState => {
   switch (action.type) {
-    case 'SET_ROOM_ID':
+    case "SET_ROOM_ID":
       return {
         ...state,
         user: {
@@ -10,12 +10,32 @@ const reducer = (state: RoomState, action: Action): RoomState => {
           roomId: action.payload,
         },
       };
-    case 'SET_MODE':
+    case "SET_TYPE":
       return {
         ...state,
-        mode: action.payload,
+        type: action.payload,
       };
-    case 'SET_IS_OWNER':
+    case "SET_WORDLENGTH":
+      return {
+        ...state,
+        wordlength: action.payload,
+      };
+    case "SET_QUOTELENGTH":
+      return {
+        ...state,
+        quotelength: action.payload,
+      };
+    case "SET_PUNCTUATION":
+      return {
+        ...state,
+        punctuation: action.payload,
+      };
+    case "SET_NUMBERS":
+      return {
+        ...state,
+        numbers: action.payload,
+      };
+    case "SET_IS_OWNER":
       return {
         ...state,
         user: {
@@ -23,12 +43,12 @@ const reducer = (state: RoomState, action: Action): RoomState => {
           isOwner: action.payload,
         },
       };
-    case 'TOGGLE_CHAT':
+    case "TOGGLE_CHAT":
       return {
         ...state,
         isChatOpen: !state.isChatOpen,
       };
-    case 'SET_USER_ID':
+    case "SET_USER_ID":
       return {
         ...state,
         user: {
@@ -36,8 +56,8 @@ const reducer = (state: RoomState, action: Action): RoomState => {
           id: action.payload,
         },
       };
-    case 'SET_NICKNAME':
-      localStorage.setItem('nickname', action.payload);
+    case "SET_NICKNAME":
+      localStorage.setItem("nickname", action.payload);
       return {
         ...state,
         user: {
@@ -45,7 +65,7 @@ const reducer = (state: RoomState, action: Action): RoomState => {
           username: action.payload,
         },
       };
-    case 'SET_STATUS':
+    case "SET_STATUS":
       return {
         ...state,
         user: {
@@ -56,22 +76,22 @@ const reducer = (state: RoomState, action: Action): RoomState => {
           },
         },
       };
-    case 'SET_IS_PLAYING':
+    case "SET_IS_PLAYING":
       return {
         ...state,
         isPlaying: action.payload,
       };
-    case 'SET_IS_FINISHED':
+    case "SET_IS_FINISHED":
       return {
         ...state,
         isFinished: action.payload,
       };
-    case 'SET_WINNER':
+    case "SET_WINNER":
       return {
         ...state,
         winner: action.payload,
       };
-    case 'SET_IS_READY':
+    case "SET_IS_READY":
       return {
         ...state,
         user: {
@@ -79,18 +99,18 @@ const reducer = (state: RoomState, action: Action): RoomState => {
           isReady: action.payload,
         },
       };
-    case 'SET_PLAYERS':
+    case "SET_PLAYERS":
       return {
         ...state,
         players: action.payload,
       };
-    case 'SET_TEXT':
+    case "SET_TEXT":
       return {
         ...state,
         text: action.payload,
       };
     default:
-      throw new Error('Unknown action type');
+      throw new Error("Unknown action type");
   }
 };
 

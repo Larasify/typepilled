@@ -6,6 +6,7 @@ import "~/styles/globals.css";
 import PreferenceProvider from "~/context/Preference/PreferenceContext";
 import Header from "~/components/Layout/Header";
 import Layout from "~/components/Layout/Layout";
+import { RoomProvider } from "~/context/Room/RoomContext";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -14,9 +15,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <PreferenceProvider>
       <SessionProvider session={session}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <RoomProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </RoomProvider>
       </SessionProvider>
     </PreferenceProvider>
   );

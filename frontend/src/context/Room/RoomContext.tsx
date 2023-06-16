@@ -3,7 +3,8 @@ import * as React from "react";
 import { io, type Socket } from "socket.io-client";
 import { animals, uniqueNamesGenerator } from "unique-names-generator";
 import { useSession } from "next-auth/react";
-import reducer  from "./roomReducer";
+import reducer from "./roomReducer";
+import { useEffect, useReducer } from "react";
 
 export type Player = {
   username: string;
@@ -19,7 +20,11 @@ export type Player = {
 
 export type RoomState = {
   user: Player;
-  mode: "words" | "sentences" | "numbers";
+  type: "words" | "quote";
+  wordlength: string;
+  quotelength: string;
+  punctuation: boolean;
+  numbers: boolean;
   isFinished: boolean;
   isPlaying: boolean;
   isChatOpen: boolean;
@@ -38,7 +43,11 @@ export type RoomContextValues = {
 
 export type Action =
   | { type: "SET_ROOM_ID"; payload: string | null }
-  | { type: "SET_MODE"; payload: "words" | "sentences" | "numbers" }
+  | { type: "SET_TYPE"; payload: "words" | "quote" }
+  | { type: "SET_WORDLENGTH"; payload: string }
+  | { type: "SET_QUOTELENGTH"; payload: string }
+  | { type: "SET_PUNCTUATION"; payload: boolean }
+  | { type: "SET_NUMBERS"; payload: boolean }
   | { type: "SET_TEXT"; payload: string }
   | { type: "SET_IS_OWNER"; payload: boolean }
   | { type: "SET_USER_ID"; payload: string }
@@ -68,11 +77,14 @@ const RoomContext = React.createContext({} as RoomContextValues);
 
 export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
   const { data: session } = useSession();
-  const user = session?.user;
 
-  const [room, dispatch] = React.useReducer(reducer, {
+  const [room, dispatch] = useReducer(reducer, {
     text: "",
-    mode: "words",
+    type: "words",
+    wordlength: "25",
+    quotelength: "medium",
+    punctuation: false,
+    numbers: false,
     isPlaying: false,
     isFinished: false,
     isChatOpen: false,
@@ -80,13 +92,10 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
     user: {
       isOwner: false,
       roomId: null,
-      username:
-        localStorage?.getItem("nickname") ||
-        user?.name ||
-        uniqueNamesGenerator({
-          dictionaries: [animals],
-          style: "lowerCase",
-        }),
+      username: uniqueNamesGenerator({
+        dictionaries: [animals],
+        style: "lowerCase",
+      }),
       id: "",
       status: {
         wpm: 0,
@@ -98,6 +107,28 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
     socket,
   });
 
+  useEffect(() => {
+    if (session?.user?.name) {
+      dispatch({ type: "SET_NICKNAME", payload: session.user.name });
+    }
+  }, [session?.user?.name]);
+
+  /*
+  React.useEffect(() => {
+    if (typeof window !== undefined) {
+      const nickname = window.localStorage.getItem("nickname");
+      if (nickname) dispatch({ type: "SET_NICKNAME", payload: nickname });
+      /* IF YOU WANT PERSISTENT RANDOM NICKNAMES
+      else {
+        const newNickname = uniqueNamesGenerator({
+          dictionaries: [animals],
+          style: "lowerCase",
+        });
+        dispatch({ type: "SET_NICKNAME", payload: newNickname });
+      }
+    }
+  }, []);
+  */
   const [timeBeforeRestart, setTimeBeforeRestart] = React.useState(() => 0);
 
   // eslint-disable-next-line @typescript-eslint/require-await
