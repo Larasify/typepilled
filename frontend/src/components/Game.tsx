@@ -10,6 +10,7 @@ import {
 import useTypingGame, { CharStateType } from "react-typing-game-hook";
 import { GiArrowCursor } from "react-icons/gi";
 import { BsQuote } from "react-icons/bs";
+import { usePreferenceContext } from "~/context/PreferenceContext";
 
 type ButtonProps = {
   text: string;
@@ -25,6 +26,7 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
   const [isFocused, setIsFocused] = useState(() => false);
   const letterElements = useRef<HTMLDivElement>(null);
   const [timeLeft, setTimeLeft] = useState(props.time);
+  const { preferences, dispatch } = usePreferenceContext();
 
   //get game hook
   const {
@@ -102,10 +104,13 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
 
   //set WPM
   useEffect(() => {
-    if(phase === 2 ){
-      setDuration(props.time - timeLeft)
-    }
-    else{
+    if (phase === 2) {
+      if (preferences.type === "time") {
+        setDuration(props.time - timeLeft);
+      } else if (endTime && startTime) {
+        setDuration(Math.floor((endTime - startTime) / 1000));
+      }
+    } else {
       setDuration(0);
     }
     /*
@@ -148,22 +153,24 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
 
   //countdown timer
   useEffect(() => {
-    const Timer = setInterval(() => {
-      if (phase === 1 && isFocused) {
-        setTimeLeft((currentTime) => {
-          if (currentTime === 1) {
-            clearInterval(Timer);
-            endTyping();
-          }
-          return currentTime - 1;
-        });
+    if (preferences.type == "time") {
+      const Timer = setInterval(() => {
+        if (phase === 1 && isFocused) {
+          setTimeLeft((currentTime) => {
+            if (currentTime === 1) {
+              clearInterval(Timer);
+              endTyping();
+            }
+            return currentTime - 1;
+          });
+        }
+      }, 1000);
+      if (phase === 2) {
+        clearInterval(Timer);
       }
-    }, 1000);
-    if (phase === 2) {
-      clearInterval(Timer);
+      return () => clearInterval(Timer);
     }
-    return () => clearInterval(Timer);
-  }, [startTime, phase, isFocused]);
+  }, [startTime, phase, isFocused, preferences]);
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -189,29 +196,33 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
     <>
       <div className="relative w-full max-w-[1100px]">
         {/*Timer*/}
-        <div className="text-fg/80 absolute -top-[3.25rem] left-0 z-40 text-4xl text-primary-color">
-          {animated ? (
-            <span className="countdown">
-              <span style={{ "--value": timeLeft } as CSSProperties}></span>
-            </span>
-          ) : (
-            <span>{timeLeft}</span>
-          )}
-        </div>
+        {preferences.type === "time" && (
+          <>
+            <div className="text-fg/80 absolute -top-[3.25rem] left-0 z-40 text-4xl text-primary-color">
+              {animated ? (
+                <span className="countdown">
+                  <span style={{ "--value": timeLeft } as CSSProperties}></span>
+                </span>
+              ) : (
+                <span>{timeLeft}</span>
+              )}
+            </div>
 
-        <button
-          className={clsx("flex flex-row", {
-            "text-primary-color ": animated,
-          })}
-          onClick={() => {
-            setAnimated(!animated);
-            if (ref != null && typeof ref !== "function") {
-              ref?.current?.focus();
-            }
-          }}
-        >
-          <BsQuote className="mt-1" /> <span> Animated</span>{" "}
-        </button>
+            <button
+              className={clsx("flex flex-row", {
+                "text-primary-color ": animated,
+              })}
+              onClick={() => {
+                setAnimated(!animated);
+                if (ref != null && typeof ref !== "function") {
+                  ref?.current?.focus();
+                }
+              }}
+            >
+              <BsQuote className="mt-1" /> <span> Animated</span>{" "}
+            </button>
+          </>
+        )}
 
         {/*Game*/}
         <div
