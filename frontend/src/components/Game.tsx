@@ -327,8 +327,7 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
                 WPM: {Math.round(((60 / duration) * correctChar) / 5)}
               </span>
               <span className="mr-4 text-blue-500">
-                Accuracy: {((correctChar / props.text.length) * 100).toFixed(2)}
-                %
+                Accuracy: {((correctChar / (correctChar+errorChar)) * 100).toFixed(2)}%
               </span>
               <span className="mr-4 text-yellow-500">
                 Duration: {duration}s

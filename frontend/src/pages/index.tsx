@@ -65,9 +65,6 @@ const Home: NextPage = () => {
       <AuthShowcase />
       <Options />
       <div className="layout flex flex-col items-center pt-36 text-center ">
-        <h1 className="h-40 text-4xl font-bold text-primary">
-          Welcome to Typepilled
-        </h1>
         <Game
           ref={ref}
           reset={reset}
