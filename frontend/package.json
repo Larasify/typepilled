@@ -28,6 +28,7 @@
     "react-typing-game-hook": "^1.4.2",
     "socket.io-client": "^4.6.2",
     "superjson": "1.12.2",
+    "unique-names-generator": "^4.7.1",
     "zod": "^3.21.4"
   },
   "devDependencies": {

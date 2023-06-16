@@ -3,7 +3,7 @@ import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
 import { api } from "~/utils/api";
 import "~/styles/globals.css";
-import PreferenceProvider from "~/context/PreferenceContext";
+import PreferenceProvider from "~/context/Preference/PreferenceContext";
 import Header from "~/components/Layout/Header";
 import Layout from "~/components/Layout/Layout";
 

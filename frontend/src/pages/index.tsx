@@ -7,22 +7,9 @@ import { FaRedo } from "react-icons/fa";
 
 import Options from "~/components/Options";
 import { getWords } from "~/utils/getWords";
-import { usePreferenceContext } from "~/context/PreferenceContext";
+import { usePreferenceContext } from "~/context/Preference/PreferenceContext";
 
 const Home: NextPage = () => {
-  useEffect(() => {
-    console.log("initialising socket");
-    const socket = io("http://localhost:8080");
-
-    socket.on("connect", () => {
-      console.log("connected to socket");
-      socket.emit("message", "hello world");
-      socket.on("message", (data) => {
-        console.log(data);
-      });
-    });
-  }, []);
-
   const ref = useRef<HTMLInputElement>(null);
   const { preferences, dispatch } = usePreferenceContext();
   const [text, setText] = useState(

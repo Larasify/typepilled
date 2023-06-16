@@ -5,7 +5,7 @@ import { CgSpinner } from "react-icons/cg";
 import Footer from "./Footer";
 import Header from "./Header";
 import { useEffect } from "react";
-import { usePreferenceContext } from "~/context/PreferenceContext";
+import { usePreferenceContext } from "~/context/Preference/PreferenceContext";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isClient, setIsClient] = React.useState(true);

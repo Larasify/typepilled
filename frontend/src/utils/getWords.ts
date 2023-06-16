@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
-import { type PreferenceState } from "~/context/PreferenceContext";
+import { type PreferenceState } from "~/context/Preference/PreferenceContext";
 
 import english from "./static/english.json";
 import englishQuotes from "./static/english_quotes.json";

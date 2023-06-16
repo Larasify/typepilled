@@ -10,7 +10,7 @@ import {
 import useTypingGame, { CharStateType } from "react-typing-game-hook";
 import { GiArrowCursor } from "react-icons/gi";
 import { BsQuote } from "react-icons/bs";
-import { usePreferenceContext } from "~/context/PreferenceContext";
+import { usePreferenceContext } from "~/context/Preference/PreferenceContext";
 
 type ButtonProps = {
   text: string;

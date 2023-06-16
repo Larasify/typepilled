@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import Game from "~/components/Game";
 import clsx from "clsx";
 import { FaAt, FaHashtag, FaClock, FaFont, FaQuoteLeft } from "react-icons/fa";
-import { usePreferenceContext } from "~/context/PreferenceContext";
+import { usePreferenceContext } from "~/context/Preference/PreferenceContext";
 
 const Options = () => {
   const {

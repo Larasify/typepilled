@@ -13,7 +13,7 @@ import {
 import { RiTeamFill } from "react-icons/ri";
 import { TbKeyboard } from "react-icons/tb";
 
-import { usePreferenceContext } from "../../context/PreferenceContext";
+import { usePreferenceContext } from "../../context/Preference/PreferenceContext";
 import { useSession } from "next-auth/react";
 
 const typeList = ["words", "sentences", "numbers"];

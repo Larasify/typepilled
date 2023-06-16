@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import * as React from 'react';
 import { FaCode, FaPalette } from 'react-icons/fa';
-import { usePreferenceContext } from '~/context/PreferenceContext';
+import { usePreferenceContext } from '~/context/Preference/PreferenceContext';
 
 
 export default function Footer() {
