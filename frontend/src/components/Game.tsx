@@ -5,7 +5,7 @@ import {
   useRef,
   useState,
   useMemo,
-  CSSProperties,
+  type CSSProperties,
 } from "react";
 import useTypingGame, { CharStateType } from "react-typing-game-hook";
 import { GiArrowCursor } from "react-icons/gi";
@@ -198,11 +198,11 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
         {/*Timer*/}
 
         <div
-          className={clsx("visible", {
-            invisible: preferences.type !== "time",
+          className={clsx("visible flex flex-row", {
+            "invisible": preferences.type !== "time",
           })}
         >
-          <div className="text-fg/80 absolute -top-[3.25rem] left-0 z-40 text-4xl text-primary">
+          <div className="text-fg/80 left-0 z-40 text-4xl text-primary">
             {animated ? (
               <span className="countdown">
                 <span style={{ "--value": timeLeft } as CSSProperties}></span>
@@ -327,7 +327,8 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
                 WPM: {Math.round(((60 / duration) * correctChar) / 5)}
               </span>
               <span className="mr-4 text-blue-500">
-                Accuracy: {((correctChar / (correctChar+errorChar)) * 100).toFixed(2)}%
+                Accuracy:{" "}
+                {((correctChar / (correctChar + errorChar)) * 100).toFixed(2)}%
               </span>
               <span className="mr-4 text-yellow-500">
                 Duration: {duration}s

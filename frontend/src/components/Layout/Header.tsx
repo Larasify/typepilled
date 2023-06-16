@@ -14,6 +14,7 @@ import { RiTeamFill } from "react-icons/ri";
 import { TbKeyboard } from "react-icons/tb";
 
 import { usePreferenceContext } from "../../context/PreferenceContext";
+import { useSession } from "next-auth/react";
 
 const typeList = ["words", "sentences", "numbers"];
 
@@ -26,6 +27,11 @@ export default function Header() {
   } = usePreferenceContext();
 
   const { pathname } = useRouter();
+
+  const { data: session, status } = useSession();
+  /*if (status === "authenticated") {
+    return <p>Signed in as {session.user.email}</p>
+  }*/
 
   return (
     <header className={clsx("layout font-primary bg-transparent")}>
@@ -51,57 +57,80 @@ export default function Header() {
           <div className="flex space-x-6">
             <div className="tooltip tooltip-bottom font-bold" data-tip="Solo">
               <div className="relative">
-                <div className="peer">
-                  <Link href="/">
-                    <FaKeyboard
+                <Link href="/">
+                  <FaKeyboard
+                    className={clsx(
+                      "secondary cursor-pointer fill-neutral text-lg transition-colors duration-200 hover:fill-secondary",
+                      { " fill-secondary": pathname === "/" }
+                    )}
+                  />
+                </Link>
+              </div>
+            </div>
+
+            <div className="relative">
+              <Link href="/leaderboard">
+                <FaCrown
+                  className={clsx(
+                    "cursor-pointer fill-neutral text-lg transition-colors duration-200 hover:fill-secondary",
+                    { "fill-secondary": pathname === "/leaderboard" }
+                  )}
+                />
+              </Link>
+            </div>
+            <div className="relative">
+              <Link href="/about">
+                <FaInfo
+                  className={clsx(
+                    "cursor-pointer fill-neutral text-lg transition-colors duration-200 hover:fill-secondary",
+                    { "fill-secondary": pathname === "/about" }
+                  )}
+                />
+              </Link>
+            </div>
+            <div className="relative">
+              <Link href="/multiplayer">
+                <RiTeamFill
+                  className={clsx(
+                    "cursor-pointer fill-neutral text-lg transition-colors duration-200 hover:fill-secondary",
+                    { "fill-secondary": pathname === "/multiplayer" }
+                  )}
+                />
+              </Link>
+            </div>
+          </div>
+          <div className="relative">
+            <Link href="/account">
+              <div className="group mr-2 flex h-full cursor-pointer gap-2 fill-neutral text-neutral transition-colors duration-200 hover:fill-secondary hover:text-secondary">
+                {session ? (
+                  <>
+                    <FaUser
                       className={clsx(
-                        "secondary cursor-pointer fill-neutral text-lg transition-colors duration-200 hover:fill-secondary",
-                        { " fill-secondary": pathname === "/" }
+                        "cursor-pointer  text-lg transition-colors duration-200",
+                        { "fill-secondary": pathname === "/account" }
                       )}
                     />
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="peer">
-                <Link href="/leaderboard">
-                  <FaCrown
+
+                    <span
+                      className={clsx(
+                        "cursor-pointers font-mono  transition-colors duration-200",
+                        { "text-secondary": pathname === "/account" }
+                      )}
+                    >
+                      {session.user.name}
+                    </span>
+                    
+                  </>
+                ) : (
+                  <FaRegUser
                     className={clsx(
                       "cursor-pointer fill-neutral text-lg transition-colors duration-200 hover:fill-secondary",
-                      { "fill-secondary": pathname === "/leaderboard" }
+                      { "fill-secondary": pathname === "/account" }
                     )}
                   />
-                </Link>
+                )}
               </div>
-            </div>
-            <div className="relative">
-              <div className="peer">
-                <Link href="/about">
-                  <FaInfo
-                    className={clsx(
-                      "cursor-pointer fill-neutral text-lg transition-colors duration-200 hover:fill-secondary",
-                      { "fill-secondary": pathname === "/about" }
-                    )}
-                  />
-                </Link>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="peer">
-                <Link href="/multiplayer">
-                  <RiTeamFill
-                    className={clsx(
-                      "cursor-pointer fill-neutral text-lg transition-colors duration-200 hover:fill-secondary",
-                      { "fill-secondary": pathname === "/multiplayer" }
-                    )}
-                  />
-                </Link>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="peer"></div>
-            </div>
+            </Link>
           </div>
         </nav>
       </div>

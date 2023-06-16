@@ -11,4 +11,6 @@ prayge
 - [ ] fix themeing so it runs well on random other daisyui themes too
 - [ ] keyboard shortcuts
 - [ ] prettyfy theme selector
-- [ ] sign in page
+- [x] sign in page
+- [ ] sign out button on header
+- [ ] make an animation switch that will turn off blinking and countdown animation
