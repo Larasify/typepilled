@@ -41,8 +41,8 @@ export default function Header() {
             <div className="flex space-x-1">
               <TbKeyboard className="group-hover:text-hl text-4xl text-primary transition-colors duration-200" />
 
-              <div className="text-fg relative font-mono text-3xl">
-                <div className="group-hover:text-fg absolute -top-4 left-0 text-[8px] text-secondary transition-colors duration-200">
+              <div className="relative font-mono text-3xl">
+                <div className="absolute -top-4 left-0 text-[8px] text-secondary transition-colors duration-200">
                   im so
                 </div>
                 <span className="group-hover:text-hl text-secondary transition-colors duration-200">

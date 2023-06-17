@@ -14,3 +14,6 @@ prayge
 - [x] sign in page
 - [ ] sign out button on header
 - [ ] make an animation switch that will turn off blinking and countdown animation
+
+- [ ] if no owner exists promote oldest player to owner or delete the room
+- [ ] if someone joins from link they dont have a roomId set (and in general joining from a link)

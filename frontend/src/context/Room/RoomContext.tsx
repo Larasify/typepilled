@@ -156,7 +156,7 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, [room.user.isReady]);
 
-  const { pathname } = useRouter();
+  const router = useRouter();
 
   socket.on("connect", () => {
     dispatch({ type: "SET_USER_ID", payload: socket.id });
@@ -172,12 +172,19 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
       socket.emit("room update", room.user);
     }
 
-    if (pathname === "/multiplayer" && room.user.roomId && room.user.id) {
+    if (
+      router.query.id !== room.user.roomId &&
+      room.user.roomId &&
+      room.user.id
+    ) {
       socket.emit("leave room", room.user);
     }
+  }, [router.pathname]);
 
+  useEffect(() => {
+    if (room.socket.connected) return;
     socket.connect();
-  }, [pathname, room.user]);
+  }, [room.socket.connected]);
 
   return (
     <RoomContext.Provider

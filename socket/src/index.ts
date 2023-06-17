@@ -3,8 +3,15 @@ import http from "http";
 import cors from "cors";
 
 import { Server } from "socket.io";
-import { createRoomHandler, joinRoomHander, leaveRoomHandler, updateRoomHandler } from "./roomHandler";
+import {
+  createRoomHandler,
+  joinRoomHander,
+  leaveRoomHandler,
+  updateRoomHandler,
+} from "./roomHandler";
 import { create } from "domain";
+import { disconnectHandler } from "./disconnectHandler";
+import { PreferenceState, getWords } from "./utils/getWords";
 
 export type Player = {
   username: string;
@@ -31,12 +38,6 @@ export type PlayerState = {
   [key: string]: string[];
 };
 
-
-export const playerRooms: PlayerState = {};
-
-// rooms will consist of key value pair, key being room id, pair being users inside that room and their corresponding data
-export const rooms: RoomState = {};
-
 const app = express();
 app.use(cors);
 const server = http.createServer(app);
@@ -47,6 +48,11 @@ export const io = new Server(server, {
   },
 });
 
+export const playerRooms: PlayerState = {};
+
+// rooms will consist of key value pair, key being room id, pair being users inside that room and their corresponding data
+export const rooms: RoomState = {};
+
 io.on("connection", (socket) => {
   console.log("user is connected");
 
@@ -54,10 +60,12 @@ io.on("connection", (socket) => {
     io.emit("message", message);
   });
 
+  updateRoomHandler(socket);
+  createRoomHandler(socket);
   joinRoomHander(socket);
   leaveRoomHandler(socket);
-  createRoomHandler(socket);
-  updateRoomHandler(socket);
+  disconnectHandler(socket);
+  
 });
 
 server.listen(8080, () => {

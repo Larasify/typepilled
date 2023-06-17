@@ -18,12 +18,21 @@ export default function Multiplayer() {
 
   const createRoom = () => {
     const id = v4().slice(0, 6);
-    room.socket.emit("create room", id, {preferences:{ type:room.type, wordlength:room.wordlength, quotelength:room.quotelength, punctuation:room.punctuation, numbers:room.numbers}});
-  }
+    room.socket.emit("create room", id, {
+      preferences: {
+        type: room.type,
+        wordlength: room.wordlength,
+        quotelength: room.quotelength,
+        punctuation: room.punctuation,
+        numbers: room.numbers,
+      },
+    });
+  };
 
   useEffect(() => {
     room.socket.emit("message", "hihihihihi");
-    room.socket.on("message", (message: string) => {
+
+    room.socket.off("message").on("message", (message: string) => {
       console.log(message);
       setIsServerUp(true);
     });
@@ -90,34 +99,37 @@ export default function Multiplayer() {
   return (
     <main>
       <section>
-        <div className="layout font-primary flex min-h-[65vh] w-full flex-col items-center pt-10 text-center">
-          <div className="relative mb-8 flex h-8 w-full max-w-[800px] items-center justify-between"></div>
+        <span className=" mx-auto mt-5 flex justify-center font-mono text-3xl text-secondary">
+          multiplayer
+        </span>
+        <MultiplayerOptions />
+
+        <div className="mt-10 flex min-h-[65vh] w-full flex-col items-center text-center">
           <div className="flex w-full flex-col gap-4">
-            <h1 className="mb-2">multiplayer mode</h1>
             <form onSubmit={handleSubmit}>
-              <div className="mx-auto -mb-2 flex max-w-[330px] justify-center gap-2">
+              <div className="mx-auto flex max-w-[330px] justify-center gap-2">
                 <input
                   name="code"
                   id="code"
                   autoComplete="off"
                   placeholder="enter room code"
-                  className="flex-1 rounded-r-none"
+                  className="flex-1 rounded"
                   ref={codeRef}
                 />
                 <button
                   disabled={isJoiningRoom}
                   type="submit"
-                  className={`grid h-[42px] w-12 place-items-center rounded-l-none`}
+                  className={`h-10 w-12 place-items-center rounded-l-none`}
                 >
                   <FaArrowRight className="text-bg" />
                 </button>
               </div>
             </form>
 
-            <span className="mb-4 text-3xl font-bold">or</span>
-            <MultiplayerOptions />
+            <span className="text-3xl font-bold">or</span>
             <div className="flex items-center justify-center space-x-4">
               <button
+                className="mt-5 rounded border border-secondary bg-base-100 px-8 py-4 font-mono text-xl font-normal text-secondary transition-colors duration-300 hover:text-secondary active:bg-secondary active:text-neutral"
                 onClick={() => {
                   setIsCreatingRoom(true);
                   createRoom();
@@ -125,7 +137,7 @@ export default function Multiplayer() {
                 disabled={isCreatingRoom}
               >
                 {isCreatingRoom ? (
-                  <span className="text-bg flex items-center">
+                  <span className="flex items-center">
                     Creating room
                     <CgSpinner className="ml-2 animate-spin" />
                   </span>

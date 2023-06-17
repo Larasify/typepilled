@@ -18,8 +18,9 @@ const createRoomHandler = (socket) => {
                 inGame: false,
                 winner: null,
             };
+            console.log("oncreate", index_1.rooms);
             socket.emit("words generated", index_1.rooms[roomId].text);
-            socket.emit("create room success", roomId, text);
+            socket.emit("create room success", roomId);
             // console.log(roomId);
             // console.log(io.sockets.adapter.rooms.get(roomId));
             // const sockets = Array.from(io.sockets.sockets).map((socket) => socket[0]);
@@ -36,6 +37,7 @@ const updateRoomHandler = (socket) => {
         const players = index_1.rooms[roomId].players;
         index_1.rooms[roomId].players = players.map((player) => (player.id !== user.id ? player : user));
         index_1.io.in(roomId).emit("room update", index_1.rooms[roomId].players);
+        console.log("onupdate", index_1.rooms);
         // start game
         // const allPlayersReady = rooms[roomId].players.every((player) => player.isReady);
         // if (allPlayersReady) {
@@ -59,10 +61,13 @@ const joinRoomHander = (socket) => {
             socket.emit("room in game");
             return;
         }
+        else if (index_1.rooms[roomId].players.some((player) => player.id === user.id))
+            return;
         else {
             index_1.rooms[roomId].players = [...index_1.rooms[roomId].players, user];
             index_1.playerRooms[socket.id] = [roomId];
         }
+        console.log("onjoin", index_1.rooms);
         socket.join(roomId);
         socket.emit("words generated", index_1.rooms[roomId].text);
         index_1.io.in(roomId).emit("room update", index_1.rooms[roomId].players);
@@ -80,8 +85,9 @@ const leaveRoomHandler = (socket) => {
             return;
         index_1.rooms[roomId].players = players.players.filter((player) => {
             if (player.id === user.id) {
-                // socket.to(roomId).emit("leave room", player.username);
+                socket.to(roomId).emit("leave room", player.username);
                 index_1.io.in(roomId).emit("receive chat", { username: player.username, value: "left", id: player.id });
+                console.log("onleave", index_1.rooms);
             }
             return player.id !== user.id;
         });
