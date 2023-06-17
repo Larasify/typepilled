@@ -1,15 +1,17 @@
 import { Socket } from "socket.io";
 import { io, playerRooms, rooms, type Player } from "./index";
+import { PreferenceState, getWords } from "./utils/getWords";
+
 
 export const createRoomHandler = (socket: Socket) => {
-	socket.on("create room", (roomId: string, type: "words" | "quote" ) => {
+	socket.on("create room", (roomId: string, preferences:PreferenceState ) => {
         console.log(":3");
 		if (io.sockets.adapter.rooms.get(roomId)) {
 			socket.emit("room already exist");
 		} else {
             console.log("room created: ", roomId);
 
-			const text = "Hello my baby hello my honey hello my ragtime gal"
+			const text = getWords(preferences).join(" ");
 
 			rooms[roomId] = {
 				players: [],

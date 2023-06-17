@@ -2,15 +2,16 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.leaveRoomHandler = exports.joinRoomHander = exports.updateRoomHandler = exports.createRoomHandler = void 0;
 const index_1 = require("./index");
+const getWords_1 = require("./utils/getWords");
 const createRoomHandler = (socket) => {
-    socket.on("create room", (roomId, type) => {
+    socket.on("create room", (roomId, preferences) => {
         console.log(":3");
         if (index_1.io.sockets.adapter.rooms.get(roomId)) {
             socket.emit("room already exist");
         }
         else {
             console.log("room created: ", roomId);
-            const text = "Hello my baby hello my honey hello my ragtime gal";
+            const text = (0, getWords_1.getWords)(preferences).join(" ");
             index_1.rooms[roomId] = {
                 players: [],
                 text,
@@ -18,7 +19,7 @@ const createRoomHandler = (socket) => {
                 winner: null,
             };
             socket.emit("words generated", index_1.rooms[roomId].text);
-            socket.emit("create room success", roomId);
+            socket.emit("create room success", roomId, text);
             // console.log(roomId);
             // console.log(io.sockets.adapter.rooms.get(roomId));
             // const sockets = Array.from(io.sockets.sockets).map((socket) => socket[0]);

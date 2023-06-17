@@ -7,7 +7,7 @@ import { FaArrowRight } from "react-icons/fa";
 import clsx from "clsx";
 import { CgSpinner } from "react-icons/cg";
 import { z } from "zod";
-import Options from "~/components/Options";
+import MultiplayerOptions from "~/components/Multiplayer/MultiplayerOptions";
 
 export default function Multiplayer() {
   const { room, dispatch, resetTime } = useRoomContext();
@@ -15,6 +15,11 @@ export default function Multiplayer() {
   const [isCreatingRoom, setIsCreatingRoom] = useState(false);
   const [isJoiningRoom, setIsJoiningRoom] = useState(false);
   const [isServerUp, setIsServerUp] = useState(false);
+
+  const createRoom = () => {
+    const id = v4().slice(0, 6);
+    room.socket.emit("create room", id, {preferences:{ type:room.type, wordlength:room.wordlength, quotelength:room.quotelength, punctuation:room.punctuation, numbers:room.numbers}});
+  }
 
   useEffect(() => {
     room.socket.emit("message", "hihihihihi");
@@ -24,13 +29,12 @@ export default function Multiplayer() {
     });
 
     room.socket.off("room id exists").on("room id exists", () => {
-      const id = v4().slice(0, 6);
-      room.socket.emit("create room", id, room.type);
+      createRoom();
     });
 
     room.socket
       .off("create room success")
-      .on("create room success", (roomId: string) => {
+      .on("create room success", (roomId: string, text: string) => {
         toast.success("Room Created", {
           style: { borderRadius: "10px", background: "#333", color: "#fff" },
         });
@@ -75,15 +79,13 @@ export default function Multiplayer() {
     }
   };
 
-
   if (!isServerUp)
     return (
-      <div className="flex flex-col max-w-lg m-auto items-center justify-center align-middle h-full">
+      <div className="m-auto flex h-full max-w-lg flex-col items-center justify-center align-middle">
         <div className="loading text-2xl text-primary"></div>
         <div className="text-secondary">Trying to connect ...</div>
       </div>
     );
-    
 
   return (
     <main>
@@ -113,33 +115,12 @@ export default function Multiplayer() {
             </form>
 
             <span className="mb-4 text-3xl font-bold">or</span>
-            <Options />
-            <div className="font-primary mx-auto mb-4 flex space-x-2">
-              <button
-                onClick={() => dispatch({ type: "SET_TYPE", payload: "words" })}
-                className={clsx(
-                  "rounded-lg px-2 py-1 transition-colors duration-200",
-                  [room.type === "words" ? "text-hl ring-fg ring-2" : "text-hl"]
-                )}
-              >
-                words
-              </button>
-              <button
-                onClick={() => dispatch({ type: "SET_TYPE", payload: "quote" })}
-                className={clsx(
-                  "rounded-lg px-2 py-1 transition-colors duration-200",
-                  [room.type === "quote" ? "text-hl ring-fg ring-2" : "text-hl"]
-                )}
-              >
-                sentences
-              </button>
-            </div>
+            <MultiplayerOptions />
             <div className="flex items-center justify-center space-x-4">
               <button
                 onClick={() => {
                   setIsCreatingRoom(true);
-                  const id = v4().slice(0, 6);
-                  room.socket.emit("create room", id, room.type);
+                  createRoom();
                 }}
                 disabled={isCreatingRoom}
               >
