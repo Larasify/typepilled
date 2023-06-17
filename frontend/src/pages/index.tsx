@@ -38,7 +38,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Options />
-      <div className="layout flex flex-col items-center pt-36 text-center ">
+      <div className="flex flex-col items-center pt-36 text-center ">
         <Game
           ref={ref}
           reset={reset}
