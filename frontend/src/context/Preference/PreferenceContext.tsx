@@ -33,7 +33,7 @@ export default function PreferenceProvider({
   children: React.ReactNode;
 }) {
   const [preferences, dispatch] = React.useReducer(reducer, {
-    type: "time",
+    type: "words",
     time: "30",
     wordlength: "25",
     quotelength: "medium",

@@ -7,6 +7,7 @@ import PreferenceProvider from "~/context/Preference/PreferenceContext";
 import Header from "~/components/Layout/Header";
 import Layout from "~/components/Layout/Layout";
 import { RoomProvider } from "~/context/Room/RoomContext";
+import { Toaster } from "react-hot-toast";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -17,6 +18,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
       <SessionProvider session={session}>
         <RoomProvider>
           <Layout>
+            <Toaster position="bottom-center" />
             <Component {...pageProps} />
           </Layout>
         </RoomProvider>
