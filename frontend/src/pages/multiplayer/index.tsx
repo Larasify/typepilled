@@ -113,7 +113,8 @@ export default function Multiplayer() {
                   id="code"
                   autoComplete="off"
                   placeholder="enter room code"
-                  className="flex-1 rounded"
+                  type="text"
+                  className="input-bordered input w-full max-w-xs"
                   ref={codeRef}
                 />
                 <button
@@ -129,7 +130,7 @@ export default function Multiplayer() {
             <span className="text-3xl font-bold">or</span>
             <div className="flex items-center justify-center space-x-4">
               <button
-                className="mt-5 rounded border border-secondary bg-base-100 px-8 py-4 font-mono text-xl font-normal text-secondary transition-colors duration-300 hover:text-secondary active:bg-secondary active:text-neutral"
+                className="btn"
                 onClick={() => {
                   setIsCreatingRoom(true);
                   createRoom();
@@ -137,10 +138,12 @@ export default function Multiplayer() {
                 disabled={isCreatingRoom}
               >
                 {isCreatingRoom ? (
-                  <span className="flex items-center">
-                    Creating room
-                    <CgSpinner className="ml-2 animate-spin" />
-                  </span>
+                  <>
+                    {" "}
+                    <span className="loading loading-spinner">
+                      {" "}
+                    </span>loading{" "}
+                  </>
                 ) : (
                   "Create New Room"
                 )}

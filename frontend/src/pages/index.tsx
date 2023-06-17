@@ -1,7 +1,6 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
-import io from "socket.io-client";
 import Game from "~/components/Game";
 import { FaRedo } from "react-icons/fa";
 
@@ -15,6 +14,7 @@ const Home: NextPage = () => {
   const [text, setText] = useState(
     "hello my baby hello my honey hello my ragtime gal how are you i am a frog froggity frog hop hop fill this line please bro what why does it not work properly hello my baby hello my honey hello my ragtime gal how are you i am a frog froggity frog hop hop fill this line please bro what why does it not work properly"
   );
+  
 
   function handleClick() {
     reset();
