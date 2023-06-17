@@ -14,11 +14,13 @@ export default function Multiplayer() {
   const router = useRouter();
   const [isCreatingRoom, setIsCreatingRoom] = useState(false);
   const [isJoiningRoom, setIsJoiningRoom] = useState(false);
+  const [isServerUp, setIsServerUp] = useState(false);
 
   useEffect(() => {
     room.socket.emit("message", "hihihihihi");
     room.socket.on("message", (message: string) => {
       console.log(message);
+      setIsServerUp(true);
     });
 
     room.socket.off("room id exists").on("room id exists", () => {
@@ -72,6 +74,16 @@ export default function Multiplayer() {
       }
     }
   };
+
+
+  if (!isServerUp)
+    return (
+      <div className="flex flex-col max-w-lg m-auto items-center justify-center align-middle h-full">
+        <div className="loading text-2xl text-primary"></div>
+        <div className="text-secondary">Trying to connect ...</div>
+      </div>
+    );
+    
 
   return (
     <main>
