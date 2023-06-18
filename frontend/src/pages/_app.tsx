@@ -17,7 +17,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   const description =
     "Come race your friends in this typing test inspired by monkeytype and typeracer";
   const title = "typepilled";
-  const imageMetaURL = "https://typepilled.vercel.app/android-chrome-192x192.png";
+  const imageMetaURL = "https://typepilled.vercel.app/social.png";
 
 
   return (
@@ -31,7 +31,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           <Head>
             <title>{title}</title>
             <meta name="description" content={description} />
-            <link rel="icon" href={"https://typepilled.vercel.app//favicon.ico"} />
+            <link rel="icon" href={"https://typepilled.vercel.app/favicon.ico"} />
             <meta property="og:title" content={title} />
             <meta property="og:description" content={description} />
             <meta property="og:image" content={imageMetaURL} />
