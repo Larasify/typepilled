@@ -45,7 +45,7 @@ export default function Header() {
                 <div className="absolute -top-4 left-0 text-[8px] text-secondary transition-colors duration-200">
                   im so
                 </div>
-                <span className="text-secondary transition-colors duration-200">
+                <span className="text-secondary transition-colors duration-200 font-semibold">
                   typepilled
                 </span>
               </div>

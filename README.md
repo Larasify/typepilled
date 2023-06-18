@@ -23,7 +23,7 @@ prayge
 
 - [x] when game ends non winner doesnt get wpm or stop sending out updates ( and in the next game they get the wpm from the last game)
 
-- [ ] the person that started the game has +5 seconds of duration
+- [ ] the person that started the game has +5 seconds of duration (the others have -5 seconds ?)
 
 - [x] create room button spinner is not correct
 

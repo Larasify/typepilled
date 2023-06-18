@@ -3,7 +3,7 @@ import { useState, useEffect, type FormEvent, useRef } from "react";
 import { useRoomContext } from "~/context/Room/RoomContext";
 import toast from "react-hot-toast";
 import { v4 } from "uuid";
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight, FaUsers } from "react-icons/fa";
 import clsx from "clsx";
 import { CgSpinner } from "react-icons/cg";
 import { z } from "zod";
@@ -100,7 +100,7 @@ export default function Multiplayer() {
     <main>
       <section>
         <span className=" mx-auto mt-5 flex justify-center font-mono text-3xl text-secondary">
-          multiplayer
+          welcome to multiplayer
         </span>
         <MultiplayerOptions />
 
@@ -127,7 +127,7 @@ export default function Multiplayer() {
               </div>
             </form>
 
-            <span className="text-3xl font-bold">or</span>
+            <span className="text-3xl font-bold font-roboto">or</span>
             <div className="flex items-center justify-center space-x-4">
               <button
                 className="btn"

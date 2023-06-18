@@ -25,6 +25,12 @@ export default {
       animation: {
         "fade-in": "fade-in 0.5s ease-out",
       },
+      fontFamily: {
+        'roboto': ['Roboto Mono', 'monospace'],
+      },
+      fontSize: {
+        'gamesize': '1.65rem',
+      }
     },
   },
   plugins: [require("daisyui")],

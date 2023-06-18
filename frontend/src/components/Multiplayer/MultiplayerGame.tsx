@@ -218,10 +218,10 @@ const MultiplayerGame = forwardRef<HTMLInputElement, TypingInputProps>(
 
     return (
       <>
-        <div className="relative w-full max-w-[1100px]">
+        <div className="relative w-full max-w-[1200px]">
           {/*Game*/}
           <div
-            className="relative z-40 h-[140px] w-full text-2xl outline-none"
+            className="relative z-40 h-[150px] w-full text-2xl outline-none"
             onClick={() => {
               if (!isPlaying) return;
               if (ref != null && typeof ref !== "function") {
@@ -276,14 +276,14 @@ const MultiplayerGame = forwardRef<HTMLInputElement, TypingInputProps>(
 
             <div
               className={clsx(
-                "absolute left-0 top-0 mb-4 h-full w-full overflow-hidden text-justify leading-relaxed tracking-wide transition-all duration-200",
+                "absolute left-0 top-0 mb-4 h-full w-full overflow-hidden text-justify leading-relaxed transition-all duration-200",
                 { "opacity-40 blur-[8px]": !isFocused }
               )}
             ></div>
             {/*Text*/}
             <div
               className={clsx(
-                "absolute left-0 top-0 mb-4 h-full w-full overflow-hidden text-justify leading-relaxed tracking-wide transition-all duration-200",
+                "absolute left-0 top-0 mb-4 h-full w-full overflow-hidden text-justify leading-relaxed tracking-tight transition-all duration-200 font-roboto text-gamesize",
                 { "opacity-40 blur-[8px]": !isFocused }
               )}
             >
@@ -303,7 +303,7 @@ const MultiplayerGame = forwardRef<HTMLInputElement, TypingInputProps>(
                   const state = charsState[index];
                   const color =
                     state === CharStateType.Incomplete || currIndex <= index - 1
-                      ? "text-gray-500"
+                      ? "text-neutral-500"
                       : state === CharStateType.Correct
                       ? "text-gray-200"
                       : "text-red-500 border-b-2 border-hl border-red-500";

@@ -192,7 +192,7 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
   const [animated, setAnimated] = useState(() => false);
   return (
     <>
-      <div className="relative w-full max-w-[1100px]">
+      <div className="relative w-full max-w-[1200px]">
         {/*Timer*/}
 
         <div
@@ -227,7 +227,7 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
 
         {/*Game*/}
         <div
-          className="relative z-40 h-[140px] w-full text-2xl outline-none"
+          className="relative z-40 h-[150px] w-full text-2xl outline-none"
           onClick={() => {
             if (ref != null && typeof ref !== "function") {
               ref?.current?.focus();
@@ -264,14 +264,14 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
           </span>
           <div
             className={clsx(
-              "absolute left-0 top-0 mb-4 h-full w-full overflow-hidden text-justify leading-relaxed tracking-wide transition-all duration-200",
+              "absolute left-0 top-0 mb-4 h-full w-full overflow-hidden text-justify leading-relaxed transition-all duration-200",
               { "opacity-40 blur-[8px]": !isFocused }
             )}
           ></div>
           {/*Text*/}
           <div
             className={clsx(
-              "absolute left-0 top-0 mb-4 h-full w-full overflow-hidden text-justify leading-relaxed tracking-wide transition-all duration-200",
+              "absolute left-0 top-0  mb-4 h-full w-full overflow-hidden text-justify leading-relaxed tracking-tight transition-all duration-200 font-roboto text-gamesize",
               { "opacity-40 blur-[8px]": !isFocused }
             )}
           >
@@ -291,7 +291,7 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
                 const state = charsState[index];
                 const color =
                   state === CharStateType.Incomplete
-                    ? "text-gray-500"
+                    ? "text-neutral-500"
                     : state === CharStateType.Correct
                     ? "text-gray-200"
                     : "text-red-500 border-b-2 border-hl border-red-500";
