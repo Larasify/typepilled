@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import RoomCode from "~/components/Multiplayer/RoomCode";
 import Players from "~/components/Multiplayer/Players";
 import MultiplayerGame from "~/components/Multiplayer/MultiplayerGame";
+import { CgSpinner } from "react-icons/cg";
 
 export default function GameRoom() {
   const {
@@ -87,7 +88,20 @@ export default function GameRoom() {
 
   return (
     <>
-      {!isClient && (
+      {isClient ? (
+        <>
+          <div className="fixed inset-0 flex h-screen w-screen items-center justify-center bg-base-100">
+            <div className="flex max-w-[500px] flex-wrap items-center justify-center gap-x-8 ">
+              <div className="flex flex-col items-center gap-4">
+                <CgSpinner className="text-fg animate-spin text-[3rem] text-primary" />
+                <div className="text-fg text-primary">
+                  Connecting to multiplayer servers...
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : (
         <>
           <Players />
           <RoomCode />
@@ -105,7 +119,6 @@ export default function GameRoom() {
               Start
             </button>
           </div>
-          
         </>
       )}
     </>

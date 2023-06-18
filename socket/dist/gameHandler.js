@@ -20,7 +20,6 @@ const endGameHander = (socket) => {
 exports.endGameHander = endGameHander;
 const startGameHander = (socket) => {
     socket.on("start game", (roomId) => {
-        console.log("starting game: ", roomId, " ", index_1.rooms[roomId].text, index_1.rooms[roomId].players);
         index_1.io.in(roomId).emit("words generated", index_1.rooms[roomId].text);
         index_1.io.in(roomId).emit("start game");
         index_1.rooms[roomId].inGame = true;

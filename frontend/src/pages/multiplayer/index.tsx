@@ -47,13 +47,13 @@ export default function Multiplayer() {
         toast.success("Room Created", {
           style: { borderRadius: "10px", background: "#333", color: "#fff" },
         });
-        setIsCreatingRoom(false);
 
         dispatch({ type: "SET_ROOM_ID", payload: roomId });
         dispatch({ type: "SET_IS_OWNER", payload: true });
-        void router
-          .push(`/multiplayer/${roomId}`)
-          .then(() => console.log("joined room"));
+        void router.push(`/multiplayer/${roomId}`).then(() => {
+          console.log("joined room");
+          setIsCreatingRoom(false);
+        });
       });
 
     room.socket.off("end game").on("end game", () => {
@@ -142,7 +142,7 @@ export default function Multiplayer() {
                     {" "}
                     <span className="loading loading-spinner">
                       {" "}
-                    </span>loading{" "}
+                    </span>Creating Room{" "}
                   </>
                 ) : (
                   "Create New Room"
