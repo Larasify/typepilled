@@ -17,7 +17,7 @@ export default function GameRoom() {
   } = useRoomContext();
   const router = useRouter();
   useEffect(() => {
-    console.log(user, isPlaying)
+    console.log(user, isPlaying);
     console.log(players);
   }, [players]);
 
@@ -104,10 +104,11 @@ export default function GameRoom() {
         </>
       ) : (
         <>
-          <Players />
           <RoomCode />
-          <MultiplayerGame ref={ref} />
-          <div>
+          <Players />
+          <div className="flex flex-col items-center pt-24 text-center">
+            <MultiplayerGame ref={ref} />
+
             <button
               disabled={isPlaying || !user.isOwner || timeBeforeRestart > 0}
               onClick={() => {
