@@ -12,6 +12,7 @@ import {
 import { create } from "domain";
 import { disconnectHandler } from "./disconnectHandler";
 import { PreferenceState, getWords } from "./utils/getWords";
+import { endGameHander, startGameHander } from "./gameHandler";
 
 export type Player = {
   username: string;
@@ -57,7 +58,7 @@ io.on("connection", (socket) => {
   console.log("user is connected");
 
   socket.on("message", (message) => {
-    io.emit("message", message);
+    socket.emit("message", message);
   });
 
   updateRoomHandler(socket);
@@ -65,6 +66,8 @@ io.on("connection", (socket) => {
   joinRoomHander(socket);
   leaveRoomHandler(socket);
   disconnectHandler(socket);
+  startGameHander(socket);
+  endGameHander(socket);
   
 });
 

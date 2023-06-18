@@ -46,7 +46,7 @@ export default function Players() {
                 {player.status.wpm} wpm
               </span>
             </div>
-            <progress className="progress progress-primary w-full bg-base-50" value={45} max="100"></progress>
+            <progress className="progress progress-primary w-full bg-base-50" value={player.status.progress} max="100"></progress>
           </div>
         )
       )}

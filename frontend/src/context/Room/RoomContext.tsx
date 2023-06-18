@@ -167,6 +167,14 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
     dispatch({ type: "SET_ROOM_ID", payload: null });
   });
 
+
+  useEffect(() => {
+    console.log("i sent out update");
+    if (room.user.id && room.user.roomId) {
+      socket.emit("room update", room.user);
+    }
+  },[room.user]);
+  
   React.useEffect(() => {
     if (room.user.id && room.user.roomId) {
       socket.emit("room update", room.user);

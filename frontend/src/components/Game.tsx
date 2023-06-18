@@ -87,7 +87,6 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
         chars.split("").at(currIndex) == " " &&
         nextleft < 15
       ) {
-        console.log("middle work");
         return {
           left: -2,
           top: nexttop,
@@ -177,7 +176,6 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
   const handleBlur = () => {
     // Wait for 500 milliseconds before reducing opacity
     timeoutRef.current = setTimeout(() => {
-      console.log("blur");
       setIsFocused(false);
     }, 500);
   };
@@ -202,7 +200,7 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
             "invisible": preferences.type !== "time",
           })}
         >
-          <div className="text-fg/80 left-0 z-40 text-4xl text-primary">
+          <div className="left-0 z-40 text-4xl text-primary">
             {animated ? (
               <span className="countdown">
                 <span style={{ "--value": timeLeft } as CSSProperties}></span>
@@ -258,7 +256,7 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
           <span
             className={clsx(
               "absolute z-20 flex h-full w-full cursor-default items-center justify-center text-primary opacity-0 transition-all duration-200",
-              { "text-fg opacity-100 ": !isFocused }
+              { "opacity-100 ": !isFocused }
             )}
           >
             <GiArrowCursor className="mt-1" /> Click here or start typing to

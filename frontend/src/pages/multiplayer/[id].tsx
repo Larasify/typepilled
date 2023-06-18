@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRoomContext } from "~/context/Room/RoomContext";
 import { type Player } from "../../context/Room/RoomContext";
 import toast from "react-hot-toast";
@@ -8,8 +8,6 @@ import Players from "~/components/Multiplayer/Players";
 import MultiplayerGame from "~/components/Multiplayer/MultiplayerGame";
 
 export default function GameRoom() {
-  console.log("game room");
-
   const {
     room: { socket, user, type, text, players, isPlaying, winner },
     timeBeforeRestart,
@@ -23,8 +21,9 @@ export default function GameRoom() {
 
   useEffect(() => {
     if (user.id && router?.query?.id) {
+      const stri = router?.query?.id as string;
       socket.emit("join room", { roomId: router?.query?.id, user });
-      dispatch({ type: "SET_ROOM_ID", payload: router?.query?.id as string });
+      dispatch({ type: "SET_ROOM_ID", payload: stri });
 
       socket.off("room update").on("room update", (players: Player[]) => {
         dispatch({ type: "SET_PLAYERS", payload: players });
@@ -74,7 +73,12 @@ export default function GameRoom() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query, user.id]);
 
-  
+  const [isClient, setIsClient] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => setIsClient(false), 500);
+  }, []);
+
   const ref = useRef<HTMLInputElement>(null);
   useEffect(() => {
     isPlaying && ref.current?.focus();
@@ -83,10 +87,27 @@ export default function GameRoom() {
 
   return (
     <>
-    <Players />
-      <RoomCode />
-       
-      <MultiplayerGame ref={ref}  />
+      {!isClient && (
+        <>
+          <Players />
+          <RoomCode />
+          <MultiplayerGame ref={ref} />
+          <div>
+            <button
+              disabled={isPlaying || !user.isOwner || timeBeforeRestart > 0}
+              onClick={() => {
+                user.id &&
+                  user.roomId &&
+                  socket.emit("start game", user.roomId);
+              }}
+              className="btn-primary btn"
+            >
+              Start
+            </button>
+          </div>
+          
+        </>
+      )}
     </>
   );
 }

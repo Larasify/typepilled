@@ -10,6 +10,7 @@ const cors_1 = __importDefault(require("cors"));
 const socket_io_1 = require("socket.io");
 const roomHandler_1 = require("./roomHandler");
 const disconnectHandler_1 = require("./disconnectHandler");
+const gameHandler_1 = require("./gameHandler");
 const app = (0, express_1.default)();
 app.use(cors_1.default);
 const server = http_1.default.createServer(app);
@@ -25,13 +26,15 @@ exports.rooms = {};
 exports.io.on("connection", (socket) => {
     console.log("user is connected");
     socket.on("message", (message) => {
-        exports.io.emit("message", message);
+        socket.emit("message", message);
     });
     (0, roomHandler_1.updateRoomHandler)(socket);
     (0, roomHandler_1.createRoomHandler)(socket);
     (0, roomHandler_1.joinRoomHander)(socket);
     (0, roomHandler_1.leaveRoomHandler)(socket);
     (0, disconnectHandler_1.disconnectHandler)(socket);
+    (0, gameHandler_1.startGameHander)(socket);
+    (0, gameHandler_1.endGameHander)(socket);
 });
 server.listen(8080, () => {
     console.log("started listening on port:8080");

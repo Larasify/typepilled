@@ -14,6 +14,11 @@ prayge
 - [x] sign in page
 - [ ] sign out button on header
 - [ ] make an animation switch that will turn off blinking and countdown animation
+- [ ] options selector should not jump around should be smooth on the right side
 
 - [ ] if no owner exists promote oldest player to owner or delete the room
 - [ ] if someone joins from link they dont have a roomId set (and in general joining from a link)
+
+- [ ] if a room has been inactive for super long or state hasnt been updated in forever cull it
+
+- [ ] when game ends non winner doesnt get wpm or stop sending out updates

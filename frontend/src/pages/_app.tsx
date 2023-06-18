@@ -15,7 +15,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <PreferenceProvider>
-      <SessionProvider session={session}>
+      <SessionProvider
+        session={session}
+        refetchInterval={60 * 60 *24}
+        refetchOnWindowFocus={false}
+      >
         <RoomProvider>
           <Layout>
             <Toaster position="bottom-center" />
