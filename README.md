@@ -28,3 +28,5 @@ prayge
 - [x] create room button spinner is not correct
 
 - [ ] same user can connect multiple times but this isnt really too big of a deal just same username happens they have different id's
+
+- [ ] leaderboards and about me section
