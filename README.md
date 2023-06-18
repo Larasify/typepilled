@@ -20,6 +20,7 @@ prayge
 - [ ] when seomeone joins there has to be a delay for the components to mount before opening a connection or sth like that somethings borked there or like socket needs time to return stuff before update is set or something
 
 - [ ] if a room has been inactive for super long or state hasnt been updated in forever cull it
+- [ ] notification when someone joins or leaves
 
 - [x] when game ends non winner doesnt get wpm or stop sending out updates ( and in the next game they get the wpm from the last game)
 
@@ -30,3 +31,5 @@ prayge
 - [ ] same user can connect multiple times but this isnt really too big of a deal just same username happens they have different id's
 
 - [ ] leaderboards and about me section
+
+- [x] game gave normal words instead of quote on multiplayer (if second user wins with a different options state it keeps their options state for next game)

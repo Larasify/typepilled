@@ -48,16 +48,7 @@ const MultiplayerGame = forwardRef<HTMLInputElement, TypingInputProps>(
 
       if (isFinished) {
         progress = 100;
-        !winner &&
-          socket.emit("end game", roomId, {
-            preferences: {
-              type: type,
-              wordlength: wordlength,
-              quotelength: quotelength,
-              punctuation: punctuation,
-              numbers: numbers,
-            },
-          });
+        !winner && socket.emit("end game", roomId);
       }
 
       dispatch({ type: "SET_STATUS", payload: { wpm, progress } });
@@ -154,7 +145,6 @@ const MultiplayerGame = forwardRef<HTMLInputElement, TypingInputProps>(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [phase, startTime, endTime, ref]);
 
-
     //handle key presses
     const handleKeyDown = (letter: string, control: boolean) => {
       if (letter === "Backspace") {
@@ -179,7 +169,7 @@ const MultiplayerGame = forwardRef<HTMLInputElement, TypingInputProps>(
 
     //reset game when isPlaying changes
     useEffect(() => {
-      if(!isPlaying){
+      if (!isPlaying) {
         endTyping();
       }
     }, [isPlaying]);
@@ -283,7 +273,7 @@ const MultiplayerGame = forwardRef<HTMLInputElement, TypingInputProps>(
             {/*Text*/}
             <div
               className={clsx(
-                "absolute left-0 top-0 mb-4 h-full w-full overflow-hidden text-justify leading-relaxed tracking-tight transition-all duration-200 font-roboto text-gamesize",
+                "absolute left-0 top-0 mb-4 h-full w-full overflow-hidden text-justify font-roboto text-gamesize leading-relaxed tracking-tight transition-all duration-200",
                 { "opacity-40 blur-[8px]": !isFocused }
               )}
             >

@@ -17,6 +17,7 @@ const createRoomHandler = (socket) => {
                 text,
                 inGame: false,
                 winner: null,
+                preferences,
             };
             console.log("oncreate", index_1.rooms);
             socket.emit("words generated", index_1.rooms[roomId].text);

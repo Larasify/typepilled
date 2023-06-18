@@ -4,13 +4,15 @@ exports.startGameHander = exports.endGameHander = void 0;
 const index_1 = require("./index");
 const getWords_1 = require("./utils/getWords");
 const endGameHander = (socket) => {
-    socket.on("end game", (roomId, preferences) => {
+    socket.on("end game", (roomId) => {
+        const preferences = index_1.rooms[roomId].preferences;
         const text = (0, getWords_1.getWords)(preferences).join(" ");
         index_1.rooms[roomId] = {
             players: index_1.rooms[roomId].players,
             text,
             inGame: false,
             winner: socket.id,
+            preferences,
         };
         // console.log(socket.id);
         // io.in(roomId).emit("winner", rooms[roomId].winner);

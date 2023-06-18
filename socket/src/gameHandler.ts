@@ -4,13 +4,15 @@ import { PreferenceState, getWords } from "./utils/getWords";
 
 
 export const endGameHander = (socket: Socket) => {
-	socket.on("end game", (roomId: string, preferences:PreferenceState) => {
+	socket.on("end game", (roomId: string) => {
+		const preferences = rooms[roomId].preferences;
         const text = getWords(preferences).join(" ");
 		rooms[roomId] = {
 			players: rooms[roomId].players,
 			text,
 			inGame: false,
 			winner: socket.id,
+			preferences,
 		};
 		// console.log(socket.id);
 		// io.in(roomId).emit("winner", rooms[roomId].winner);

@@ -18,6 +18,7 @@ export const createRoomHandler = (socket: Socket) => {
 				text,
 				inGame: false,
 				winner: null,
+				preferences,
 			};
 			console.log("oncreate",rooms);
 

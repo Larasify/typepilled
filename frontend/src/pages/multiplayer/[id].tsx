@@ -16,10 +16,11 @@ export default function GameRoom() {
     resetTime,
   } = useRoomContext();
   const router = useRouter();
-  useEffect(() => {
+  
+  /*useEffect(() => {
     console.log(user, isPlaying);
     console.log(players);
-  }, [players]);
+  }, [players]);*/
 
   useEffect(() => {
     if (user.id && router?.query?.id) {

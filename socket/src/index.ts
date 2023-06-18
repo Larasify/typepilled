@@ -32,6 +32,7 @@ export type RoomState = {
     players: Player[];
     inGame: boolean;
     winner: string | null;
+    preferences: PreferenceState;
   };
 };
 
