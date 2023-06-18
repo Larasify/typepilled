@@ -189,7 +189,6 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
     setIsFocused(true);
   };
 
-  const [animated, setAnimated] = useState(() => false);
   return (
     <>
       <div className="relative w-full max-w-[1200px]">
@@ -197,32 +196,12 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
 
         <div
           className={clsx("visible flex flex-row", {
-            "invisible": preferences.type !== "time",
+            invisible: preferences.type !== "time",
           })}
         >
           <div className="left-0 z-40 text-4xl text-primary">
-            {animated ? (
-              <span className="countdown">
-                <span style={{ "--value": timeLeft } as CSSProperties}></span>
-              </span>
-            ) : (
-              <span>{timeLeft}</span>
-            )}
+            <span>{timeLeft}</span>
           </div>
-
-          <button
-            className={clsx("flex flex-row", {
-              "text-primary ": animated,
-            })}
-            onClick={() => {
-              setAnimated(!animated);
-              if (ref != null && typeof ref !== "function") {
-                ref?.current?.focus();
-              }
-            }}
-          >
-            <BsQuote className="mt-1" /> <span> Animated</span>{" "}
-          </button>
         </div>
 
         {/*Game*/}
@@ -271,7 +250,7 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
           {/*Text*/}
           <div
             className={clsx(
-              "absolute left-0 top-0  mb-4 h-full w-full overflow-hidden text-justify leading-relaxed tracking-tight transition-all duration-200 font-roboto text-gamesize",
+              "absolute left-0 top-0  mb-4 h-full w-full overflow-hidden text-justify font-roboto text-gamesize leading-relaxed tracking-tight transition-all duration-200",
               { "opacity-40 blur-[8px]": !isFocused }
             )}
           >
