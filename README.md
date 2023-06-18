@@ -37,3 +37,5 @@ prayge
 - [ ] Real online users counter
 
 - [ ] Random rooms so it matches people together?
+
+- [ ] cant type in game and the players tab glitched out. i think these two are related

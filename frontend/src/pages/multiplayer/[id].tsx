@@ -117,7 +117,7 @@ export default function GameRoom() {
                   user.roomId &&
                   socket.emit("start game", user.roomId);
               }}
-              className="btn-primary btn"
+              className="btn-primary btn mt-2"
             >
               Start
             </button>

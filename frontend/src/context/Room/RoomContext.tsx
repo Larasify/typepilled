@@ -186,8 +186,16 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
       room.user.id
     ) {
       socket.emit("leave room", room.user);
+      // I'm not sure if this is a good solution maybe something else?
+      dispatch({ type: "SET_ROOM_ID", payload: null });
+      dispatch({ type: "SET_IS_OWNER", payload: false });
+      dispatch({ type: "SET_TEXT", payload: "" });
+      dispatch({ type: "SET_PLAYERS", payload: [] });
+
+
     }
   }, [router.pathname]);
+
 
   useEffect(() => {
     if (room.socket.connected) return;
