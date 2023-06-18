@@ -32,11 +32,6 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <Head>
-        <title>typepilled</title>
-        <meta name="description" content="i'm so typepilled" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <Options />
       <div className="flex flex-col items-center pt-44 text-center ">
         <Game

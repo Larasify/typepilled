@@ -33,3 +33,7 @@ prayge
 - [ ] leaderboards and about me section
 
 - [x] game gave normal words instead of quote on multiplayer (if second user wins with a different options state it keeps their options state for next game)
+
+- [ ] Real online users counter
+
+- [ ] Random rooms so it matches people together?
