@@ -21,6 +21,10 @@ prayge
 
 - [ ] if a room has been inactive for super long or state hasnt been updated in forever cull it
 
-- [ ] when game ends non winner doesnt get wpm or stop sending out updates ( and in the next game they get the wpm from the last game)
+- [x] when game ends non winner doesnt get wpm or stop sending out updates ( and in the next game they get the wpm from the last game)
+
+- [ ] the person that started the game has +5 seconds of duration
 
 - [x] create room button spinner is not correct
+
+- [ ] same user can connect multiple times but this isnt really too big of a deal just same username happens they have different id's

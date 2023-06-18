@@ -177,6 +177,13 @@ const MultiplayerGame = forwardRef<HTMLInputElement, TypingInputProps>(
       }
     }, [id, roomId]);
 
+    //reset game when isPlaying changes
+    useEffect(() => {
+      if(!isPlaying){
+        endTyping();
+      }
+    }, [isPlaying]);
+
     //countdown timer
     useEffect(() => {
       const timerInterval = setInterval(() => {

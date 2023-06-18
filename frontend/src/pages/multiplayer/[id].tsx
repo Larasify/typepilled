@@ -17,6 +17,7 @@ export default function GameRoom() {
   } = useRoomContext();
   const router = useRouter();
   useEffect(() => {
+    console.log(user, isPlaying)
     console.log(players);
   }, [players]);
 
