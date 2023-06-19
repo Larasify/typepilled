@@ -39,3 +39,5 @@ prayge
 - [ ] Random rooms so it matches people together?
 
 - [ ] cant type in game and the players tab glitched out. i think these two are related
+
+- [ ] dont let them backspace back into a correct word (check monkeytype for this)

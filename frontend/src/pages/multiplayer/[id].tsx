@@ -76,11 +76,12 @@ export default function GameRoom() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query, user.id]);
 
-  const [isClient, setIsClient] = useState(true);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => setIsClient(false), 500);
-  }, []);
+    if (text.length > 0) setIsClient(true);
+    setTimeout(() => setIsClient(true), 8000); //TODO: Make this timeout send them back to the multiplayer page
+  }, [text]);
 
   const ref = useRef<HTMLInputElement>(null);
   useEffect(() => {
@@ -90,7 +91,7 @@ export default function GameRoom() {
 
   return (
     <>
-      {isClient ? (
+      {!isClient ? (
         <>
           <div className="fixed inset-0 flex h-screen w-screen items-center justify-center bg-base-100">
             <div className="flex max-w-[500px] flex-wrap items-center justify-center gap-x-8 ">
