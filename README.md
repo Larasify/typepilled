@@ -19,7 +19,7 @@ prayge
 - [x] if no owner exists promote oldest player to owner or delete the room
 - [ ] when seomeone joins there has to be a delay for the components to mount before opening a connection or sth like that somethings borked there or like socket needs time to return stuff before update is set or something
 
-- [ ] if a room has been inactive for super long or state hasnt been updated in forever cull it
+- [ ] if a room has been inactive for super long or state hasnt been updated in forever cull it (dont cull it once the last person leaves it should stay up for like 4-5 more mins or sth like that)
 - [ ] notification when someone joins or leaves or owner changes
 
 - [x] when game ends non winner doesnt get wpm or stop sending out updates ( and in the next game they get the wpm from the last game)
