@@ -108,7 +108,7 @@ export default function GameRoom() {
         <>
           <RoomCode />
           <Players />
-          <div className="flex flex-col items-center pt-24 text-center">
+          <div className="flex flex-col items-center pt-24 text-center h-full justify-end">
             <MultiplayerGame ref={ref} />
 
             <button

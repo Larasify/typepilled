@@ -14,7 +14,6 @@ const Home: NextPage = () => {
   const [text, setText] = useState(
     "hello my baby hello my honey hello my ragtime gal how are you i am a frog froggity frog hop hop fill this line please bro what why does it not work properly hello my baby hello my honey hello my ragtime gal how are you i am a frog froggity frog hop hop fill this line please bro what why does it not work properly"
   );
-  
 
   function handleClick() {
     reset();
@@ -33,7 +32,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Options />
-      <div className="flex flex-col items-center pt-44 text-center ">
+      <div className="flex flex-col items-center h-full justify-end text-center ">
         <Game
           ref={ref}
           reset={reset}
@@ -52,6 +51,7 @@ const Home: NextPage = () => {
             <FaRedo />
           </button>
         </div>
+
       </div>
     </>
   );
