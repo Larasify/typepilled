@@ -16,7 +16,7 @@ prayge
 - [ ] make an animation switch that will turn off blinking and countdown animation
 - [ ] options selector should not jump around should be smooth on the right side
 
-- [ ] if no owner exists promote oldest player to owner or delete the room
+- [x] if no owner exists promote oldest player to owner or delete the room
 - [ ] when seomeone joins there has to be a delay for the components to mount before opening a connection or sth like that somethings borked there or like socket needs time to return stuff before update is set or something
 
 - [ ] if a room has been inactive for super long or state hasnt been updated in forever cull it

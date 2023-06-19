@@ -16,7 +16,7 @@ export default function GameRoom() {
     resetTime,
   } = useRoomContext();
   const router = useRouter();
-  
+
   /*useEffect(() => {
     console.log(user, isPlaying);
     console.log(players);
@@ -29,6 +29,14 @@ export default function GameRoom() {
       dispatch({ type: "SET_ROOM_ID", payload: stri });
 
       socket.off("room update").on("room update", (players: Player[]) => {
+        const owner = players.find((p) => p.isOwner);
+        //TODO: This check is not really unnecessary on every single room update event maybe hold the player count in a state only update that here and another effect on player count change to do promotion
+        if (!owner && players[0]) {
+          if (user.id === players[0].id) {
+            dispatch({ type: "SET_IS_OWNER", payload: true });
+          }
+        }
+
         dispatch({ type: "SET_PLAYERS", payload: players });
       });
 
@@ -108,7 +116,7 @@ export default function GameRoom() {
         <>
           <RoomCode />
           <Players />
-          <div className="flex flex-col items-center pt-24 text-center h-full justify-end">
+          <div className="flex h-full flex-col items-center justify-end pt-24 text-center">
             <MultiplayerGame ref={ref} />
 
             <button
