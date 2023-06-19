@@ -20,7 +20,7 @@ prayge
 - [ ] when seomeone joins there has to be a delay for the components to mount before opening a connection or sth like that somethings borked there or like socket needs time to return stuff before update is set or something
 
 - [ ] if a room has been inactive for super long or state hasnt been updated in forever cull it
-- [ ] notification when someone joins or leaves
+- [ ] notification when someone joins or leaves or owner changes
 
 - [x] when game ends non winner doesnt get wpm or stop sending out updates ( and in the next game they get the wpm from the last game)
 
@@ -41,3 +41,7 @@ prayge
 - [ ] cant type in game and the players tab glitched out. i think these two are related
 
 - [ ] dont let them backspace back into a correct word (check monkeytype for this)
+
+- [ ] make a chat for game room
+
+- [x] on socket disconnect on the client after a while redirect them back to the multiplayer page [ ] maybe add a delay of 4-5 seconds before redirecting them back to the multiplayer page 

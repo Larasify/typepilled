@@ -5,6 +5,7 @@ import { animals, uniqueNamesGenerator } from "unique-names-generator";
 import { useSession } from "next-auth/react";
 import reducer from "./roomReducer";
 import { useEffect, useReducer } from "react";
+import toast from "react-hot-toast";
 
 export type Player = {
   username: string;
@@ -158,14 +159,22 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
 
   const router = useRouter();
 
-  socket.on("connect", () => {
+  useEffect(() =>{
+  socket.off("connect").on("connect", () => {
     dispatch({ type: "SET_USER_ID", payload: socket.id });
   });
 
-  socket.on("disconnect", () => {
+  socket.off("disconnect").on("disconnect", () => {
     dispatch({ type: "SET_IS_READY", payload: false });
     dispatch({ type: "SET_ROOM_ID", payload: null });
+
+    void router.push(`/multiplayer/`).then(() => {
+      toast.error("Disconnected from the server", {
+        style: { borderRadius: "10px", background: "#333", color: "#fff" },
+      });
+    });
   });
+}, []);
 
 
   useEffect(() => {

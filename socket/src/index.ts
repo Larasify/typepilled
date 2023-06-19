@@ -9,7 +9,6 @@ import {
   leaveRoomHandler,
   updateRoomHandler,
 } from "./roomHandler";
-import { create } from "domain";
 import { disconnectHandler } from "./disconnectHandler";
 import { PreferenceState, getWords } from "./utils/getWords";
 import { endGameHander, startGameHander } from "./gameHandler";
