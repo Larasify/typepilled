@@ -80,6 +80,7 @@ export default function Header() {
                       "cursor-pointer fill-neutral text-lg transition-colors duration-200 hover:fill-secondary",
                       { "fill-secondary": pathname === "/leaderboard" }
                     )}
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
                     onClick={()=>(window as any).leaderboard_modal.showModal()}
                   />
               </div>
