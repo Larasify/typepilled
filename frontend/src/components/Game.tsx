@@ -11,6 +11,8 @@ import useTypingGame, { CharStateType } from "react-typing-game-hook";
 import { GiArrowCursor } from "react-icons/gi";
 import { BsQuote } from "react-icons/bs";
 import { usePreferenceContext } from "~/context/Preference/PreferenceContext";
+import { api } from "~/utils/api";
+import { useSession } from "next-auth/react";
 
 type ButtonProps = {
   text: string;
@@ -101,11 +103,26 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
     }
   }, [currIndex]);
 
+  const { data: session, status } = useSession();
+  const leaderboardMutation = api.leaderboard.create.useMutation();
+
   //set WPM
   useEffect(() => {
     if (phase === 2) {
       if (preferences.type === "time") {
         setDuration(props.time - timeLeft);
+
+        if (session?.user.id != null && preferences.type === "time") {
+          leaderboardMutation.mutate({
+            userId: session?.user.id,
+            type: preferences.time,
+            accuracy: Math.round(
+              (correctChar / (correctChar + errorChar)) * 100
+            ),
+            wordcount: correctChar,
+            wpm: Math.round(((60 / parseInt(preferences.time)) * correctChar) / 5),
+          });
+        }
       } else if (endTime && startTime) {
         setDuration(Math.floor((endTime - startTime) / 1000));
       }

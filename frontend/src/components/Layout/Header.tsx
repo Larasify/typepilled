@@ -15,6 +15,7 @@ import { TbKeyboard } from "react-icons/tb";
 
 import { usePreferenceContext } from "../../context/Preference/PreferenceContext";
 import { useSession } from "next-auth/react";
+import Leaderboard from "../Leaderboard";
 
 const typeList = ["words", "sentences", "numbers"];
 
@@ -71,15 +72,16 @@ export default function Header() {
               className="tooltip tooltip-bottom font-bold"
               data-tip="Leaderboard"
             >
+
+              <Leaderboard />
               <div className="relative">
-                <Link href="/leaderboard">
                   <FaCrown
                     className={clsx(
                       "cursor-pointer fill-neutral text-lg transition-colors duration-200 hover:fill-secondary",
                       { "fill-secondary": pathname === "/leaderboard" }
                     )}
+                    onClick={()=>(window as any).leaderboard_modal.showModal()}
                   />
-                </Link>
               </div>
             </div>
             <div className="tooltip tooltip-bottom font-bold" data-tip="About">
