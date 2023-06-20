@@ -17,7 +17,7 @@ const Options = () => {
 
   return (
     <div className="mt-5 flex h-max w-full flex-row items-center justify-around gap-2 ">
-      <div className="flex flex-col sm:flex-row rounded-lg bg-accent px-2 font-mono text-sm text-neutral">
+      <div className="flex flex-col sm:flex-row rounded-lg bg-base-200 px-2 font-mono text-sm text-neutral-500">
         {/*punc numbers*/}
         <div
           className={clsx(

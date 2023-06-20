@@ -44,6 +44,7 @@ export default {
           "accent": "#2c2e31",
           "neutral": "#646669",
           "base-100": "#323437",
+          "base-200": "#2c2e31",
         },
       },
       "dark",
