@@ -121,6 +121,8 @@ const Game = forwardRef<HTMLInputElement, ButtonProps>(function Game(
             ),
             wordcount: correctChar,
             wpm: Math.round(((60 / parseInt(preferences.time)) * correctChar) / 5),
+            punctuation: preferences.punctuation,
+            numbers: preferences.numbers,
           });
         }
       } else if (endTime && startTime) {

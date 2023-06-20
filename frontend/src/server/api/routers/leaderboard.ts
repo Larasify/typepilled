@@ -18,6 +18,8 @@ export const leaderboardRouter = createTRPCRouter({
         accuracy: true,
         wordcount: true,
         userId: true,
+        punctuation: true,
+        numbers: true,
       },
       orderBy: {
         wpm: "desc",
@@ -35,10 +37,12 @@ export const leaderboardRouter = createTRPCRouter({
         accuracy: z.number(),
         wordcount: z.number(),
         userId: z.string(),
+        punctuation: z.boolean(),
+        numbers: z.boolean()
       })
     )
     .mutation(async ({ input }) => {
-      const { type, wpm, accuracy, wordcount, userId } = input;
+      const { type, wpm, accuracy, wordcount, userId, punctuation, numbers } = input;
       const leaderboardEntry = await prisma.leaderboard.create({
         data: {
           type,
@@ -46,6 +50,8 @@ export const leaderboardRouter = createTRPCRouter({
           accuracy,
           wordcount,
           userId,
+          punctuation,
+          numbers,
         },
       });
 

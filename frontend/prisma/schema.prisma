@@ -104,6 +104,8 @@ model Leaderboard {
   wordcount Int
   user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId   String
+  punctuation Boolean 
+  numbers Boolean 
 
 
   @@index([userId])

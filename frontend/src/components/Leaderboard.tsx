@@ -19,6 +19,8 @@ type Data = {
   wpm: number;
   accuracy: number;
   wordcount: number;
+  punctuation: boolean;
+  numbers: boolean;
 };
 
 function LeaderboradMap(props: { data: Data[] }) {
@@ -39,69 +41,78 @@ export default function Leaderboard() {
       <dialog id="leaderboard_modal" className="modal" ref={modalRef}>
         <form
           method="dialog"
-          className="modal-box h-full w-screen overflow-auto max-w-screen-2xl"
+          className="modal-box h-full w-screen max-w-screen-2xl scrollbar overflow-x-hidden"
         >
-          <h3 className="text-lg font-bold">Select a ThemeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!</h3>
+          <h3 className="text-lg font-bold">
+            Select a ThemeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!
+          </h3>
           {!isLoading ? (
             <LeaderboradMap data={data?.leaderboard as Data[]} />
           ) : (
             "Hello my babyyy hello my honey hello my ragtime gal!"
           )}
-          <div className="flex flex-row h-full">
-          <div className="overflow-y-scroll w-full h-full scrollbar">
-            <table className="w-full table table-zebra">
-              <thead>
-                <td className=" w-[5%]">#</td>
-                <td>name</td>
-                <td className=" w-1/6 text-right">wpm</td>
-                <td className=" w-1/6 text-right">accuracy</td>
-                <td className=" w-1/5 text-right">raw</td>
-              </thead>
-              <tbody>
-                {data?.leaderboard.map((user, index) => (
-                  <tr key={user.id}>
-                    <td>{index + 1}</td>
-                    <td>
-                        <span>{user.user.name}</span>
-                    </td>
-                    <td className="text-right">{user.wpm}</td>
-                    <td className="text-right">{user.accuracy}%</td>
-                    <td className="text-right">{user.wordcount}</td>
-                  </tr>
-                ))}
-              </tbody>
-              <tfoot>
-                <tr></tr>
-              </tfoot>
-            </table>
-          </div>
-          <div className="overflow-y-scroll w-full h-full scrollbar">
-            <table className="w-full table table-zebra">
-              <thead>
-                <td className=" w-[5%]">#</td>
-                <td>name</td>
-                <td className=" w-1/6 text-right">wpm</td>
-                <td className=" w-1/6 text-right">accuracy</td>
-                <td className=" w-1/5 text-right">raw</td>
-              </thead>
-              <tbody>
-                {data?.leaderboard.map((user, index) => (
-                  <tr key={user.id}>
-                    <td>{index + 1}</td>
-                    <td>
-                        <span>{user.user.name}</span>
-                    </td>
-                    <td className="text-right">{user.wpm}</td>
-                    <td className="text-right">{user.accuracy}%</td>
-                    <td className="text-right">{user.wordcount}</td>
-                  </tr>
-                ))}
-              </tbody>
-              <tfoot>
-                <tr></tr>
-              </tfoot>
-            </table>
-          </div>
+          <div className="flex flex-col sm:flex-row h-[90%] gap-5 p-2">
+            <div className="h-full w-full ">
+              <div>Hello</div>
+              <div className="h-full scrollbar overflow-y-scroll">
+                <table className="table-zebra table w-full">
+                  <thead>
+                    <td className=" w-[5%]">#</td>
+                    <td>name</td>
+                    <td className=" w-1/6 text-right">wpm</td>
+                    <td className=" w-1/6 text-right">accuracy</td>
+                    <td className=" w-1/5 text-right">raw</td>
+                  </thead>
+                  <tbody>
+                    {data?.leaderboard.map((user, index) => (
+                      <tr key={user.id}>
+                        <td>{index + 1}</td>
+                        <td>
+                          <span>{user.user.name}</span>
+                        </td>
+                        <td className="text-right">{user.wpm}</td>
+                        <td className="text-right">{user.accuracy}%</td>
+                        <td className="text-right">{user.wordcount}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                  <tfoot>
+                    <tr></tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <div className="h-full w-full ">
+              <div>Hello</div>
+              <div className="h-full scrollbar overflow-y-scroll">
+                <table className="table-zebra table w-full">
+                  <thead>
+                    <td className=" w-[5%]">#</td>
+                    <td>name</td>
+                    <td className=" w-1/6 text-right">wpm</td>
+                    <td className=" w-1/6 text-right">accuracy</td>
+                    <td className=" w-1/5 text-right">raw</td>
+                  </thead>
+                  <tbody>
+                    {data?.leaderboard.map((user, index) => (
+                      <tr key={user.id}>
+                        <td>{index + 1}</td>
+                        <td>
+                          <span>{user.user.name}</span>
+                        </td>
+                        <td className="text-right">{user.wpm}</td>
+                        <td className="text-right">{user.accuracy}%</td>
+                        <td className="text-right">{user.wordcount}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                  <tfoot>
+                    <tr></tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+
           </div>
         </form>
         <form method="dialog" className="modal-backdrop">

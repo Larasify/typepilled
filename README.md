@@ -45,3 +45,5 @@ prayge
 - [ ] make a chat for game room
 
 - [x] on socket disconnect on the client after a while redirect them back to the multiplayer page [ ] maybe add a delay of 4-5 seconds before redirecting them back to the multiplayer page 
+
+- [ ] punctuation and number tags on leaderboards
