@@ -39,7 +39,7 @@ export default function PreferenceProvider({
     quotelength: "medium",
     punctuation: false,
     numbers: false,
-    theme: "monkey",
+    theme: "forest",
   });
 
   React.useEffect(() => {

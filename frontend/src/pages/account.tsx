@@ -25,7 +25,7 @@ const AuthShowcase: React.FC = () => {
         {secretMessage && <span> - {secretMessage}</span>}
       </p>
       <button
-        className="flex items-center gap-2 rounded-lg bg-accent px-20 py-3 font-semibold text-secondary hover:text-neutral no-underline transition hover:bg-secondary"
+        className="btn btn-accent flex items-center gap-2 rounded-lg px-20 py-3 font-semibold hover:text-neutral no-underline transition"
         onClick={sessionData ? () => void signOut() : () => void signIn()}
       >
         <FaSignInAlt/>{sessionData ? "Sign out" : "Sign in"}

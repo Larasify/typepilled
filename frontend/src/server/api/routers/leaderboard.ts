@@ -24,7 +24,7 @@ export const leaderboardRouter = createTRPCRouter({
       orderBy: {
         wpm: "desc",
       },
-      take: 20,
+      take: 50,
     });
 
     return { success: true, leaderboard };
