@@ -41,7 +41,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
           <div data-theme={preferences.theme}
             className={clsx(
-              "h-screen w-full overflow-y-auto bg-base-100 transition-colors duration-300"
+              "scrollbar h-screen w-full overflow-y-auto bg-base-100 transition-colors duration-300"
             )}
           >
             <div className=" mx-auto flex h-my-screen w-11/12 max-w-6xl flex-col bg-transparent">

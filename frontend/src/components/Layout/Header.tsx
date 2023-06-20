@@ -55,7 +55,7 @@ export default function Header() {
         </div>
 
         <nav className="flex w-full flex-1 items-center justify-between sm:w-auto">
-          <div className="flex space-x-6">
+          <div className="flex gap-6">
             <div className="tooltip tooltip-bottom font-bold" data-tip="Solo">
               <div className="relative">
                 <Link href="/">
@@ -68,23 +68,7 @@ export default function Header() {
                 </Link>
               </div>
             </div>
-            <div
-              className="tooltip tooltip-bottom font-bold"
-              data-tip="Leaderboard"
-            >
-
-              <Leaderboard />
-              <div className="relative">
-                  <FaCrown
-                    className={clsx(
-                      "cursor-pointer fill-neutral text-lg transition-colors duration-200 hover:fill-secondary",
-                      { "fill-secondary": pathname === "/leaderboard" }
-                    )}
-                    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
-                    onClick={()=>(window as any).leaderboard_modal.showModal()}
-                  />
-              </div>
-            </div>
+            <Leaderboard />
             <div className="tooltip tooltip-bottom font-bold" data-tip="About">
               <div className="relative">
                 <Link href="/about">
