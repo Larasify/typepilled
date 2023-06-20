@@ -7,6 +7,26 @@ import {
 import { prisma } from "~/server/db";
 
 export const leaderboardRouter = createTRPCRouter({
+  getpublicleaderboard: publicProcedure.query(async () => {
+    const leaderboard = await prisma.leaderboard.findMany({
+      select: {
+        user: true,
+        id: true,
+        createdAt: true,
+        type: true,
+        wpm: true,
+        accuracy: true,
+        wordcount: true,
+        userId: true,
+      },
+      orderBy: {
+        wpm: "desc",
+      },
+      take: 10,
+    });
+
+    return { success: true, leaderboard };
+  }),
   create: protectedProcedure
     .input(
       z.object({

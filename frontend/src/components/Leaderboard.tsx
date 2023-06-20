@@ -1,4 +1,7 @@
+import { api } from "~/utils/api";
+
 export default function Leaderboard() {
+  const data = api.leaderboard.getpublicleaderboard.useQuery(undefined,{ staleTime: Infinity });
   return (
     <dialog id="leaderboard_modal" className="modal">
       <form method="dialog" className="modal-box flex max-h-96 flex-col gap-3">
