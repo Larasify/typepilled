@@ -46,7 +46,7 @@ export default function Header() {
                 <div className="absolute -top-4 left-0 text-[8px] text-secondary transition-colors duration-200">
                   im so
                 </div>
-                <span className="text-secondary transition-colors duration-200 font-semibold">
+                <span className="font-semibold text-secondary transition-colors duration-200">
                   typepilled
                 </span>
               </div>
@@ -61,8 +61,9 @@ export default function Header() {
                 <Link href="/">
                   <FaKeyboard
                     className={clsx(
-                      "secondary cursor-pointer fill-neutral text-lg transition-colors duration-200 hover:fill-secondary",
-                      { " fill-secondary": pathname === "/" }
+                      "secondary cursor-pointer text-lg transition-colors duration-200 hover:fill-secondary",
+                      { "fill-secondary": pathname === "/" },
+                      { "fill-neutral-500": pathname !== "/" }
                     )}
                   />
                 </Link>
@@ -74,8 +75,9 @@ export default function Header() {
                 <Link href="/about">
                   <FaInfo
                     className={clsx(
-                      "cursor-pointer fill-neutral text-lg transition-colors duration-200 hover:fill-secondary",
-                      { "fill-secondary": pathname === "/about" }
+                      "cursor-pointer text-lg transition-colors duration-200 hover:fill-secondary",
+                      { "fill-secondary": pathname === "/about" },
+                      { "fill-neutral-500": pathname !== "/about" }
                     )}
                   />
                 </Link>
@@ -89,8 +91,9 @@ export default function Header() {
                 <Link href="/multiplayer">
                   <RiTeamFill
                     className={clsx(
-                      "cursor-pointer fill-neutral text-lg transition-colors duration-200 hover:fill-secondary",
-                      { "fill-secondary": pathname === "/multiplayer" }
+                      "cursor-pointer  text-lg transition-colors duration-200 hover:fill-secondary",
+                      { "fill-secondary": pathname === "/multiplayer" },
+                      { "fill-neutral-500": pathname !== "/multiplayer" }
                     )}
                   />
                 </Link>
@@ -98,10 +101,10 @@ export default function Header() {
             </div>
           </div>
 
-          <div className="tooltip tooltip-bottom font-bold" data-tip="Solo">
+          <div className="tooltip tooltip-bottom font-bold" data-tip="Account">
             <div className="relative">
               <Link href="/account">
-                <div className="group mr-2 flex h-full cursor-pointer gap-2 fill-neutral text-neutral transition-colors duration-200 hover:fill-secondary hover:text-secondary">
+                <div className="group mr-2 flex h-full cursor-pointer gap-2 fill-neutral-500 text-neutral-500 transition-colors duration-200 hover:fill-secondary hover:text-secondary">
                   {session ? (
                     <>
                       <FaUser
@@ -123,7 +126,7 @@ export default function Header() {
                   ) : (
                     <FaRegUser
                       className={clsx(
-                        "cursor-pointer fill-neutral text-lg transition-colors duration-200 hover:fill-secondary",
+                        "cursor-pointer fill-neutral-500 text-lg transition-colors duration-200 hover:fill-secondary",
                         { "fill-secondary": pathname === "/account" }
                       )}
                     />

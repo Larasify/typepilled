@@ -122,12 +122,12 @@ export default function Multiplayer() {
                   type="submit"
                   className={`h-10 w-12 place-items-center rounded-l-none`}
                 >
-                  <FaArrowRight className="text-bg" />
+                  <FaArrowRight className="text-bg text-secondary" />
                 </button>
               </div>
             </form>
 
-            <span className="text-3xl font-bold font-roboto">or</span>
+            <span className="text-3xl font-bold font-roboto text-secondary">or</span>
             <div className="flex items-center justify-center space-x-4">
               <button
                 className="btn"

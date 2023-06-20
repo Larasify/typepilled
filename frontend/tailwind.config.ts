@@ -49,7 +49,15 @@ export default {
       "dark",
       "cupcake",
       "synthwave",
-      "bumblebee"
+      "bumblebee",
+      "retro",
+      "valentine",
+      "coffee",
+      "forest",
+      "night",
+      "garden",
+      "black",
+      "halloween",
 
     ],
   },

@@ -45,7 +45,7 @@ const Home: NextPage = () => {
           data-tip="Restart Test"
         >
           <button
-            className="mt-5 rounded bg-base-100 px-8 py-4 font-normal text-neutral transition-colors duration-300 hover:text-secondary active:bg-secondary active:text-neutral"
+            className="mt-5 rounded bg-base-100 px-8 py-4 font-normal text-neutral-500 transition-colors duration-300 hover:text-secondary active:bg-secondary active:text-neutral"
             onClick={handleClick}
           >
             <FaRedo />

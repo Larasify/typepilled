@@ -41,7 +41,7 @@ export default function Leaderboard() {
       <dialog id="leaderboard_modal" className="modal" ref={modalRef}>
         <form
           method="dialog"
-          className="modal-box h-full w-screen max-w-screen-2xl scrollbar overflow-x-hidden"
+          className="scrollbar modal-box h-full w-screen max-w-screen-2xl overflow-x-hidden"
         >
           <h3 className="text-lg font-bold">
             Select a ThemeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!
@@ -51,10 +51,10 @@ export default function Leaderboard() {
           ) : (
             "Hello my babyyy hello my honey hello my ragtime gal!"
           )}
-          <div className="flex flex-col sm:flex-row h-[90%] gap-5 p-2">
+          <div className="flex h-[90%] flex-col gap-5 p-2 sm:flex-row">
             <div className="h-full w-full ">
               <div>Hello</div>
-              <div className="h-full scrollbar overflow-y-scroll">
+              <div className="scrollbar h-full overflow-y-scroll">
                 <table className="table-zebra table w-full">
                   <thead>
                     <td className=" w-[5%]">#</td>
@@ -84,7 +84,7 @@ export default function Leaderboard() {
             </div>
             <div className="h-full w-full ">
               <div>Hello</div>
-              <div className="h-full scrollbar overflow-y-scroll">
+              <div className="scrollbar h-full overflow-y-scroll">
                 <table className="table-zebra table w-full">
                   <thead>
                     <td className=" w-[5%]">#</td>
@@ -112,7 +112,6 @@ export default function Leaderboard() {
                 </table>
               </div>
             </div>
-
           </div>
         </form>
         <form method="dialog" className="modal-backdrop">
@@ -123,8 +122,7 @@ export default function Leaderboard() {
         <div className="relative">
           <FaCrown
             className={clsx(
-              "cursor-pointer fill-neutral text-lg transition-colors duration-200 hover:fill-secondary",
-              { "fill-secondary": pathname === "/leaderboard" }
+              "cursor-pointer fill-neutral-500 text-lg transition-colors duration-200 hover:fill-secondary"
             )}
             onClick={() => {
               modalRef.current?.showModal();
