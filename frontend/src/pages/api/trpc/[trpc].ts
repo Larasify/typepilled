@@ -21,8 +21,7 @@ export default createNextApiHandler({
       const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
       return {
         headers: {
-          "cache-control": `s-maxage=600`,
-          "set-cookie": "",
+          'cache-control': `s-maxage=${60*10}`,
         },
       };
     }
