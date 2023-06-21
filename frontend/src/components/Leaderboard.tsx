@@ -56,7 +56,7 @@ export default function Leaderboard() {
             {[data?.leaderboard15, data?.leaderboard30].map((leaderboard) => (
               <>
                 <div className="h-full w-full ">
-                  {isLoading && <CgSpinner />}
+                  {isLoading && <span className="loading loading-spinner" />}
                   <div className="text-secondary">
                     Time {leaderboard?.at(0)?.type}
                   </div>

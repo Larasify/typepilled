@@ -168,11 +168,14 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
     dispatch({ type: "SET_IS_READY", payload: false });
     dispatch({ type: "SET_ROOM_ID", payload: null });
 
-    void router.push(`/multiplayer/`).then(() => {
-      toast.error("Disconnected from the server", {
-        style: { borderRadius: "10px", background: "#333", color: "#fff" },
+    if (window.location.href.includes("/multiplayer")) {
+      void router.push(`/multiplayer/`).then(() => {
+        toast.error("Disconnected from the server", {
+          style: { borderRadius: "10px", background: "#333", color: "#fff" },
+        });
       });
-    });
+    }
+
   });
 }, []);
 
