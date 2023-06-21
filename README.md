@@ -38,4 +38,4 @@ prayge
 
 - [ ] leaderboard update timer
 
-- [ ] increase amount of words in timed mode
+- [ ] multiplayer shouldnt end on first finish it should end when last person finishes

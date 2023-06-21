@@ -43,10 +43,13 @@ export function getWords(preferences: PreferenceState) {
     return words;
   }
   if (preferences.type === "time") {
+    if (preferences.time === "60" || preferences.time === "120") {
+      words = [...words, ...words];
+    }
     words.sort(() => Math.random() - 0.5);
     words = words.slice(
       0,
-      Math.max(100, Math.floor(parseInt(preferences.time) / 0.6))
+      Math.max(100, Math.floor(parseInt(preferences.time) / 0.25))
     );
     return words;
   }
