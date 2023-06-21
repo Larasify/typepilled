@@ -53,9 +53,9 @@ export default function Leaderboard() {
             Time mode Leaderboards
           </span>
           <div className="flex h-[90%] flex-col gap-5 p-2 sm:flex-row">
-            {[data?.leaderboard15, data?.leaderboard30].map((leaderboard) => (
-              <>
-                <div className="h-full w-full ">
+            {[data?.leaderboard15, data?.leaderboard30].map(
+              (leaderboard, index) => (
+                <div key={index} className="h-full w-full ">
                   {isLoading && <span className="loading loading-spinner" />}
                   <div className="text-secondary">
                     Time {leaderboard?.at(0)?.type}
@@ -63,6 +63,7 @@ export default function Leaderboard() {
                   <div className="scrollbar h-full overflow-y-scroll">
                     <table className="table-zebra table w-full">
                       <thead className="sticky top-0 z-50 bg-base-100 font-semibold">
+                        <tr>
                         <td className=" w-[5%]">#</td>
                         <td>name</td>
                         <td className=" w-1/6 text-right">
@@ -74,6 +75,7 @@ export default function Leaderboard() {
                           <span className=" opacity-50">raw characters</span>{" "}
                         </td>
                         <td className=" w-1/5 text-right">date</td>
+                        </tr>
                       </thead>
                       <tbody className="leading-4">
                         {leaderboard &&
@@ -82,10 +84,17 @@ export default function Leaderboard() {
                               <td className="py-0">
                                 {index + 1 === 1 ? (
                                   <FaCrown className="text-primary" />
-                                ) : ( index + 1 === 2 || index + 1 === 3 ) ? (
-                                  <FaMedal className={clsx("",{"text-zinc-400":index+1===2},{"text-orange-400":index+1===3})} />
-                                ):
-                                <span>{index+1}</span>}
+                                ) : index + 1 === 2 || index + 1 === 3 ? (
+                                  <FaMedal
+                                    className={clsx(
+                                      "",
+                                      { "text-zinc-400": index + 1 === 2 },
+                                      { "text-orange-400": index + 1 === 3 }
+                                    )}
+                                  />
+                                ) : (
+                                  <span>{index + 1}</span>
+                                )}
                               </td>
                               <td className="py-0">
                                 <span>{user.user.name}</span>
@@ -137,8 +146,8 @@ export default function Leaderboard() {
                     </table>
                   </div>
                 </div>
-              </>
-            ))}
+              )
+            )}
           </div>
         </form>
         <form method="dialog" className="modal-backdrop">

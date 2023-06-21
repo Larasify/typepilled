@@ -58,4 +58,6 @@ prayge
 
 - [ ] leaderboard should only do one query if possible
 
-- [ ] caching man :c
+- [x] caching man ?
+
+- [ ] leaderboard update timer
