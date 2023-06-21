@@ -1,7 +1,7 @@
 
 const Controls = () =>  {
   return (
-    <div className="font-primary flex flex-col items-center justify-end gap-2">
+    <div className="font-primary flex flex-col justify-end gap-2">
       <div className="flex items-center space-x-2 font-roboto text-sm text-neutral-500">
         <kbd className="kbd rounded-lg">tab</kbd>
         <span className="text-hl"> + </span>

@@ -14,8 +14,6 @@ prayge
 
 - [ ] same user can connect multiple times but this isnt really too big of a deal just same username happens they have different id's
 
-- [ ] about me section
-
 - [ ] Real online users counter
 
 - [ ] Random rooms so it matches people together?
