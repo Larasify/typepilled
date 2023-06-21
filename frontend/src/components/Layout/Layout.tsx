@@ -29,7 +29,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div className="flex max-w-[500px] flex-wrap items-center justify-center gap-x-8 ">
               <div className="flex flex-col items-center gap-4">
                 <CgSpinner className="text-fg animate-spin text-[3rem] text-primary" />
-                <div className="text-primary text-fg">
+                <div className="text-neutral-500 text-fg">
                   Preparing the page for you...
                 </div>
               </div>
