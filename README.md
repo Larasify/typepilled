@@ -10,7 +10,7 @@ prayge
 - [ ] add correct word count and wpm next to timer as an info panel
 - [ ] fix themeing so it runs well on random other daisyui themes too
 - [ ] keyboard shortcuts
-- [ ] prettyfy theme selector
+- [x] prettyfy theme selector
 - [x] sign in page
 - [ ] sign out button on header
 - [ ] make an animation switch that will turn off blinking and countdown animation
@@ -46,4 +46,14 @@ prayge
 
 - [x] on socket disconnect on the client after a while redirect them back to the multiplayer page [ ] maybe add a delay of 4-5 seconds before redirecting them back to the multiplayer page 
 
-- [ ] punctuation and number tags on leaderboards
+- [x] punctuation and number tags on leaderboards
+
+- [ ] change metaurl to the green one (and maybe the favico too)
+
+- [ ] change the loading and scrollbar themeing to be dynamic with the theme
+
+- [ ] responsive leaderboards and make the game playable on mobile
+
+- [x] leaderboard #1 spot should be primary color FaCrown (maybe silver and bronze colored numbers for 2nd and 3rd)
+
+- [ ] leaderboard should only do one query if possible

@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
-import { FaAt, FaCrown, FaHashtag } from "react-icons/fa";
+import { FaAt, FaCrown, FaHashtag, FaMedal } from "react-icons/fa";
 import { api } from "~/utils/api";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -53,14 +53,16 @@ export default function Leaderboard() {
             Time mode Leaderboards
           </span>
           <div className="flex h-[90%] flex-col gap-5 p-2 sm:flex-row">
-            {[15, 30].map((timetype) => (
+            {[data?.leaderboard15, data?.leaderboard30].map((leaderboard) => (
               <>
                 <div className="h-full w-full ">
                   {isLoading && <CgSpinner />}
-                  <div className="text-secondary">Time {timetype}</div>
+                  <div className="text-secondary">
+                    Time {leaderboard?.at(0)?.type}
+                  </div>
                   <div className="scrollbar h-full overflow-y-scroll">
                     <table className="table-zebra table w-full">
-                      <thead className="font-semibold">
+                      <thead className="sticky top-0 z-50 bg-base-100 font-semibold">
                         <td className=" w-[5%]">#</td>
                         <td>name</td>
                         <td className=" w-1/6 text-right">
@@ -74,55 +76,60 @@ export default function Leaderboard() {
                         <td className=" w-1/5 text-right">date</td>
                       </thead>
                       <tbody className="leading-4">
-                        {data?.leaderboard.map(
-                          (user, index) =>
-                            user.type === timetype.toString() && (
-                              <tr key={user.id}>
-                                <td className="py-0">{index + 1}</td>
-                                <td className="py-0">
-                                  <span>{user.user.name}</span>
-                                </td>
-                                <td className="py-0 text-right leading-5">
-                                  {user.wpm.toFixed(2)} <br />{" "}
-                                  <div className="flex justify-end gap-3">
-                                    <FaAt
-                                      className={clsx(
-                                        "mt-0 text-xs  ",
-                                        {
-                                          "text-primary opacity-100":
-                                            user.punctuation,
-                                        },
-                                        { "opacity-50": !user.punctuation }
-                                      )}
-                                    />
-                                    <FaHashtag
-                                      className={clsx(
-                                        "mt-0 text-xs ",
-                                        {
-                                          "text-primary opacity-100":
-                                            user.numbers,
-                                        },
-                                        { "opacity-50": !user.numbers }
-                                      )}
-                                    />
-                                  </div>
-                                </td>
-                                <td className="py-0 text-right">
-                                  {user.accuracy.toFixed(2)}% <br />{" "}
-                                  <span className="opacity-50">
-                                    {user.wordcount}
-                                  </span>
-                                </td>
-                                <td className="py-2 text-right">
-                                  {dayjs(user.createdAt).format("DD MMM YYYY")}{" "}
-                                  <br />
-                                  <span className="opacity-50">
-                                    {dayjs(user.createdAt).format("HH:mm")}
-                                  </span>
-                                </td>
-                              </tr>
-                            )
-                        )}
+                        {leaderboard &&
+                          leaderboard.map((user, index) => (
+                            <tr key={user.id}>
+                              <td className="py-0">
+                                {index + 1 === 1 ? (
+                                  <FaCrown className="text-primary" />
+                                ) : ( index + 1 === 2 || index + 1 === 3 ) ? (
+                                  <FaMedal className={clsx("",{"text-zinc-400":index+1===2},{"text-orange-400":index+1===3})} />
+                                ):
+                                <span>{index+1}</span>}
+                              </td>
+                              <td className="py-0">
+                                <span>{user.user.name}</span>
+                              </td>
+                              <td className="py-0 text-right leading-5">
+                                {user.wpm.toFixed(2)} <br />{" "}
+                                <div className="flex justify-end gap-3">
+                                  <FaAt
+                                    className={clsx(
+                                      "mt-0 text-xs  ",
+                                      {
+                                        "text-primary opacity-100":
+                                          user.punctuation,
+                                      },
+                                      { "opacity-50": !user.punctuation }
+                                    )}
+                                  />
+                                  <FaHashtag
+                                    className={clsx(
+                                      "mt-0 text-xs ",
+                                      {
+                                        "text-primary opacity-100":
+                                          user.numbers,
+                                      },
+                                      { "opacity-50": !user.numbers }
+                                    )}
+                                  />
+                                </div>
+                              </td>
+                              <td className="py-0 text-right">
+                                {user.accuracy.toFixed(2)}% <br />{" "}
+                                <span className="opacity-50">
+                                  {user.wordcount}
+                                </span>
+                              </td>
+                              <td className="py-2 text-right">
+                                {dayjs(user.createdAt).format("DD MMM YYYY")}{" "}
+                                <br />
+                                <span className="opacity-50">
+                                  {dayjs(user.createdAt).format("HH:mm")}
+                                </span>
+                              </td>
+                            </tr>
+                          ))}
                       </tbody>
                       <tfoot>
                         <tr></tr>

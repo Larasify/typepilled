@@ -7,6 +7,7 @@ import { createTRPCContext } from "~/server/api/trpc";
 export default createNextApiHandler({
   router: appRouter,
   createContext: createTRPCContext,
+  /*
   responseMeta(opts) {
     const { ctx, paths, errors, type } = opts;
     // assuming you have all your public routes with the keyword `public` in them
@@ -16,7 +17,6 @@ export default createNextApiHandler({
     // checking we're doing a query request
     const isQuery = type === 'query';
     if (allPublic && allOk && isQuery) {
-      console.log("hit cache");
       // cache request for 1 day + revalidate once every second
       const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
       return {
@@ -26,7 +26,7 @@ export default createNextApiHandler({
       };
     }
     return {};
-  },
+  },*/
   onError:
     env.NODE_ENV === "development"
       ? ({ path, error }) => {

@@ -8,7 +8,7 @@ import { prisma } from "~/server/db";
 
 export const leaderboardRouter = createTRPCRouter({
   getpublicleaderboard: publicProcedure.query(async () => {
-    const leaderboard = await prisma.leaderboard.findMany({
+    const leaderboard15 = await prisma.leaderboard.findMany({
       select: {
         user: true,
         id: true,
@@ -21,13 +21,37 @@ export const leaderboardRouter = createTRPCRouter({
         punctuation: true,
         numbers: true,
       },
+      where: {
+        type: "15",
+      },
       orderBy: {
         wpm: "desc",
       },
-      take: 50,
+      take: 20,
+    });
+    const leaderboard30 = await prisma.leaderboard.findMany({
+      select: {
+        user: true,
+        id: true,
+        createdAt: true,
+        type: true,
+        wpm: true,
+        accuracy: true,
+        wordcount: true,
+        userId: true,
+        punctuation: true,
+        numbers: true,
+      },
+      where: {
+        type: "30",
+      },
+      orderBy: {
+        wpm: "desc",
+      },
+      take: 20,
     });
 
-    return { success: true, leaderboard };
+    return { leaderboard15, leaderboard30 };
   }),
   create: protectedProcedure
     .input(
@@ -38,11 +62,12 @@ export const leaderboardRouter = createTRPCRouter({
         wordcount: z.number(),
         userId: z.string(),
         punctuation: z.boolean(),
-        numbers: z.boolean()
+        numbers: z.boolean(),
       })
     )
     .mutation(async ({ input }) => {
-      const { type, wpm, accuracy, wordcount, userId, punctuation, numbers } = input;
+      const { type, wpm, accuracy, wordcount, userId, punctuation, numbers } =
+        input;
       const leaderboardEntry = await prisma.leaderboard.create({
         data: {
           type,
