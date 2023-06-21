@@ -7,7 +7,7 @@ import { createTRPCContext } from "~/server/api/trpc";
 export default createNextApiHandler({
   router: appRouter,
   createContext: createTRPCContext,
-  /*
+  
   responseMeta(opts) {
     const { ctx, paths, errors, type } = opts;
     // assuming you have all your public routes with the keyword `public` in them
@@ -21,12 +21,12 @@ export default createNextApiHandler({
       const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
       return {
         headers: {
-          'cache-control': `s-maxage=1, stale-while-revalidate=${60*10}`,
+          'cache-control': `s-maxage=${60*10}`,
         },
       };
     }
     return {};
-  },*/
+  },
   onError:
     env.NODE_ENV === "development"
       ? ({ path, error }) => {
