@@ -7,6 +7,7 @@ import {
   FaInfo,
   FaKeyboard,
   FaRegUser,
+  FaSignInAlt,
   FaTerminal,
   FaUser,
 } from "react-icons/fa";
@@ -14,7 +15,7 @@ import { RiTeamFill } from "react-icons/ri";
 import { TbKeyboard } from "react-icons/tb";
 
 import { usePreferenceContext } from "../../context/Preference/PreferenceContext";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Leaderboard from "../Leaderboard";
 
 const typeList = ["words", "sentences", "numbers"];
@@ -101,39 +102,59 @@ export default function Header() {
             </div>
           </div>
 
-          <div className="tooltip tooltip-bottom font-bold" data-tip="Account">
-            <div className="relative">
-              <Link href="/account">
-                <div className="group mr-2 flex h-full cursor-pointer gap-2 fill-neutral-500 text-neutral-500 transition-colors duration-200 hover:fill-secondary hover:text-secondary">
-                  {session ? (
-                    <>
-                      <FaUser
+          <div className="flex flex-row items-center">
+            <div
+              className="tooltip tooltip-bottom font-bold"
+              data-tip="Account"
+            >
+              <div className="relative">
+                <Link href="/account">
+                  <div className="group mr-2 flex h-full cursor-pointer gap-2 fill-neutral-500 text-neutral-500 transition-colors duration-200 hover:fill-secondary hover:text-secondary">
+                    {session ? (
+                      <>
+                        <FaUser
+                          className={clsx(
+                            "cursor-pointer  text-lg transition-colors duration-200",
+                            { "fill-secondary": pathname === "/account" }
+                          )}
+                        />
+
+                        <span
+                          className={clsx(
+                            "cursor-pointers font-mono  transition-colors duration-200",
+                            { "text-secondary": pathname === "/account" }
+                          )}
+                        >
+                          {session.user.name}
+                        </span>
+                      </>
+                    ) : (
+                      <FaRegUser
                         className={clsx(
-                          "cursor-pointer  text-lg transition-colors duration-200",
+                          "cursor-pointer fill-neutral-500 text-lg transition-colors duration-200 hover:fill-secondary",
                           { "fill-secondary": pathname === "/account" }
                         )}
                       />
-
-                      <span
-                        className={clsx(
-                          "cursor-pointers font-mono  transition-colors duration-200",
-                          { "text-secondary": pathname === "/account" }
-                        )}
-                      >
-                        {session.user.name}
-                      </span>
-                    </>
-                  ) : (
-                    <FaRegUser
-                      className={clsx(
-                        "cursor-pointer fill-neutral-500 text-lg transition-colors duration-200 hover:fill-secondary",
-                        { "fill-secondary": pathname === "/account" }
-                      )}
-                    />
-                  )}
-                </div>
-              </Link>
+                    )}
+                  </div>
+                </Link>
+              </div>
             </div>
+
+            {session && (
+              <div
+                className="tooltip tooltip-bottom font-bold"
+                data-tip="Sign Out"
+              >
+                <FaSignInAlt
+                  onClick={() => void signOut()}
+                  className={clsx(
+                    "cursor-pointer fill-neutral-500 text-lg transition-colors duration-200 hover:fill-secondary",
+                    { "fill-secondary": pathname === "/account" }
+                  )}
+                />
+              </div>
+            )}
           </div>
         </nav>
       </div>

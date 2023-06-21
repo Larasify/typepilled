@@ -5,7 +5,6 @@ const index_1 = require("./index");
 const getWords_1 = require("./utils/getWords");
 const createRoomHandler = (socket) => {
     socket.on("create room", (roomId, preferences) => {
-        console.log(":3");
         if (index_1.io.sockets.adapter.rooms.get(roomId)) {
             socket.emit("room already exist");
         }
@@ -19,7 +18,6 @@ const createRoomHandler = (socket) => {
                 winner: null,
                 preferences,
             };
-            console.log("oncreate", index_1.rooms);
             socket.emit("words generated", index_1.rooms[roomId].text);
             socket.emit("create room success", roomId);
             // console.log(roomId);
@@ -38,7 +36,6 @@ const updateRoomHandler = (socket) => {
         const players = index_1.rooms[roomId].players;
         index_1.rooms[roomId].players = players.map((player) => (player.id !== user.id ? player : user));
         index_1.io.in(roomId).emit("room update", index_1.rooms[roomId].players);
-        console.log("onupdate", index_1.rooms);
         // start game
         // const allPlayersReady = rooms[roomId].players.every((player) => player.isReady);
         // if (allPlayersReady) {
@@ -68,13 +65,11 @@ const joinRoomHander = (socket) => {
             index_1.rooms[roomId].players = [...index_1.rooms[roomId].players, user];
             index_1.playerRooms[socket.id] = [roomId];
         }
-        console.log("onjoin", index_1.rooms);
         socket.join(roomId);
         socket.emit("words generated", index_1.rooms[roomId].text);
         index_1.io.in(roomId).emit("room update", index_1.rooms[roomId].players);
         // socket.to(roomId).emit("notify", `${user.username} is here.`);
         index_1.io.in(roomId).emit("receive chat", { username: user.username, value: "joined", id: user.id, type: "notification" });
-        // console.log("join", rooms);
     });
 };
 exports.joinRoomHander = joinRoomHander;
@@ -88,15 +83,14 @@ const leaveRoomHandler = (socket) => {
             if (player.id === user.id) {
                 socket.to(roomId).emit("leave room", player.username);
                 index_1.io.in(roomId).emit("receive chat", { username: player.username, value: "left", id: player.id });
-                console.log("onleave", index_1.rooms);
             }
             return player.id !== user.id;
         });
         index_1.io.in(roomId).emit("room update", index_1.rooms[roomId].players);
         if (index_1.rooms[roomId].players.length === 0) {
+            console.log("room deleted: ", roomId);
             delete index_1.rooms[roomId];
         }
-        // console.log("leave ", rooms);
     });
 };
 exports.leaveRoomHandler = leaveRoomHandler;

@@ -5,7 +5,6 @@ import { PreferenceState, getWords } from "./utils/getWords";
 
 export const createRoomHandler = (socket: Socket) => {
 	socket.on("create room", (roomId: string, preferences:PreferenceState ) => {
-        console.log(":3");
 		if (io.sockets.adapter.rooms.get(roomId)) {
 			socket.emit("room already exist");
 		} else {
@@ -20,7 +19,6 @@ export const createRoomHandler = (socket: Socket) => {
 				winner: null,
 				preferences,
 			};
-			console.log("oncreate",rooms);
 
 			socket.emit("words generated", rooms[roomId].text);
 			socket.emit("create room success", roomId);
@@ -41,7 +39,6 @@ export const updateRoomHandler = (socket: Socket) => {
 		const players = rooms[roomId].players;
 		rooms[roomId].players = players.map((player) => (player.id !== user.id ? player : user));
 		io.in(roomId).emit("room update", rooms[roomId].players);
-		console.log("onupdate",rooms);
 
 		// start game
 		// const allPlayersReady = rooms[roomId].players.every((player) => player.isReady);
@@ -72,14 +69,12 @@ export const joinRoomHander = (socket: Socket) => {
 			playerRooms[socket.id] = [roomId];
 		}
 
-		console.log("onjoin",rooms);
 
 		socket.join(roomId);
 		socket.emit("words generated", rooms[roomId].text);
 		io.in(roomId).emit("room update", rooms[roomId].players);
 		// socket.to(roomId).emit("notify", `${user.username} is here.`);
 		io.in(roomId).emit("receive chat", { username: user.username, value: "joined", id: user.id, type: "notification" });
-		// console.log("join", rooms);
 	});
 };
 
@@ -92,15 +87,14 @@ export const leaveRoomHandler = (socket: Socket) => {
 			if (player.id === user.id) {
 				socket.to(roomId).emit("leave room", player.username);
 				io.in(roomId).emit("receive chat", { username: player.username, value: "left", id: player.id });
-				console.log("onleave",rooms);
 			}
 			return player.id !== user.id;
 		});
 
 		io.in(roomId).emit("room update", rooms[roomId].players);
 		if (rooms[roomId].players.length === 0) {
+			console.log("room deleted: ", roomId);
 			delete rooms[roomId];
 		}
-		// console.log("leave ", rooms);
 	});
 };
