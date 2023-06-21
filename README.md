@@ -52,7 +52,7 @@ prayge
 
 - [ ] change the loading and scrollbar themeing to be dynamic with the theme
 
-- [ ] responsive leaderboards and make the game playable on mobile
+- [ ] responsive leaderboards and make the game playable on mobile and on mobile stop focusing on options change and restart
 
 - [x] leaderboard #1 spot should be primary color FaCrown (maybe silver and bronze colored numbers for 2nd and 3rd)
 
