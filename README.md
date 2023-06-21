@@ -61,3 +61,5 @@ prayge
 - [x] caching man ?
 
 - [ ] leaderboard update timer
+
+- [ ] increase amount of words in timed mode

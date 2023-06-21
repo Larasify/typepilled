@@ -53,6 +53,53 @@ export const leaderboardRouter = createTRPCRouter({
 
     return { leaderboard15, leaderboard30 };
   }),
+
+  getpublicleaderboardpg2: publicProcedure.query(async () => {
+    const leaderboard60 = await prisma.leaderboard.findMany({
+      select: {
+        user: true,
+        id: true,
+        createdAt: true,
+        type: true,
+        wpm: true,
+        accuracy: true,
+        wordcount: true,
+        userId: true,
+        punctuation: true,
+        numbers: true,
+      },
+      where: {
+        type: "60",
+      },
+      orderBy: {
+        wpm: "desc",
+      },
+      take: 20,
+    });
+    const leaderboard120 = await prisma.leaderboard.findMany({
+      select: {
+        user: true,
+        id: true,
+        createdAt: true,
+        type: true,
+        wpm: true,
+        accuracy: true,
+        wordcount: true,
+        userId: true,
+        punctuation: true,
+        numbers: true,
+      },
+      where: {
+        type: "120",
+      },
+      orderBy: {
+        wpm: "desc",
+      },
+      take: 20,
+    });
+
+    return { leaderboard60, leaderboard120 };
+  }),
   create: protectedProcedure
     .input(
       z.object({
