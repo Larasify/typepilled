@@ -59,7 +59,15 @@ io.on("connection", (socket) => {
 
   socket.on("message", (message) => {
     socket.emit("message", message);
+    socket.join("multiplayerPage");
   });
+
+  const sockets = Array.from(io.sockets.sockets).map((socket) => socket[0]);
+  io.to("multiplayerPage").emit("online users", sockets.length);
+  socket.on("get online users", () => {
+    const sockets = Array.from(io.sockets.sockets).map((socket) => socket[0]);
+    socket.emit("online users", sockets.length);
+  })
 
   updateRoomHandler(socket);
   createRoomHandler(socket);

@@ -27,6 +27,13 @@ exports.io.on("connection", (socket) => {
     console.log("user is connected");
     socket.on("message", (message) => {
         socket.emit("message", message);
+        socket.join("multiplayerPage");
+    });
+    const sockets = Array.from(exports.io.sockets.sockets).map((socket) => socket[0]);
+    exports.io.to("multiplayerPage").emit("online users", sockets.length);
+    socket.on("get online users", () => {
+        const sockets = Array.from(exports.io.sockets.sockets).map((socket) => socket[0]);
+        socket.emit("online users", sockets.length);
     });
     (0, roomHandler_1.updateRoomHandler)(socket);
     (0, roomHandler_1.createRoomHandler)(socket);

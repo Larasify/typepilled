@@ -21,8 +21,6 @@ prayge
 
 - [ ] same user can connect multiple times but this isnt really too big of a deal just same username happens they have different id's
 
-- [ ] Real online users counter
-
 - [ ] Random rooms so it matches people together? or a join room button that joins another created room
 
 - [ ] cant type in game and the players tab glitched out. i think these two are related

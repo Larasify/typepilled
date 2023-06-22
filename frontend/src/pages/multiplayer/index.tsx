@@ -16,6 +16,8 @@ export default function Multiplayer() {
   const [isJoiningRoom, setIsJoiningRoom] = useState(false);
   const [isServerUp, setIsServerUp] = useState(false);
 
+  const [onlineUserCount, setOnlineUserCount] = useState(0);
+
   const createRoom = () => {
     const id = v4().slice(0, 6);
     room.socket.emit("create room", id, {
@@ -36,6 +38,12 @@ export default function Multiplayer() {
       console.log(message);
       setIsServerUp(true);
     });
+
+    room.socket.off("online users").on("online users", (count: number) => {
+      setOnlineUserCount(count);
+    });
+    room.socket.emit("get online users");
+
 
     room.socket.off("room id exists").on("room id exists", () => {
       createRoom();
@@ -99,6 +107,7 @@ export default function Multiplayer() {
   return (
     <main>
       <section>
+        <span className="absolute left-0 top-0 text-neutral-500 font-roboto font-semibold">{`Online: ${onlineUserCount}`}</span>
         <span className=" mx-auto mt-5 flex justify-center font-mono text-3xl text-secondary">
           welcome to multiplayer
         </span>
