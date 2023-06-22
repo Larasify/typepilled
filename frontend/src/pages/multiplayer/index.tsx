@@ -107,7 +107,7 @@ export default function Multiplayer() {
   return (
     <main>
       <section>
-        <span className="absolute left-0 top-0 text-neutral-500 font-roboto font-semibold">{`Online: ${onlineUserCount}`}</span>
+        <span className="absolute left-0 top-0 text-neutral-500 font-roboto font-semibold hidden sm:block">{`Online: ${onlineUserCount}`}</span>
         <span className=" mx-auto mt-5 flex justify-center font-mono text-3xl text-secondary">
           welcome to multiplayer
         </span>
