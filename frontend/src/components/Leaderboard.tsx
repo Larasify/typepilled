@@ -1,11 +1,10 @@
 import clsx from "clsx";
-import { useRouter } from "next/router";
-import { useEffect, useMemo, useRef, useState } from "react";
+import {  useMemo, useRef, useState } from "react";
 import { FaAt, FaCrown, FaHashtag, FaMedal } from "react-icons/fa";
 import { api } from "~/utils/api";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { CgSpinner } from "react-icons/cg";
+
 
 dayjs.extend(relativeTime);
 
@@ -60,6 +59,7 @@ export default function Leaderboard() {
   const shownLoading = useMemo(() => {
     return pagenumber === 1 ? isLoading : page2isLoading;
   }, [pagenumber, isLoading, page2isLoading]);
+
 
   return (
     <>
