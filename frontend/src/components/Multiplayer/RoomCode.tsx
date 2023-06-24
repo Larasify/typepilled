@@ -24,7 +24,7 @@ export default function RoomCode() {
             });
         }
       }}
-      className="btn text-white relative flex cursor-pointer items-center rounded-md bg-primary px-4 pt-5 text-3xl font-bold w-max h-max mt-5 mb-5"
+      className="btn text-white relative flex cursor-pointer items-center rounded-md bg-primary px-4 pt-5 text-3xl font-bold w-max h-max"
     >
       <span className="absolute left-0 top-0 whitespace-nowrap px-4 pt-1 text-xs">
         copy and share

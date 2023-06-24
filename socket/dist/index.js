@@ -29,6 +29,9 @@ exports.io.on("connection", (socket) => {
         socket.emit("message", message);
         socket.join("multiplayerPage");
     });
+    socket.on("send chat", ({ username, id, message, type, roomId }) => {
+        exports.io.to(roomId).emit("receive chat", { username, id, message, type, roomId });
+    });
     const sockets = Array.from(exports.io.sockets.sockets).map((socket) => socket[0]);
     exports.io.to("multiplayerPage").emit("online users", sockets.length);
     socket.on("get online users", () => {

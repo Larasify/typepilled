@@ -39,6 +39,14 @@ export type PlayerState = {
   [key: string]: string[];
 };
 
+export type Chat = { 
+  username: string;
+  id: string;
+  message: string;
+  type: "notification" | "chat";
+  roomId: string;
+}
+
 const app = express();
 app.use(cors);
 const server = http.createServer(app);
@@ -61,6 +69,10 @@ io.on("connection", (socket) => {
     socket.emit("message", message);
     socket.join("multiplayerPage");
   });
+
+  socket.on("send chat", ({username, id, message, type, roomId}: Chat) => {
+    io.to(roomId).emit("receive chat", {username, id, message, type, roomId});
+  })
 
   const sockets = Array.from(io.sockets.sockets).map((socket) => socket[0]);
   io.to("multiplayerPage").emit("online users", sockets.length);

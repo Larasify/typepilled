@@ -19,8 +19,18 @@ export type Player = {
   isReady: boolean;
 };
 
+export type Chat = { 
+  username: string;
+  id: string;
+  message: string;
+  type: "notification" | "chat";
+  roomId: string;
+  createdAt: Date;
+}
+
 export type RoomState = {
   user: Player;
+  chat: Chat[];
   type: "words" | "quote";
   wordlength: string;
   quotelength: string;
@@ -64,8 +74,10 @@ export type Action =
   | { type: "SET_WINNER"; payload: string | null }
   | { type: "SET_IS_PLAYING"; payload: boolean }
   | { type: "TOGGLE_CHAT" }
+  | { type: "ADD_CHAT"; payload: Chat}
+  | { type: 'CLEAR_CHAT' }
   | { type: "SET_IS_READY"; payload: boolean }
-  | { type: "SET_IS_FINISHED"; payload: boolean };
+  | { type: "SET_IS_FINISHED"; payload: boolean }
 
 const socket = io(
   process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:8080",
@@ -105,6 +117,7 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
       isReady: false,
     },
     players: [],
+    chat: [],
     socket,
   });
 

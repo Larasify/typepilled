@@ -15,6 +15,16 @@ const reducer = (state: RoomState, action: Action): RoomState => {
         ...state,
         type: action.payload,
       };
+    case "ADD_CHAT":
+      return {
+        ...state,
+        chat: [...state.chat, action.payload],
+      };
+    case "CLEAR_CHAT":
+      return {
+        ...state,
+        chat: [],
+      };
     case "SET_WORDLENGTH":
       return {
         ...state,

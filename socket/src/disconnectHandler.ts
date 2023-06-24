@@ -17,7 +17,8 @@ export const disconnectHandler = (socket: Socket) => {
 			rooms[roomId].players = players.filter((player) => {
 				if (player.id === socket.id) {
 					// io.in(roomId).emit("leave room", player.username);
-					io.in(roomId).emit("receive chat", { username: player.username, value: "left", id: player.id });
+					io.to(roomId).emit("receive chat", {username: player.username, id:player.id, message:`${player.username} has left the room`, type:"notification", roomId});
+
 				}
 				return player.id !== socket.id;
 			});

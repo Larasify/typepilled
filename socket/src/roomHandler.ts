@@ -9,6 +9,7 @@ export const createRoomHandler = (socket: Socket) => {
 			socket.emit("room already exist");
 		} else {
             console.log("room created: ", roomId);
+			console.log("room count: ", io.sockets.adapter.rooms.size);
 
 			const text = getWords(preferences).join(" ");
 
@@ -74,7 +75,8 @@ export const joinRoomHander = (socket: Socket) => {
 		socket.emit("words generated", rooms[roomId].text);
 		io.in(roomId).emit("room update", rooms[roomId].players);
 		// socket.to(roomId).emit("notify", `${user.username} is here.`);
-		io.in(roomId).emit("receive chat", { username: user.username, value: "joined", id: user.id, type: "notification" });
+		io.to(roomId).emit("receive chat", {username: user.username, id:user.id, message:`${user.username} has joined the room`, type:"notification", roomId});
+
 	});
 };
 
@@ -86,7 +88,7 @@ export const leaveRoomHandler = (socket: Socket) => {
 		rooms[roomId].players = players.players.filter((player) => {
 			if (player.id === user.id) {
 				socket.to(roomId).emit("leave room", player.username);
-				io.in(roomId).emit("receive chat", { username: player.username, value: "left", id: player.id });
+				io.to(roomId).emit("receive chat", {username: user.username, id:user.id, message:`${user.username} has left the room`, type:"notification", roomId});
 			}
 			return player.id !== user.id;
 		});

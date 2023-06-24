@@ -10,10 +10,13 @@ import {
   SiTrpc,
   SiVercel,
 } from "react-icons/si";
+import { usePreferenceContext } from "~/context/Preference/PreferenceContext";
+import clsx from "clsx";
 
 export default function About() {
+  const { preferences, dispatch } = usePreferenceContext();
   return (
-    <div className=" flex h-full items-center font-mono text-lg font-semibold p-10 pt-24 text-neutral-500">
+    <div className=" flex h-full items-center p-10 pt-24 font-mono text-lg font-semibold text-neutral-500">
       <div className="flex flex-col gap-10">
         <span>
           This project was built to learn more about web development and
@@ -23,7 +26,7 @@ export default function About() {
           <span className="text-lg font-semibold text-neutral-500">
             Built with
           </span>
-          <div className="flex flex-row gap-2 items-center">
+          <div className="flex flex-row items-center gap-2">
             <SiNextdotjs />
             <SiTrpc />
             <SiPrisma />
@@ -53,6 +56,35 @@ export default function About() {
             <Monkeytype />
           </a>
         </div>
+
+        <div className="flex flex-col gap-4">
+          <span className="font-roboto font-semibold text-neutral-500">
+            Multiplayer Chatbox type
+          </span>
+          <div className="flex gap-3 align-middle">
+            <span
+              className={clsx("font-roboto font-semibold text-neutral-400", {
+                "text-neutral-500": preferences.chatType,
+              })}
+            >
+              Drawer
+            </span>
+            <input
+              type="checkbox"
+              className="toggle"
+              checked={preferences.chatType}
+              onChange={() => dispatch({ type: "TOGGLE_CHAT_TYPE" })}
+            />
+            <span
+              className={clsx("font-roboto font-semibold text-neutral-400", {
+                "text-neutral-500": !preferences.chatType,
+              })}
+            >
+              Modal
+            </span>
+          </div>
+        </div>
+
         <div className="flex flex-col gap-2">
           <span className="">controls:</span>
           <Controls />

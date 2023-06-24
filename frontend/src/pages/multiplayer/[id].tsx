@@ -7,6 +7,9 @@ import RoomCode from "~/components/Multiplayer/RoomCode";
 import Players from "~/components/Multiplayer/Players";
 import MultiplayerGame from "~/components/Multiplayer/MultiplayerGame";
 import { CgSpinner } from "react-icons/cg";
+import ChatRoom from "~/components/Multiplayer/ChatRoom";
+import ChatDrawer from "~/components/Multiplayer/ChatDrawer";
+import { usePreferenceContext } from "~/context/Preference/PreferenceContext";
 
 export default function GameRoom() {
   const {
@@ -16,6 +19,12 @@ export default function GameRoom() {
     resetTime,
   } = useRoomContext();
   const router = useRouter();
+
+  const { preferences, dispatch:preferenceDispatch } = usePreferenceContext();
+
+
+
+  
 
   /*useEffect(() => {
     console.log(user, isPlaying);
@@ -54,6 +63,19 @@ export default function GameRoom() {
       dispatch({ type: "SET_IS_PLAYING", payload: false });
       dispatch({ type: "SET_IS_FINISHED", payload: false });
       dispatch({ type: "SET_WINNER", payload: null });
+      dispatch({ type: "CLEAR_CHAT" });
+      if (user.roomId)
+        dispatch({
+          type: "ADD_CHAT",
+          payload: {
+            username: "System",
+            message: `Welcome to the room ${user.roomId}`,
+            id: "system",
+            type: "notification",
+            roomId: user.roomId,
+            createdAt: new Date(),
+          },
+        });
       void resetTime(0);
 
       socket.off("end game").on("end game", (playerId: string) => {
@@ -82,7 +104,7 @@ export default function GameRoom() {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.query, user.id]);
+  }, [router.query, user.id, user.roomId]);
 
   const [isClient, setIsClient] = useState(false);
 
@@ -114,7 +136,14 @@ export default function GameRoom() {
         </>
       ) : (
         <>
-          <RoomCode />
+          <div className="mb-5 mt-5 flex items-center justify-between">
+            <RoomCode />
+            <div className="flex">
+              {preferences.chatType ? (<ChatRoom />):
+               (<ChatDrawer />)}
+            </div>
+          </div>
+
           <Players />
           <div className="flex h-full flex-col items-center justify-end pt-24 text-center">
             <MultiplayerGame ref={ref} />
@@ -126,7 +155,7 @@ export default function GameRoom() {
                   user.roomId &&
                   socket.emit("start game", user.roomId);
               }}
-              className="btn-primary btn mt-2"
+              className="btn-primary btn mt-2 rounded-lg"
             >
               Start
             </button>

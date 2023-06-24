@@ -47,23 +47,36 @@ const reducer = (state: PreferenceState, action: Action) => {
       };
     case "SET_NUMBERS":
       if (typeof window !== undefined) {
-        window.localStorage.setItem(
-          "numbers",
-          JSON.stringify(action.payload)
-        );
+        window.localStorage.setItem("numbers", JSON.stringify(action.payload));
       }
       return {
         ...state,
         numbers: action.payload,
       };
-      case "SET_THEME":
-        if (typeof window !== undefined) {
-          window.localStorage.setItem("theme", action.payload);
-        }
-        return {
-          ...state,
-          theme: action.payload,
-        };
+    case "SET_THEME":
+      if (typeof window !== undefined) {
+        window.localStorage.setItem("theme", action.payload);
+      }
+      return {
+        ...state,
+        theme: action.payload,
+      };
+    case "SET_CHAT_TYPE":
+      if (typeof window !== undefined) {
+        window.localStorage.setItem("chatType", JSON.stringify(action.payload));
+      }
+      return {
+        ...state,
+        chatType: action.payload,
+      };
+    case "TOGGLE_CHAT_TYPE":
+      if (typeof window !== undefined) {
+        window.localStorage.setItem("chatType", JSON.stringify(!state.chatType));
+      }
+      return {
+        ...state,
+        chatType: !state.chatType,
+      };
     default:
       throw new Error("Unknown action type");
   }
