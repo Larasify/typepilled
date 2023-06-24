@@ -2,16 +2,16 @@ import express from "express";
 import http from "http";
 import cors from "cors";
 
-import { Server } from "socket.io";
+import { Server, Socket } from "socket.io";
 import {
   createRoomHandler,
   joinRoomHander,
   leaveRoomHandler,
   updateRoomHandler,
+  endGameHander,
+  startGameHander,
 } from "./roomHandler";
-import { disconnectHandler } from "./disconnectHandler";
 import { PreferenceState, getWords } from "./utils/getWords";
-import { endGameHander, startGameHander } from "./gameHandler";
 
 export type Player = {
   username: string;
@@ -39,13 +39,13 @@ export type PlayerState = {
   [key: string]: string[];
 };
 
-export type Chat = { 
+export type Chat = {
   username: string;
   id: string;
   message: string;
   type: "notification" | "chat";
   roomId: string;
-}
+};
 
 const app = express();
 app.use(cors);
@@ -70,27 +70,66 @@ io.on("connection", (socket) => {
     socket.join("multiplayerPage");
   });
 
-  socket.on("send chat", ({username, id, message, type, roomId}: Chat) => {
-    io.to(roomId).emit("receive chat", {username, id, message, type, roomId});
-  })
+  socket.on("send chat", ({ username, id, message, type, roomId }: Chat) => {
+    io.to(roomId).emit("receive chat", { username, id, message, type, roomId });
+  });
 
   const sockets = Array.from(io.sockets.sockets).map((socket) => socket[0]);
   io.to("multiplayerPage").emit("online users", sockets.length);
+
   socket.on("get online users", () => {
     const sockets = Array.from(io.sockets.sockets).map((socket) => socket[0]);
     socket.emit("online users", sockets.length);
-  })
+  });
+
+  
 
   updateRoomHandler(socket);
   createRoomHandler(socket);
   joinRoomHander(socket);
   leaveRoomHandler(socket);
-  disconnectHandler(socket);
   startGameHander(socket);
   endGameHander(socket);
-  
+  disconnectHandler(socket);
+
 });
 
 server.listen(8080, () => {
   console.log("started listening on port:8080");
 });
+
+
+export const disconnectHandler = (socket: Socket) => {
+  socket.on("disconnect", () => {
+    // disconnected client id
+    const sockets = Array.from(io.sockets.sockets).map((socket) => socket[0]);
+    io.to("multiplayerPage").emit("online users", sockets.length);
+
+    // the rooms player is currently in
+    const disconnectPlayerFrom = playerRooms[socket.id];
+    if (!disconnectPlayerFrom) return;
+    disconnectPlayerFrom.forEach((roomId) => {
+      if (!rooms[roomId]) return;
+      const players = rooms[roomId].players;
+      rooms[roomId].players = players.filter((player) => {
+        if (player.id === socket.id) {
+          io.to(roomId).emit("receive chat", {
+            username: player.username,
+            id: player.id,
+            message: `${player.username} has left the room`,
+            type: "notification",
+            roomId,
+          });
+        }
+        return player.id !== socket.id;
+      });
+
+      io.in(roomId).emit("room update", rooms[roomId].players);
+      if (rooms[roomId].players.length === 0) {
+        delete rooms[roomId];
+      }
+    });
+      // remove player
+      delete playerRooms[socket.id];
+    });
+}

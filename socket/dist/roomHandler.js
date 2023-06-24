@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.leaveRoomHandler = exports.joinRoomHander = exports.updateRoomHandler = exports.createRoomHandler = void 0;
+exports.startGameHander = exports.endGameHander = exports.leaveRoomHandler = exports.joinRoomHander = exports.updateRoomHandler = exports.createRoomHandler = void 0;
 const index_1 = require("./index");
 const getWords_1 = require("./utils/getWords");
 const createRoomHandler = (socket) => {
@@ -21,10 +21,6 @@ const createRoomHandler = (socket) => {
             };
             socket.emit("words generated", index_1.rooms[roomId].text);
             socket.emit("create room success", roomId);
-            // console.log(roomId);
-            // console.log(io.sockets.adapter.rooms.get(roomId));
-            // const sockets = Array.from(io.sockets.sockets).map((socket) => socket[0]);
-            // console.log("room created: ", socket.rooms);
         }
     });
 };
@@ -37,14 +33,6 @@ const updateRoomHandler = (socket) => {
         const players = index_1.rooms[roomId].players;
         index_1.rooms[roomId].players = players.map((player) => (player.id !== user.id ? player : user));
         index_1.io.in(roomId).emit("room update", index_1.rooms[roomId].players);
-        // start game
-        // const allPlayersReady = rooms[roomId].players.every((player) => player.isReady);
-        // if (allPlayersReady) {
-        // 	io.in(roomId).emit("start game");
-        // 	rooms[roomId].inGame = true;
-        // } else {
-        // 	rooms[roomId].inGame = false;
-        // }
     });
 };
 exports.updateRoomHandler = updateRoomHandler;
@@ -69,7 +57,6 @@ const joinRoomHander = (socket) => {
         socket.join(roomId);
         socket.emit("words generated", index_1.rooms[roomId].text);
         index_1.io.in(roomId).emit("room update", index_1.rooms[roomId].players);
-        // socket.to(roomId).emit("notify", `${user.username} is here.`);
         index_1.io.to(roomId).emit("receive chat", { username: user.username, id: user.id, message: `${user.username} has joined the room`, type: "notification", roomId });
     });
 };
@@ -95,4 +82,27 @@ const leaveRoomHandler = (socket) => {
     });
 };
 exports.leaveRoomHandler = leaveRoomHandler;
+const endGameHander = (socket) => {
+    socket.on("end game", (roomId) => {
+        const preferences = index_1.rooms[roomId].preferences;
+        const text = (0, getWords_1.getWords)(preferences).join(" ");
+        index_1.rooms[roomId] = {
+            players: index_1.rooms[roomId].players,
+            text,
+            inGame: false,
+            winner: socket.id,
+            preferences,
+        };
+        index_1.io.in(roomId).emit("end game", socket.id);
+    });
+};
+exports.endGameHander = endGameHander;
+const startGameHander = (socket) => {
+    socket.on("start game", (roomId) => {
+        index_1.io.in(roomId).emit("words generated", index_1.rooms[roomId].text);
+        index_1.io.in(roomId).emit("start game");
+        index_1.rooms[roomId].inGame = true;
+    });
+};
+exports.startGameHander = startGameHander;
 //# sourceMappingURL=roomHandler.js.map

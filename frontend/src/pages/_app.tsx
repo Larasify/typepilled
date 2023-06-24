@@ -4,7 +4,6 @@ import { type AppType } from "next/app";
 import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import PreferenceProvider from "~/context/Preference/PreferenceContext";
-import Header from "~/components/Layout/Header";
 import Layout from "~/components/Layout/Layout";
 import { RoomProvider } from "~/context/Room/RoomContext";
 import { Toaster } from "react-hot-toast";

@@ -3,34 +3,24 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
 import {
-  FaCrown,
   FaInfo,
   FaKeyboard,
   FaRegUser,
   FaSignInAlt,
-  FaTerminal,
   FaUser,
 } from "react-icons/fa";
 import { RiTeamFill } from "react-icons/ri";
 import { TbKeyboard } from "react-icons/tb";
 
-import { usePreferenceContext } from "../../context/Preference/PreferenceContext";
 import { signOut, useSession } from "next-auth/react";
 import Leaderboard from "../Leaderboard";
 
-const typeList = ["words", "sentences", "numbers"];
-
-const timeList = ["15", "30", "45", "60", "120"];
 
 export default function Header() {
-  const {
-    preferences: { type, time },
-    dispatch,
-  } = usePreferenceContext();
 
   const { pathname } = useRouter();
 
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   /*if (status === "authenticated") {
     return <p>Signed in as {session.user.email}</p>
   }*/

@@ -14,7 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     setTimeout(() => setIsClient(false), 500);
   }, []);
 
-  const { preferences, dispatch } = usePreferenceContext();
+  const { preferences } = usePreferenceContext();
 
   return (
     <>

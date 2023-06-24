@@ -194,7 +194,6 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
 
 
   useEffect(() => {
-    console.log("i sent out update");
     if (room.user.id && room.user.roomId) {
       socket.emit("room update", room.user);
     }

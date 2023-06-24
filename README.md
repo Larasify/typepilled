@@ -27,8 +27,6 @@ prayge
 
 - [ ] dont let them backspace back into a correct word (check monkeytype for this)
 
-- [ ] make a chat for game room
-
 - [ ] maybe add a delay of 4-5 seconds before redirecting them back to the multiplayer page 
 
 - [ ] change metaurl to the green one (and maybe the favico too)

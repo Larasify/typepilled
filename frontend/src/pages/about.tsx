@@ -1,6 +1,5 @@
 import Controls from "~/components/Controls";
 import {
-  SiExpress,
   SiNextdotjs,
   SiPlanetscale,
   SiPrisma,

@@ -24,11 +24,6 @@ export const createRoomHandler = (socket: Socket) => {
 			socket.emit("words generated", rooms[roomId].text);
 			socket.emit("create room success", roomId);
 
-			// console.log(roomId);
-			// console.log(io.sockets.adapter.rooms.get(roomId));
-			// const sockets = Array.from(io.sockets.sockets).map((socket) => socket[0]);
-			// console.log("room created: ", socket.rooms);
-
 		}
 	});
 };
@@ -41,14 +36,6 @@ export const updateRoomHandler = (socket: Socket) => {
 		rooms[roomId].players = players.map((player) => (player.id !== user.id ? player : user));
 		io.in(roomId).emit("room update", rooms[roomId].players);
 
-		// start game
-		// const allPlayersReady = rooms[roomId].players.every((player) => player.isReady);
-		// if (allPlayersReady) {
-		// 	io.in(roomId).emit("start game");
-		// 	rooms[roomId].inGame = true;
-		// } else {
-		// 	rooms[roomId].inGame = false;
-		// }
 	});
 };
 
@@ -74,7 +61,6 @@ export const joinRoomHander = (socket: Socket) => {
 		socket.join(roomId);
 		socket.emit("words generated", rooms[roomId].text);
 		io.in(roomId).emit("room update", rooms[roomId].players);
-		// socket.to(roomId).emit("notify", `${user.username} is here.`);
 		io.to(roomId).emit("receive chat", {username: user.username, id:user.id, message:`${user.username} has joined the room`, type:"notification", roomId});
 
 	});
@@ -100,3 +86,29 @@ export const leaveRoomHandler = (socket: Socket) => {
 		}
 	});
 };
+
+
+export const endGameHander = (socket: Socket) => {
+	socket.on("end game", (roomId: string) => {
+	  const preferences = rooms[roomId].preferences;
+	  const text = getWords(preferences).join(" ");
+	  rooms[roomId] = {
+		players: rooms[roomId].players,
+		text,
+		inGame: false,
+		winner: socket.id,
+		preferences,
+	  };
+
+	  io.in(roomId).emit("end game", socket.id);
+	});
+  };
+  
+  export const startGameHander = (socket: Socket) => {
+	socket.on("start game", (roomId: string) => {
+	  io.in(roomId).emit("words generated", rooms[roomId].text);
+	  io.in(roomId).emit("start game");
+	  rooms[roomId].inGame = true;
+	});
+  };
+  

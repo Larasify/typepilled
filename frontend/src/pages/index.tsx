@@ -1,5 +1,4 @@
 import { type NextPage } from "next";
-import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
 import Game from "~/components/Game";
 import { FaRedo } from "react-icons/fa";
@@ -10,7 +9,7 @@ import { usePreferenceContext } from "~/context/Preference/PreferenceContext";
 
 const Home: NextPage = () => {
   const ref = useRef<HTMLInputElement>(null);
-  const { preferences, dispatch } = usePreferenceContext();
+  const { preferences } = usePreferenceContext();
   const [text, setText] = useState(
     "hello my baby hello my honey hello my ragtime gal how are you i am a frog froggity frog hop hop fill this line please bro what why does it not work properly hello my baby hello my honey hello my ragtime gal how are you i am a frog froggity frog hop hop fill this line please bro what why does it not work properly"
   );

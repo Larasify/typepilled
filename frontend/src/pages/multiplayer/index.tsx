@@ -3,9 +3,7 @@ import { useState, useEffect, type FormEvent, useRef } from "react";
 import { useRoomContext } from "~/context/Room/RoomContext";
 import toast from "react-hot-toast";
 import { v4 } from "uuid";
-import { FaArrowRight, FaUsers } from "react-icons/fa";
-import clsx from "clsx";
-import { CgSpinner } from "react-icons/cg";
+import { FaArrowRight } from "react-icons/fa";
 import { z } from "zod";
 import MultiplayerOptions from "~/components/Multiplayer/MultiplayerOptions";
 
@@ -32,7 +30,7 @@ export default function Multiplayer() {
   };
 
   useEffect(() => {
-    room.socket.emit("message", "hihihihihi");
+    room.socket.emit("message", "connected to socket");
 
     room.socket.off("message").on("message", (message: string) => {
       console.log(message);

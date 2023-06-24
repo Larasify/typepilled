@@ -66,7 +66,7 @@ export default function Leaderboard() {
       <dialog id="leaderboard_modal" className="modal" ref={modalRef}>
         <form
           method="dialog"
-          className="scrollbar modal-box h-full w-screen max-w-screen-2xl overflow-x-hidden font-roboto"
+          className="scrollbar modal-box h-full w-screen max-w-[95%] overflow-x-hidden font-roboto"
         >
           <div className="flex w-full justify-between">
             <span className="font-mono  sm:text-3xl text-secondary">
