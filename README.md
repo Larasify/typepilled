@@ -3,31 +3,17 @@
 prayge
 
 ## TODO
-- [ ] Text should animate out and in when reset or words change
+- [ ] An option to change the layout to a left side navigation panel style
 
-- [ ] add correct word count and wpm next to timer as an info panel
-
-- [ ] options selector should not jump around should be smooth on the right side
-
-- [ ] when seomeone joins there has to be a delay for the components to mount before opening a connection or sth like that somethings borked there or like socket needs time to return stuff before update is set or something
-
-- [ ] if a room has been inactive for super long or state hasnt been updated in forever cull it (dont cull it once the last person leaves it should stay up for like 4-5 more mins or sth like that)
+- [ ] Animation on text change when options change and when pages change (framer motion)
 
 - [ ] notification when someone joins or leaves or owner changes
 
 - [ ] sound effect when game is starting
 
-- [ ] the person that started the game has +5 seconds of duration (the others have -5 seconds ?)
-
-- [ ] same user can connect multiple times but this isnt really too big of a deal just same username happens they have different id's
-
-- [ ] Random rooms so it matches people together? or a join room button that joins another created room
-
-- [ ] cant type in game and the players tab glitched out. i think these two are related
-
 - [ ] dont let them backspace back into a correct word (check monkeytype for this)
 
-- [ ] maybe add a delay of 4-5 seconds before redirecting them back to the multiplayer page 
+- [ ] 4-5 seconds delay on redirecting them to the multiplayer page on disconnects
 
 - [ ] change metaurl to the green one (and maybe the favico too)
 
@@ -37,7 +23,9 @@ prayge
 
 - [ ] leaderboard should only do one query if possible
 
-- [ ] leaderboard update timer
-
 - [ ] multiplayer shouldnt end on first finish it should end when last person finishes
+
+- [ ] same user can connect multiple times but this isnt really too big of a deal just same username happens they have different id's
+
+
 
