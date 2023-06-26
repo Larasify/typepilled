@@ -48,12 +48,8 @@ export default function About() {
 
         <div className="flex items-center gap-2 align-middle">
           inspired by
-          <a href="https://play.typeracer.com/">
-            <Typeracer />
-          </a>
-          <a href="https://monkeytype.com/">
-            <Monkeytype />
-          </a>
+          <Typeracer />
+          <Monkeytype />
         </div>
 
         <div className="flex flex-col gap-4">

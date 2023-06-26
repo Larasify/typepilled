@@ -33,7 +33,7 @@ export default function Footer() {
     >
       <div className="flex w-full items-center justify-between text-neutral-500">
         <Link
-          href="https://github.com/larasify"
+          href="https://github.com/Larasify/typepilled"
           className="flex cursor-pointer items-center space-x-1.5 text-sm transition-colors duration-200 hover:text-secondary"
         >
           <FaCode />

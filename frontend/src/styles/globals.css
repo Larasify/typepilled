@@ -27,6 +27,8 @@
 }
 
 @layer utilities {
+
+  
   .h-my-screen {
     height: 100vh; /* fallback for Opera, IE and etc. */
     height: 100svh;
@@ -53,14 +55,17 @@ Not supports in Firefox and IE */
 
   /* scrollbar itself */
   .scrollbar::-webkit-scrollbar-thumb {
-    background-color: #646669;
+    /*background-color: #646669;*/
+    @apply bg-[#646669];
     border-radius: 2px;
   }
   .scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: #d1d0c5;
+    /*background-color: #d1d0c5;*/
+    @apply bg-neutral-300;
   }
   .scrollbar::-webkit-scrollbar-thumb:active { 
-    background-color: #e2b714;
+    /*background-color: #e2b714;*/
+    @apply bg-primary;
 }  
 
   /* set button(top and bottom of the scrollbar) */
