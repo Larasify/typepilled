@@ -73,7 +73,7 @@ export default function PreferenceProvider({
         dispatch({ type: "SET_NUMBERS", payload: numbers === "true" });
       if (theme) dispatch({ type: "SET_THEME", payload: theme });
       if (chatType)
-        dispatch({ type: "SET_CHAT_TYPE", payload: navType === "true" });
+        dispatch({ type: "SET_CHAT_TYPE", payload: chatType === "true" });
       if (navType)
         dispatch({ type: "SET_NAV_TYPE", payload: navType === "true" });
       if (window.innerWidth < 768)
