@@ -77,6 +77,22 @@ const reducer = (state: PreferenceState, action: Action) => {
         ...state,
         chatType: !state.chatType,
       };
+      case "SET_NAV_TYPE":
+      if (typeof window !== undefined) {
+        window.localStorage.setItem("navType", JSON.stringify(action.payload));
+      }
+      return {
+        ...state,
+        navType: action.payload,
+      };
+    case "TOGGLE_NAV_TYPE":
+      if (typeof window !== undefined) {
+        window.localStorage.setItem("navType", JSON.stringify(!state.chatType));
+      }
+      return {
+        ...state,
+        navType: !state.navType,
+      };
     default:
       throw new Error("Unknown action type");
   }

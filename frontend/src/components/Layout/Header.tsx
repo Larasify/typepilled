@@ -83,8 +83,8 @@ export default function Header() {
                   <RiTeamFill
                     className={clsx(
                       "cursor-pointer  text-lg transition-colors duration-200 hover:fill-secondary",
-                      { "fill-secondary": pathname === "/multiplayer" },
-                      { "fill-neutral-500": pathname !== "/multiplayer" }
+                      { "fill-secondary": pathname.includes("/multiplayer") },
+                      { "fill-neutral-500": !pathname.includes("/multiplayer")}
                     )}
                   />
                 </Link>

@@ -1,10 +1,10 @@
 import clsx from "clsx";
-import {  useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { FaAt, FaCrown, FaHashtag, FaMedal } from "react-icons/fa";
 import { api } from "~/utils/api";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-
+import { usePreferenceContext } from "~/context/Preference/PreferenceContext";
 
 dayjs.extend(relativeTime);
 
@@ -48,6 +48,8 @@ export default function Leaderboard() {
     enabled: false,
   });
 
+  const { preferences } = usePreferenceContext();
+
   const [pagenumber, setPagenumber] = useState(1);
   const modalRef = useRef<HTMLDialogElement>(null);
 
@@ -60,7 +62,6 @@ export default function Leaderboard() {
     return pagenumber === 1 ? isLoading : page2isLoading;
   }, [pagenumber, isLoading, page2isLoading]);
 
-
   return (
     <>
       <dialog id="leaderboard_modal" className="modal" ref={modalRef}>
@@ -69,7 +70,7 @@ export default function Leaderboard() {
           className="scrollbar modal-box h-full w-screen max-w-[95%] overflow-x-hidden font-roboto"
         >
           <div className="flex w-full justify-between">
-            <span className="font-mono  sm:text-3xl text-secondary">
+            <span className="font-mono  text-secondary sm:text-3xl">
               Time mode Leaderboards
             </span>
             <div className="flex items-center gap-2">
@@ -97,11 +98,13 @@ export default function Leaderboard() {
           <div className="flex h-[90%] flex-col gap-5 p-2 lg:flex-row">
             {shownData.map((leaderboard, index) => (
               <div key={index} className="h-full w-full ">
-                <div className="text-secondary font-bold">
+                <div className="font-bold text-secondary">
                   Time {leaderboard?.at(0)?.type}{" "}
-                  {shownLoading && <span className="loading loading-spinner w-4 h-4" />}
+                  {shownLoading && (
+                    <span className="loading loading-spinner h-4 w-4" />
+                  )}
                 </div>
-                <div className="scrollbar h-full overflow-y-scroll overflow-x-hidden">
+                <div className="scrollbar h-full overflow-x-hidden overflow-y-scroll">
                   <table className="table-zebra table w-full">
                     <thead className="sticky top-0 z-50 bg-base-100 font-semibold">
                       <tr>
@@ -170,7 +173,7 @@ export default function Leaderboard() {
                                 {user.wordcount}
                               </span>
                             </td>
-                            <td className="py-2 text-right whitespace-nowrap">
+                            <td className="whitespace-nowrap py-2 text-right">
                               {dayjs(user.createdAt).format("DD MMM YYYY")}{" "}
                               <br />
                               <span className="opacity-50">
@@ -194,16 +197,29 @@ export default function Leaderboard() {
         </form>
       </dialog>
       <div className="tooltip tooltip-bottom font-bold" data-tip="Leaderboard">
-        <div className="relative">
+        <div
+          onClick={() => {
+            modalRef.current?.showModal();
+            if (!data) void refetch();
+          }}
+          className="group flex flex-row items-center justify-end gap-4 align-middle 2xl:justify-start"
+        >
           <FaCrown
             className={clsx(
-              "cursor-pointer fill-neutral-500 text-lg transition-colors duration-200 hover:fill-secondary"
+              "cursor-pointer fill-neutral-500 transition-colors duration-200 group-hover:fill-secondary",
+              { "2xl:text-lg text-3xl": !preferences.navType },
+              { "text-lg": preferences.navType }
             )}
-            onClick={() => {
-              modalRef.current?.showModal();
-              if (!data) void refetch();
-            }}
           />
+          {!preferences.navType && (
+            <span
+              className={clsx(
+                "hidden cursor-pointer text-lg text-neutral-500 transition-colors duration-200  group-hover:text-secondary 2xl:block"
+              )}
+            >
+              Leaderboard
+            </span>
+          )}
         </div>
       </div>
     </>

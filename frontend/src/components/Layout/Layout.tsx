@@ -6,6 +6,7 @@ import Footer from "./Footer";
 import Header from "./Header";
 import { useEffect } from "react";
 import { usePreferenceContext } from "~/context/Preference/PreferenceContext";
+import Navbar from "./Navbar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isClient, setIsClient] = React.useState(true);
@@ -14,14 +15,22 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     setTimeout(() => setIsClient(false), 500);
   }, []);
 
-  const { preferences } = usePreferenceContext();
+  const { preferences, dispatch } = usePreferenceContext();
+
+  const handleResize = () => {
+    if (window.innerWidth < 768)
+      dispatch({ type: "SET_NAV_TYPE", payload: true });
+  };
+  React.useEffect(() => {
+    window.addEventListener("resize", handleResize, false);
+  }, []);
 
   return (
     <>
       {isClient ? (
         <>
           <div
-          data-theme={preferences.theme}
+            data-theme={preferences.theme}
             className={clsx(
               "fixed inset-0 flex h-screen w-screen items-center justify-center bg-base-100"
             )}
@@ -29,7 +38,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div className="flex max-w-[500px] flex-wrap items-center justify-center gap-x-8 ">
               <div className="flex flex-col items-center gap-4">
                 <CgSpinner className="text-fg animate-spin text-[3rem] text-primary" />
-                <div className="text-neutral-400 text-fg">
+                <div className="text-fg text-neutral-400">
                   Preparing the page for you...
                 </div>
               </div>
@@ -38,21 +47,23 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </>
       ) : (
         <>
-
-          <div data-theme={preferences.theme}
+          <div
+            data-theme={preferences.theme}
             className={clsx(
-              "scrollbar h-screen w-full overflow-y-auto bg-base-100 transition-colors duration-300"
+              "scrollbar  h-screen w-full overflow-y-auto bg-base-100 transition-colors duration-300",
+              { "grid grid-cols-12": !preferences.navType }
             )}
           >
-            <div className=" mx-auto flex h-my-screen w-11/12 max-w-6xl flex-col bg-transparent">
+            {!preferences.navType && <Navbar />}
+            <div className=" h-my-screen col-span-10 mx-auto flex w-11/12 max-w-6xl flex-col bg-transparent">
               <NextNProgress
-                color={`#e2b714`}
+                color="#e2b714"
                 startPosition={0.3}
                 stopDelayMs={200}
                 height={2}
                 showOnShallow={true}
               />
-              <Header />
+              {preferences.navType ? <Header /> : <div className=" h-32"></div>}
 
               {children}
               <Footer />

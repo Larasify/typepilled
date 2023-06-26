@@ -49,7 +49,6 @@ server.listen(8080, () => {
 });
 const disconnectHandler = (socket) => {
     socket.on("disconnect", () => {
-        console.log("user disconnected");
         // disconnected client id
         const sockets = Array.from(exports.io.sockets.sockets).map((socket) => socket[0]);
         exports.io.to("multiplayerPage").emit("online users", sockets.length);

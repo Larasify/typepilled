@@ -15,76 +15,125 @@ import clsx from "clsx";
 export default function About() {
   const { preferences, dispatch } = usePreferenceContext();
   return (
-    <div className=" flex h-full items-center p-10 pt-24 font-mono text-lg font-semibold text-neutral-500">
+    <div className=" flex h-full items-center sm:p-10 sm:pt-24  font-mono text-lg font-semibold text-neutral-500">
       <div className="flex flex-col gap-10">
         <span>
           This project was built to learn more about web development and
           especially sockets.
         </span>
-        <div className="flex flex-col gap-2 text-4xl text-stone-400">
-          <span className="text-lg font-semibold text-neutral-500">
-            Built with
-          </span>
-          <div className="flex flex-row items-center gap-2">
-            <SiNextdotjs />
-            <SiTrpc />
-            <SiPrisma />
-            <SiTailwindcss />
-            <SiSocketdotio />
-            <span className="text-sm">❤️</span>
+        <div className="flex flex-col sm:flex-row justify-between">
+          <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-2 text-4xl text-stone-400">
+              <span className="text-lg font-semibold text-neutral-500">
+                Built with
+              </span>
+              <div className="flex flex-row items-center gap-2">
+                <SiNextdotjs />
+                <SiTrpc />
+                <SiPrisma />
+                <SiTailwindcss />
+                <SiSocketdotio />
+                <span className="text-sm">❤️</span>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2  text-4xl text-stone-400">
+              <span className="text-lg font-semibold text-neutral-500">
+                Deployed With
+              </span>
+              <div className="flex flex-row gap-2">
+                <SiVercel />
+                <SiPlanetscale />
+                <SiRailway />
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 align-middle">
+              inspired by
+              <Typeracer />
+              <Monkeytype />
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-4">
+              <span className="font-roboto font-semibold text-neutral-500">
+                Multiplayer Chatbox type
+              </span>
+              <div className="flex gap-3 align-middle">
+                <span
+                  className={clsx(
+                    "font-roboto font-semibold text-neutral-400",
+                    {
+                      "text-neutral-500": preferences.chatType,
+                    }
+                  )}
+                >
+                  Drawer
+                </span>
+                <input
+                  type="checkbox"
+                  className="toggle"
+                  checked={preferences.chatType}
+                  onChange={() => dispatch({ type: "TOGGLE_CHAT_TYPE" })}
+                />
+                <span
+                  className={clsx(
+                    "font-roboto font-semibold text-neutral-400",
+                    {
+                      "text-neutral-500": !preferences.chatType,
+                    }
+                  )}
+                >
+                  Modal
+                </span>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <span className="font-roboto font-semibold text-neutral-500">
+                Navigation Type
+              </span>
+              <div className="flex gap-3 align-middle">
+                <span
+                  className={clsx(
+                    "font-roboto font-semibold text-neutral-400",
+                    {
+                      "text-neutral-500": preferences.navType,
+                    }
+                  )}
+                >
+                  Side
+                </span>
+                <input
+                  type="checkbox"
+                  className={clsx("toggle",{"cursor-not-allowed": window.innerWidth<768 })}
+                  checked={preferences.navType}
+                  onChange={() => {
+                    if (768 < window.innerWidth)
+                      dispatch({ type: "TOGGLE_NAV_TYPE" });
+                  }}
+                />
+                <span
+                  className={clsx(
+                    "font-roboto font-semibold text-neutral-400",
+                    {
+                      "text-neutral-500": !preferences.navType,
+                    }
+                  )}
+                >
+                  Top
+                </span>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <span className="">controls:</span>
+              <Controls />
+            </div>
           </div>
         </div>
-
-        <div className="flex flex-col gap-2  text-4xl text-stone-400">
-          <span className="text-lg font-semibold text-neutral-500">
-            Deployed With
-          </span>
-          <div className="flex flex-row gap-2">
-            <SiVercel />
-            <SiPlanetscale />
-            <SiRailway />
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2 align-middle">
-          inspired by
-          <Typeracer />
-          <Monkeytype />
-        </div>
-
-        <div className="flex flex-col gap-4">
-          <span className="font-roboto font-semibold text-neutral-500">
-            Multiplayer Chatbox type
-          </span>
-          <div className="flex gap-3 align-middle">
-            <span
-              className={clsx("font-roboto font-semibold text-neutral-400", {
-                "text-neutral-500": preferences.chatType,
-              })}
-            >
-              Drawer
-            </span>
-            <input
-              type="checkbox"
-              className="toggle"
-              checked={preferences.chatType}
-              onChange={() => dispatch({ type: "TOGGLE_CHAT_TYPE" })}
-            />
-            <span
-              className={clsx("font-roboto font-semibold text-neutral-400", {
-                "text-neutral-500": !preferences.chatType,
-              })}
-            >
-              Modal
-            </span>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <span className="">controls:</span>
-          <Controls />
-        </div>
-      </div>{" "}
+      </div>
     </div>
   );
 }
