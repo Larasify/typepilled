@@ -87,7 +87,7 @@ const reducer = (state: PreferenceState, action: Action) => {
       };
     case "TOGGLE_NAV_TYPE":
       if (typeof window !== undefined) {
-        window.localStorage.setItem("navType", JSON.stringify(!state.chatType));
+        window.localStorage.setItem("navType", JSON.stringify(!state.navType));
       }
       return {
         ...state,
