@@ -3,7 +3,7 @@
 prayge
 
 ## TODO
-- [ ] An option to change the layout to a left side navigation panel style
+- [x] An option to change the layout to a left side navigation panel style
 
 - [ ] Animation on text change when options change and when pages change (framer motion)
 
@@ -15,7 +15,7 @@ prayge
 
 - [ ] 4-5 seconds delay on redirecting them to the multiplayer page on disconnects
 
-- [ ] change metaurl to the green one (and maybe the favico too)
+- [x] change metaurl to the green one (and maybe the favico too)
 
 - [ ] change the loading and scrollbar themeing to be dynamic with the theme
 
