@@ -23,6 +23,11 @@ export default function Footer() {
     "bumblebee",
     "night",
     "black",
+    "catppuccin-latte",
+    "catppuccin-frappe",
+    "catppuccin-macchiato",
+    "catppuccin-mocha",
+    "catppuccin-vsc"
   ];
 
   return (
